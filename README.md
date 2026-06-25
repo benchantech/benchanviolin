@@ -10,10 +10,10 @@ It gives a visitor one deterministic route into a selected YouTube clip or teach
 
 - Mobile-first static router.
 - Optional 4-step orientation: entry point, level, immediate need, available time.
-- One primary recommendation with a YouTube start timestamp.
+- One primary recommendation, with optional YouTube start timestamps once real destinations are attached.
 - “This helped,” “Not my issue,” and “Turn again” paths.
 - No framework, build process, API, database, account, cookies, analytics, localStorage, or AI calls.
-- Local-only `tools/clip-builder.html` to make one clip metadata record at a time.
+- Local-only `tools/clip-builder.html` to make one clip metadata record at a time. It is excluded from the GitHub Pages build.
 
 ## What it does NOT do
 
@@ -24,12 +24,8 @@ It gives a visitor one deterministic route into a selected YouTube clip or teach
 
 ## Setup
 
-1. Search and replace:
-   - `REPLACE_WITH_YOUTUBE_VIDEO_ID`
-   - `REPLACE_WITH_STUDIO_APP_URL`
-   - `REPLACE_WITH_YOUR_USERNAME`
-   - `REPLACE_WITH_YOUR_REPO`
-2. Edit the `ROUTES` array at the top of `app.js`.
+1. Edit the `ROUTES` array at the top of `app.js`.
+2. Add a real YouTube `videoId` to each route before treating it as a published destination.
 3. Start with 10–20 routes, not the full archive.
 4. Open `tools/clip-builder.html` locally, generate a record, inspect it, then paste it into `ROUTES` manually.
 
@@ -39,7 +35,8 @@ It gives a visitor one deterministic route into a selected YouTube clip or teach
 2. Upload the contents of this folder to its root.
 3. GitHub: **Settings → Pages → Deploy from a branch → main → / (root)**.
 4. The public GitHub URL in `index.html` points to `benchantech/stand-partner-first-turn`.
-5. Test on a phone before linking from BenChanViolin.com.
+5. `_config.yml` excludes the maintainer-only `tools/` folder from the published Pages site.
+6. Test on a phone before linking from BenChanViolin.com.
 
 ## Suggested public trust claim
 
