@@ -765,6 +765,20 @@ input[type="email"]:focus {
   gap: var(--space-4);
 }
 
+.method-bridge {
+  margin-top: var(--space-4);
+  padding: var(--space-5);
+  border: 1px solid var(--rule-strong);
+  border-left: 4px solid var(--rust);
+  border-radius: var(--radius-panel);
+  background: var(--paper-raised);
+}
+
+.method-bridge h2 {
+  max-width: 15ch;
+  font-size: clamp(1.65rem, 6vw, 2.45rem);
+}
+
 .stand-callout {
   background: var(--paper-raised);
   margin-inline: calc(var(--mobile-gutter) * -1);
