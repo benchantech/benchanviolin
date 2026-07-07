@@ -55,7 +55,7 @@ values (
   '0f6n1HMHI6g',
   'Tan Dun YouTube Symphony Audition Walkthrough',
   'https://www.youtube.com/watch?v=0f6n1HMHI6g',
-  801,
+  481,
   'Ben Chan Violin',
   true
 )
