@@ -21,6 +21,9 @@ export default function HomePage() {
               lives.
             </p>
             <div className="actions">
+              <a className="btn" href="/library">
+                Search reviewed clips
+              </a>
               <a className="btn" href="https://youtube.com/benchanviolin" target="_blank" rel="noopener">
                 Browse teaching archive
               </a>

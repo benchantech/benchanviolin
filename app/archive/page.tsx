@@ -15,6 +15,7 @@ export default function ArchivePage() {
           <small>Teaching archive</small>
         </a>
         <nav className="nav" aria-label="Primary">
+          <a href="/library">Library</a>
           <a href="stand-partner.html">Stand Partner</a>
           <a href="privacy.html">Privacy</a>
         </nav>

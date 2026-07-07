@@ -6,7 +6,11 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:migrate": "node scripts/run-migrations.mjs",
+    "db:import:tan-dun": "node scripts/import-tan-dun.mjs",
+    "db:setup:tan-dun": "npm run db:migrate && npm run db:import:tan-dun",
+    "validate:tan-dun": "node scripts/validate-tan-dun.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

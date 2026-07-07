@@ -1,0 +1,929 @@
+BENCHANVIOLIN JSON -> NEON POSTGRES -> SEARCH PAGE MVP PLAN
+Scope: Build and test one complete deterministic retrieval loop on BenChanViolin.com.
+Status: BenChanViolin.com is already Next.js. Do not redesign or migrate the rest of the website in this phase.
+
+======================================================================
+1. MVP OBJECTIVE
+======================================================================
+
+Prove this end-to-end flow with the Tan Dun YouTube Symphony Audition Walkthrough first:
+
+Local Whisper JSON transcript files
+  -> timestamp-accurate candidate evidence
+  -> manually reviewed Tan Dun-style segment CSV
+  -> Neon Postgres import
+  -> deterministic tag / alias search
+  -> clickable canonical tag
+  -> reviewed segment card
+  -> exact-start YouTube embed
+  -> source-video link
+
+The MVP succeeds when a visitor can type:
+
+"bow bounce"
+
+and the site deterministically surfaces:
+
+Ricochet
+  matched alias: "bow bounce"
+
+Then, after clicking Ricochet, show a reviewed clip such as:
+
+Bow-Drop / Ricochet — Flat Hair and Tension Diagnosis
+Tan Dun YouTube Symphony Audition Walkthrough
+5:43–6:00
+Watch segment
+
+The embedded player must begin at the stored exact start second.
+
+No LLM, embeddings, user accounts, personalized routing, or bulk archive processing in this phase.
+
+======================================================================
+2. NON-GOALS FOR THIS MVP
+======================================================================
+
+Do not build:
+
+- YY Method pages or routing.
+- Violin Stand Partner integration.
+- User profiles.
+- Practice memory.
+- AI recommendations.
+- Full archive ingestion.
+- Automated transcript interpretation.
+- Multi-tag AND/OR filtering unless the one-tag loop is fully working.
+- Analytics beyond optional simple no-result logging.
+- A custom video host.
+- End-time stopping logic in the YouTube embed.
+
+The goal is one trustworthy public search loop, not a finished platform.
+
+======================================================================
+3. TEST DATASET
+======================================================================
+
+Use one video only:
+
+Video title:
+Tan Dun YouTube Symphony Audition Walkthrough
+
+YouTube video ID:
+0f6n1HMHI6g
+
+Canonical URL:
+https://www.youtube.com/watch?v=0f6n1HMHI6g
+
+Source JSON files:
+0f6n1HMHI6g__chunk_0001__000000-000300.json
+0f6n1HMHI6g__chunk_0002__000300-000600.json
+0f6n1HMHI6g__chunk_0003__000600-000801.json
+
+Use the existing reviewed Tan Dun segment CSV as the initial content seed.
+
+Minimum imported tags for the MVP:
+
+- bartok-pizzicato
+- ricochet
+- bow-drop
+- bow-relaxation
+- arm-weight
+- string-crossing
+- orchestral-balance
+- trills
+- accent
+- sforzando-piano
+
+Minimum aliases:
+
+"bow bounce" -> ricochet
+"bouncy bow" -> ricochet
+"drop bow" -> bow-drop
+"tense bow hand" -> bow-relaxation
+"my bow shakes" -> bow-relaxation
+"string changes" -> string-crossing
+"snap pizzicato" -> bartok-pizzicato
+
+Do not overbuild taxonomy in the initial test. Add only what the Tan Dun segments need.
+
+======================================================================
+4. JSON -> REVIEWED SEGMENT CSV WORKFLOW
+======================================================================
+
+A. JSON IS THE TIMESTAMP AUTHORITY
+
+Use Whisper JSON, not plain TXT, to determine segment timing.
+
+Each JSON utterance contains:
+- timestamps.from
+- timestamps.to
+- offsets.from
+- offsets.to
+- text
+
+Critical rule:
+
+Transcript times are relative to the chunk file.
+
+Original-video time equals:
+
+absolute_start_seconds = chunk_start_seconds + JSON_relative_start_seconds
+absolute_end_seconds = chunk_start_seconds + JSON_relative_end_seconds
+
+Example:
+
+File:
+0f6n1HMHI6g__chunk_0003__000600-000801.json
+
+JSON utterance:
+00:00:20,820 to 00:00:29,660
+
+Absolute original-video range:
+620.820 seconds to 629.660 seconds
+
+B. EXTRACT EVIDENCE ROWS
+
+Run the JSON extraction script across transcript folders.
+
+Expected output:
+- per-video utterance CSV
+- one combined utterance CSV
+- one review template CSV
+- a manifest
+
+The raw output is evidence only.
+
+Do not import individual utterances into the public segment table.
+
+C. CREATE REVIEWED SEGMENTS
+
+A reviewed segment may combine multiple adjacent utterances.
+
+For each candidate:
+
+1. Read the JSON evidence.
+2. Calculate exact original-video seconds.
+3. Watch the original YouTube video at that range.
+4. Adjust segment boundaries to avoid mid-sentence starts/ends.
+5. Confirm the physical and visual explanation matches the transcript.
+6. Write one concise learner-facing segment record.
+7. Add only canonical tags.
+8. Add a concrete "Use when" condition.
+9. Add a short teaching summary.
+10. Mark the row manual_reviewed only after actual review.
+
+D. TAN DUN-STYLE CSV CONTRACT
+
+Use one row per reviewed instructional segment.
+
+Required columns:
+
+video_id
+video_title
+full_url
+segment_key
+segment_title
+timestamp
+start_url
+start_seconds
+end_seconds
+duration_seconds
+technique_tags
+tag_slugs
+use_when
+teaching_summary
+problem_statement
+common_failure_mode
+suggested_experiment
+reflection_prompt
+review_status
+quality_score
+source_type
+transcript_source_file
+notes
+
+Required identities:
+
+video_id:
+0f6n1HMHI6g
+
+segment_key:
+0f6n1HMHI6g:360:381
+
+start_url:
+https://www.youtube.com/watch?v=0f6n1HMHI6g&t=360s
+
+E. EXAMPLE REVIEWED CSV ROW
+
+video_id:
+0f6n1HMHI6g
+
+video_title:
+Tan Dun YouTube Symphony Audition Walkthrough
+
+full_url:
+https://www.youtube.com/watch?v=0f6n1HMHI6g
+
+segment_key:
+0f6n1HMHI6g:360:381
+
+segment_title:
+Bow-Drop / Ricochet — Arm Weight, Not Passive Dropping
+
+timestamp:
+6:00–6:21
+
+start_url:
+https://www.youtube.com/watch?v=0f6n1HMHI6g&t=360s
+
+start_seconds:
+360
+
+end_seconds:
+381
+
+duration_seconds:
+21
+
+technique_tags:
+ricochet, bow-drop, bow relaxation, arm weight, sound production
+
+tag_slugs:
+ricochet|bow-drop|bow-relaxation|arm-weight
+
+use_when:
+the player is dropping the bow without enough arm-weight transfer to produce a full stroke
+
+teaching_summary:
+Use relaxed arm weight rather than merely letting the bow fall. Let the arm travel with the stroke so contact produces sound instead of a weak, passive drop.
+
+problem_statement:
+passive bow drop produces no speaking core
+
+common_failure_mode:
+treating the motion as a loose drop instead of a weighted arm stroke
+
+suggested_experiment:
+Compare three passive drops against three drops in which the relaxed arm travels with the bow. Listen for immediate speaking core without gripping.
+
+reflection_prompt:
+Did the stroke speak immediately without hand tension or forced pressure?
+
+review_status:
+manual_reviewed
+
+quality_score:
+0.950
+
+source_type:
+local_whisper_json_plus_manual_video_review
+
+transcript_source_file:
+0f6n1HMHI6g__chunk_0003__000600-000801.json
+
+notes:
+Timing checked against JSON and original YouTube video.
+
+======================================================================
+5. NEON POSTGRES MVP SCHEMA
+======================================================================
+
+Use only the tables necessary for public tag search and segment playback.
+
+Required tables:
+
+tag_groups
+tags
+tag_aliases
+videos
+segments
+segment_tags
+
+Optional for MVP:
+tag_relations
+tag_search_events
+
+A. tag_groups
+
+Purpose:
+Browsable category labels.
+
+Fields:
+id
+slug
+label
+display_order
+is_public
+
+Initial rows:
+
+bowing-and-contact
+left-hand-and-intonation
+articulation-and-strokes
+ensemble-and-audition
+
+B. tags
+
+Purpose:
+Canonical concepts shown to users.
+
+Fields:
+id
+group_id
+slug
+label
+description
+learner_prompt
+sort_order
+is_public
+is_active
+
+Example:
+
+slug:
+ricochet
+
+label:
+Ricochet
+
+description:
+A controlled rebound stroke in which the bow naturally bounces after a prepared contact.
+
+learner_prompt:
+My bow bounces or I cannot control the rebound.
+
+C. tag_aliases
+
+Purpose:
+Translate natural learner language into canonical tags.
+
+Fields:
+id
+tag_id
+alias
+normalized_alias
+alias_kind
+priority
+is_public
+
+Example:
+
+tag:
+ricochet
+
+alias:
+bow bounce
+
+alias_kind:
+learner_phrase
+
+priority:
+95
+
+D. videos
+
+Purpose:
+One record per parent YouTube source.
+
+Fields:
+id
+youtube_video_id
+title
+canonical_url
+duration_seconds
+channel_name
+is_public
+
+E. segments
+
+Purpose:
+One record per reviewed timestamp clip.
+
+Fields:
+id
+video_id
+start_seconds
+end_seconds
+segment_key
+segment_title
+use_when
+teaching_summary
+suggested_experiment
+reflection_prompt
+review_status
+is_public
+quality_score
+
+Constraint:
+
+unique(video_id, start_seconds, end_seconds)
+
+F. segment_tags
+
+Purpose:
+Many-to-many tag assignments.
+
+Fields:
+segment_id
+tag_id
+relevance
+is_primary
+assigned_by
+
+One segment can have multiple tags.
+
+Example:
+
+Primary:
+ricochet
+
+Secondary:
+bow-relaxation
+arm-weight
+bow-drop
+
+======================================================================
+6. DATABASE MIGRATIONS
+======================================================================
+
+Create a migrations folder in the existing Next.js repository:
+
+db/migrations/
+
+Use this minimum migration sequence:
+
+001_extensions.sql
+- create extension pgcrypto
+- create extension pg_trgm
+
+002_taxonomy.sql
+- tag_groups
+- tags
+- tag_aliases
+- trigram indexes
+
+003_videos_and_segments.sql
+- videos
+- segments
+- segment_tags
+- required uniqueness and public-status indexes
+
+004_public_search.sql
+- public_tag_directory view
+- search_public_tags() SQL function
+- public_segments_for_tag() SQL function
+
+005_seed_tan_dun.sql
+- initial tag groups
+- initial tags
+- aliases
+- one video record
+- 17 reviewed segment records
+- segment tag assignments
+
+Recommended indexing:
+
+- GIN trigram index on tags normalized label.
+- GIN trigram index on aliases normalized alias.
+- btree index on segment_tags(tag_id, segment_id).
+- btree index on segments(video_id, start_seconds).
+- partial public index for:
+  is_public = true
+  and review_status = 'manual_reviewed'
+
+Do not use a generic full-text transcript index for this MVP.
+Search tags and aliases first.
+The segment content should only appear after the user chooses a validated canonical concept.
+
+======================================================================
+7. DETERMINISTIC TAG SEARCH RULES
+======================================================================
+
+The tag typeahead should not search videos directly.
+
+It should search canonical tags and aliases in this order:
+
+1. Exact canonical label match.
+2. Exact approved alias match.
+3. Canonical prefix match.
+4. Alias prefix match.
+5. Trigram typo/fuzzy match.
+6. Clip count only as a small tie-breaker.
+
+Examples:
+
+Query:
+bow bounce
+
+Expected top result:
+Ricochet
+Matched alias: bow bounce
+
+Query:
+tense bow hand
+
+Expected top result:
+Bow relaxation
+Matched alias: tense bow hand
+
+Query:
+snap pizz
+
+Expected top result:
+Bartók pizzicato
+Matched alias: snap pizzicato
+
+The UI should expose why the tag was returned.
+That transparency is a feature.
+
+======================================================================
+8. NEXT.JS IMPLEMENTATION INSIDE BENCHANVIOLIN.COM
+======================================================================
+
+Because the website is already Next.js, add only a contained feature area.
+
+Recommended routes:
+
+app/
+  library/
+    page.tsx
+  library/
+    tags/
+      [slug]/
+        page.tsx
+  api/
+    tags/
+      search/
+        route.ts
+  api/
+    tags/
+      [slug]/
+        route.ts
+
+Recommended supporting files:
+
+components/
+  TagSearchInput.tsx
+  TagSearchResults.tsx
+  TagDirectory.tsx
+  SegmentCard.tsx
+  YouTubeSegmentEmbed.tsx
+
+lib/
+  db.ts
+  tags.ts
+  segments.ts
+  youtube.ts
+
+scripts/
+  import-tan-dun.ts
+  validate-tan-dun.ts
+
+A. ENVIRONMENT VARIABLES
+
+Add locally and in Vercel:
+
+DATABASE_URL=
+NEXT_PUBLIC_SITE_URL=https://benchanviolin.com
+
+DATABASE_URL must remain server-side only.
+
+B. DATABASE CLIENT
+
+Use Neon serverless Postgres or the project’s chosen Postgres client from server-side route handlers and server components.
+
+Never place the Neon URL in client-side code.
+
+C. SEARCH API
+
+Endpoint:
+
+GET /api/tags/search?q=bow+bounce
+
+Returns only tags:
+
+tag_id
+slug
+label
+group_label
+description
+learner_prompt
+clip_count
+match_type
+match_text
+
+D. TAG API
+
+Endpoint:
+
+GET /api/tags/ricochet
+
+Returns:
+
+tag metadata
+approved aliases
+reviewed segments
+each segment’s parent video metadata
+exact start seconds
+exact end seconds
+all canonical tags for the segment
+related tags if implemented
+
+E. EMBED URL GENERATION
+
+Use stored values.
+
+watch URL:
+
+https://www.youtube.com/watch?v=VIDEO_ID&t=START_SECONDSs
+
+embed URL:
+
+https://www.youtube.com/embed/VIDEO_ID?start=START_SECONDS
+
+Example:
+
+https://www.youtube.com/embed/0f6n1HMHI6g?start=360
+
+Do not hard-code URLs in components.
+Generate them from video ID and start seconds.
+
+======================================================================
+9. SEARCH PAGE UX
+======================================================================
+
+Route:
+
+/library
+
+Page purpose:
+Let a visitor identify a valid technique concept quickly, then choose a reviewed clip.
+
+A. EMPTY STATE
+
+Heading:
+
+What are you working on?
+
+Subtext:
+
+Search a technique, a problem, or the words you would use in practice.
+
+Suggested clickable examples:
+
+bow bounce
+tense bow hand
+string changes
+snap pizzicato
+orchestra balance
+
+Below the search bar:
+show all initial tags grouped by category with clip counts.
+
+Example:
+
+Articulation & Strokes
+Ricochet · 5 clips
+Bartók pizzicato · 4 clips
+Bow-drop · 3 clips
+
+B. TYPING STATE
+
+As the user types:
+- debounce requests modestly
+- call /api/tags/search
+- hide unrelated tag directory items
+- show top matching canonical tags
+- show match reason
+- retain keyboard selection
+- do not auto-open a video
+
+Example display:
+
+Ricochet
+matched “bow bounce”
+5 clips
+
+Bow relaxation
+related phrase match
+4 clips
+
+C. CLICKED TAG STATE
+
+When a tag is clicked:
+- navigate to /library/tags/ricochet
+or
+- update the page state and URL query parameter
+
+The tag page shows:
+
+Ricochet
+A controlled rebound stroke...
+
+Common phrases:
+bow bounce · bouncy bow · bow drop
+
+5 reviewed clips
+
+Then display segment cards.
+
+D. SEGMENT CARD
+
+Each card shows:
+
+Segment title
+Parent video title
+Timestamp
+Technique tags
+Use when
+Teaching summary
+
+Actions:
+
+Watch segment
+Open full video
+
+Do not overload the card with transcript text.
+
+E. WATCH SEGMENT BEHAVIOR
+
+On click:
+- render inline iframe or open a dedicated modal/card section
+- use the computed embed URL
+- start playback at exact start_seconds
+- keep full-video source link visible
+- show timestamp and segment title above player
+
+MVP note:
+YouTube embed start is reliable.
+End-time enforcement is optional and should not block launch.
+
+======================================================================
+10. DATA IMPORT
+======================================================================
+
+A. FIRST IMPORT
+
+Input:
+Tan Dun reviewed canonical CSV.
+
+Steps:
+
+1. Validate the CSV locally.
+2. Seed tag groups.
+3. Seed canonical tags.
+4. Seed aliases.
+5. Upsert parent video.
+6. Upsert segments using:
+   video_id + start_seconds + end_seconds
+7. Resolve tag_slugs to tag IDs.
+8. Insert or update segment_tags.
+9. Mark only manual_reviewed records public.
+10. Run validation after import.
+
+B. REQUIRED VALIDATION
+
+Before a segment can become public:
+
+- video_id is valid.
+- start_seconds >= 0.
+- end_seconds > start_seconds.
+- start_seconds is within known video duration.
+- segment key is unique.
+- parent video exists.
+- at least one tag slug resolves.
+- review_status = manual_reviewed.
+- is_public = true only when manually reviewed.
+- title, use_when, and teaching_summary are non-empty.
+- generated start URL resolves from stored video ID and start seconds.
+
+C. IMPORT SCRIPT OUTPUT
+
+The import script should print:
+
+videos upserted
+segments inserted
+segments updated
+tag assignments inserted
+unknown tag slugs
+invalid rows
+duplicate segment keys
+public segment count
+
+Fail the import if unknown tag slugs or invalid public rows exist.
+
+======================================================================
+11. END-TO-END TEST CHECKLIST
+======================================================================
+
+Test 1: JSON timing integrity
+
+- Open a Tan Dun JSON chunk.
+- Confirm source chunk start from its filename.
+- Confirm one transcript utterance’s absolute time.
+- Confirm reviewed segment start/end seconds lie inside the original video duration.
+- Open the YouTube start URL manually.
+
+Pass condition:
+The spoken / demonstrated technique appears where the CSV says it does.
+
+Test 2: Neon import
+
+- Run all migrations.
+- Run Tan Dun seed/import.
+- Confirm one row in videos.
+- Confirm 17 rows in segments.
+- Confirm all segment tags resolve.
+- Confirm public_tag_directory clip counts are correct.
+
+Pass condition:
+Database rows, tags, aliases, and counts match the reviewed CSV.
+
+Test 3: API tag search
+
+Query:
+/api/tags/search?q=bow%20bounce
+
+Pass condition:
+Ricochet appears first with alias match reason.
+
+Query:
+/api/tags/search?q=snap%20pizz
+
+Pass condition:
+Bartók pizzicato appears.
+
+Query:
+/api/tags/search?q=notarealtechnique
+
+Pass condition:
+Empty result with valid JSON response.
+
+Test 4: Tag page
+
+Open:
+/library/tags/ricochet
+
+Pass condition:
+- correct title
+- aliases visible
+- reviewed clips visible
+- clip count correct
+- no draft/unreviewed content visible
+
+Test 5: YouTube embed
+
+Click:
+Bow-Drop / Ricochet — Arm Weight, Not Passive Dropping
+
+Pass condition:
+Embed begins at 360 seconds.
+The video title and full source link are visible.
+The segment card’s tags and summary agree with the watched content.
+
+Test 6: Mobile
+
+On phone:
+- search input is usable
+- tag chips wrap appropriately
+- embed is responsive
+- no horizontal overflow
+- source video link still works
+
+======================================================================
+12. MVP DEFINITION OF DONE
+======================================================================
+
+The MVP is done when all of the following are true:
+
+1. Existing Next.js BenChanViolin.com contains a public /library page.
+2. Neon stores the Tan Dun source video, tags, aliases, and 17 reviewed segments.
+3. A visitor can type a known learner phrase and see a matching canonical tag.
+4. A visitor can click the canonical tag and view only manual-reviewed clips.
+5. Each clip has a title, exact timestamp, tags, use condition, teaching summary, and source link.
+6. Clicking Watch segment embeds YouTube at the exact stored start second.
+7. The system does not require an LLM.
+8. One import script can re-run without creating duplicate video or segment records.
+9. The site can add a second video later by following the same JSON -> CSV -> import workflow.
+10. The implementation is small enough that failure points are inspectable: JSON, CSV, database row, tag match, endpoint, card, embed.
+
+======================================================================
+13. NEXT STEP AFTER THE MVP WORKS
+======================================================================
+
+Only after the end-to-end loop is reliable:
+
+- import 5 additional high-value videos
+- add more tags only when the reviewed content requires them
+- improve aliases from observed search phrasing
+- add multi-tag filtering
+- add simple no-result logging
+- decide whether the tag directory needs related/prerequisite links
+
+Do not process the entire archive until the Tan Dun test proves:
+- timestamps hold
+- the import shape is stable
+- tags are understandable
+- users can find clips quickly
+- YouTube embed behavior is satisfactory
+
+END OF MVP PLAN
