@@ -1,0 +1,50 @@
+import StandPartnerApp from "@/components/StandPartnerApp";
+
+export const metadata = {
+  title: "Stand Partner — Ben Chan Violin",
+  description: "Stand Partner — a private, deterministic violin resource router.",
+};
+
+export default function StandPartnerPage() {
+  return (
+    <div className="stand-page">
+      <a className="skip" href="#app">
+        Skip to Stand Partner
+      </a>
+      <header className="site-header">
+        <a className="brand" href="./">
+          <b>Ben Chan Violin</b>
+          <small>Stand Partner</small>
+        </a>
+        <nav className="nav" aria-label="Primary">
+          <a href="archive.html">Archive</a>
+          <a href="privacy.html">Privacy</a>
+        </nav>
+      </header>
+      <main>
+        <section className="stand-intro" aria-labelledby="stand-page-title">
+          <div>
+            <p className="kicker">Private field guide</p>
+            <h1 id="stand-page-title">Stand Partner</h1>
+            <p className="lede">Turn to the right page for violin.</p>
+            <p className="meta-line">No account. No AI. Routing choices are not stored.</p>
+          </div>
+          <figure className="media-slot compact">
+            <div aria-hidden="true">
+              <span>Image pending</span>
+              <small>Teaching still</small>
+            </div>
+          </figure>
+        </section>
+        <section id="app" aria-live="polite">
+          <StandPartnerApp />
+        </section>
+        <p className="archive-escape">
+          <a className="text-link" href="archive.html">
+            Browse Ben’s teaching archive →
+          </a>
+        </p>
+      </main>
+    </div>
+  );
+}

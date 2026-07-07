@@ -1,50 +1,58 @@
-# Stand Partner — Free First Turn
+# BenChanViolin — Next.js
 
-A deliberately small static prototype for **BenChanViolin.com**.
+A small Next.js site for **BenChanViolin.com**, optimized for Vercel deployment and ready for Neon Postgres when server-side data is introduced.
 
 > **Stand Partner: Turn to the right page for violin.**
 
-It gives a visitor one deterministic route into a selected YouTube clip or teaching page. It is a privacy-first, no-account, no-memory counterpart to the future Studio app.
+The public behavior remains deliberately small: a visitor gets one deterministic route into a selected YouTube clip or teaching page. It is a privacy-first, no-account, no-memory counterpart to the future Studio app.
 
-## What this MVP does
+## What This Site Does
 
-- Mobile-first static homepage plus a dedicated Stand Partner router page.
-- Archive, privacy, and terms pages as static documents.
-- Optional 4-step orientation: entry point, level, immediate need, available time.
-- One primary recommendation, with optional YouTube start timestamps once real destinations are attached.
-- “This helped,” “Not my issue,” and “Turn again” paths.
-- No framework, build process, API, database, account, cookies, analytics, localStorage, or AI calls.
-- Local-only `tools/clip-builder.html` to make one clip metadata record at a time. It is excluded from the GitHub Pages build.
+- Next.js App Router pages for the homepage, archive, Stand Partner, privacy, terms, and clip builder.
+- Legacy `.html` URLs are preserved with rewrites in `next.config.ts`.
+- The Stand Partner router is a browser-only React client component.
+- Routing choices remain local React state only. They are not stored.
+- No account, cookies, analytics, localStorage, AI API, uploads, or free-text personal input.
+- Neon is available through `lib/db.ts` for future server-side features that use `DATABASE_URL`.
 
-## What it does NOT do
+## What It Does Not Do
 
 - No diagnosis, teacher replacement, health/injury advice, uploads, recordings, or user memory.
 - No free-text personal input.
 - No full personal playbook or Studio implementation.
 - No unpublished taxonomy, prompts, private research, analytics, source notes, or user feedback.
 
-## Setup
+## Development
 
-1. Edit the `ROUTES` array at the top of `app.js`.
-2. Add a real YouTube `videoId` to each route before treating it as a published destination.
-3. Start with 10–20 routes, not the full archive.
-4. Open `tools/clip-builder.html` locally, generate a record, inspect it, then paste it into `ROUTES` manually.
-5. Replace the placeholder image slots with authentic Ben Chan teaching stills, score/stand details, or archive screenshots.
+```bash
+npm install
+npm run dev
+npm run build
+```
 
-## GitHub Pages
+Edit routes in `components/StandPartnerApp.tsx`.
 
-1. Create a **public** GitHub repository.
-2. Upload the contents of this folder to its root.
-3. GitHub: **Settings → Pages → Deploy from a branch → main → / (root)**.
-4. The public GitHub URL in `index.html` points to `benchantech/stand-partner-first-turn`.
-5. `_config.yml` excludes the maintainer-only `tools/` folder from the published Pages site.
-6. Test on a phone before linking from BenChanViolin.com.
+Use `/tools/clip-builder` or `/tools/clip-builder.html` locally to generate one clip metadata record, inspect it, then paste it into `ROUTES` manually.
+
+## Vercel
+
+This repo is a Vercel Next.js project. Deploy from the repo root:
+
+```bash
+vercel deploy --prod --yes
+```
+
+`vercel.json` declares the framework. Cache headers and legacy URL rewrites live in `next.config.ts`.
+
+## Neon Postgres
+
+Set `DATABASE_URL` in Vercel when a server-side feature needs Neon. Use `getSql()` from `lib/db.ts` inside server-only code. Do not introduce database writes for Stand Partner routing unless the privacy policy and product posture are intentionally revised.
 
 ## Suggested public trust claim
 
 > **This free guide is public and inspectable.** Its routing happens locally in your browser. It does not store your answers or use AI to make recommendations.
 
-Do not use that wording if you later add analytics, forms, cookies, server calls, or third-party scripts without revising `privacy.html`.
+Do not use that wording if you later add analytics, forms, cookies, server calls, database writes, or third-party scripts without revising the privacy page.
 
 ## Rollout
 
