@@ -53,17 +53,16 @@ export default function HomePage() {
         </section>
 
         <section className="method-bridge section" aria-labelledby="method-bridge-title">
-          <p className="kicker">Practice method</p>
-          <h2 id="method-bridge-title">
-            When practice gets unclear, inspect the method behind the next page turn.
-          </h2>
+          <p className="kicker">YY Method™ for Violin</p>
+          <h2 id="method-bridge-title">Stuck on the same passage again? There&apos;s a method for that.</h2>
           <p className="copy">
-            YY Method™ for Violin is the public framework for turning stuck practice moments into one small experiment,
-            a better teacher question, and a useful record of what changed.
+            YY Method™ for Violin turns stuck practice moments into one small experiment, a sharper teacher
+            question, and a record of what actually worked — free, and built for real practice sessions, not
+            perfect ones.
           </p>
           <div className="actions">
             <a className="btn secondary" href="https://yymethod.com/violin/" target="_blank" rel="noopener">
-              Inspect YY Method™ for Violin
+              Get the method, free →
             </a>
           </div>
         </section>
