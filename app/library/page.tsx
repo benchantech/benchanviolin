@@ -9,7 +9,14 @@ export const metadata = {
   description: "Search reviewed Ben Chan Violin technique clips by canonical tags and learner phrases.",
 };
 
-export default async function LibraryPage() {
+type LibraryPageProps = {
+  searchParams?: Promise<{ q?: string | string[] }>;
+};
+
+export default async function LibraryPage({ searchParams }: LibraryPageProps) {
+  const params = await searchParams;
+  const rawQuery = Array.isArray(params?.q) ? params?.q[0] : params?.q;
+  const initialQuery = rawQuery?.trim() ?? "";
   const tags = await getTagDirectory();
 
   return (
@@ -32,7 +39,7 @@ export default async function LibraryPage() {
           <p className="kicker">Reviewed clips</p>
           <h1>What are you working on?</h1>
           <p className="lede">Search a technique, a problem, or the words you would use in practice.</p>
-          <TagSearchInput />
+          <TagSearchInput initialQuery={initialQuery} />
         </section>
 
         <section className="section" aria-labelledby="directory-title">

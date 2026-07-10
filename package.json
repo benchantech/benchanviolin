@@ -10,7 +10,8 @@
     "db:migrate": "node scripts/run-migrations.mjs",
     "db:import:tan-dun": "node scripts/import-tan-dun.mjs",
     "db:setup:tan-dun": "npm run db:migrate && npm run db:import:tan-dun",
-    "validate:tan-dun": "node scripts/validate-tan-dun.mjs"
+    "validate:tan-dun": "node scripts/validate-tan-dun.mjs",
+    "export:library-search-urls": "node scripts/export-library-search-urls.mjs"
   },
   "dependencies": {
     "@neondatabase/serverless": "^1.0.1",

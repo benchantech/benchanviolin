@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 type Result = {
   result_type: "tag";
@@ -35,10 +35,12 @@ function matchReason(result: Result) {
   return `matched "${result.match_text}"`;
 }
 
-export function TagSearchInput() {
-  const [query, setQuery] = useState("");
+export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string }) {
+  const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [loading, setLoading] = useState(false);
+  const firstResultRef = useRef<HTMLAnchorElement | null>(null);
+  const shouldScrollToInitialResult = useRef(Boolean(initialQuery.trim()));
 
   const trimmedQuery = useMemo(() => query.trim(), [query]);
 
@@ -71,6 +73,15 @@ export function TagSearchInput() {
     };
   }, [trimmedQuery]);
 
+  useEffect(() => {
+    if (!shouldScrollToInitialResult.current || loading || results.length === 0) return;
+
+    shouldScrollToInitialResult.current = false;
+    window.requestAnimationFrame(() => {
+      firstResultRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
+    });
+  }, [loading, results.length]);
+
   return (
     <div className="tag-search" role="search">
       <label htmlFor="library-search">What are you working on?</label>
@@ -96,9 +107,14 @@ export function TagSearchInput() {
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
           {!loading && results.length === 0 ? <p className="fine-print">No matching tags or transcript context yet.</p> : null}
-          {results.map((result) => (
+          {results.map((result, index) => (
             result.result_type === "tag" ? (
-              <a className="search-result" key={result.slug} href={`/library/tags/${result.slug}`}>
+              <a
+                className="search-result"
+                key={result.slug}
+                href={`/library/tags/${result.slug}`}
+                ref={index === 0 ? firstResultRef : undefined}
+              >
                 <span>
                   <b>{result.label}</b>
                   <small>{matchReason(result)}</small>
@@ -106,7 +122,12 @@ export function TagSearchInput() {
                 <em>{result.clip_count} clips</em>
               </a>
             ) : (
-              <a className="search-result transcript-hit" key={result.segment_id} href={result.start_url}>
+              <a
+                className="search-result transcript-hit"
+                key={result.segment_id}
+                href={result.start_url}
+                ref={index === 0 ? firstResultRef : undefined}
+              >
                 <span>
                   <b>{result.segment_title}</b>
                   <small>
