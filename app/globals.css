@@ -775,8 +775,9 @@ input[type="email"]:focus {
 }
 
 .method-bridge h2 {
-  max-width: 15ch;
+  max-width: none;
   font-size: clamp(1.65rem, 6vw, 2.45rem);
+  line-height: 1.15;
 }
 
 .stand-callout {
