@@ -29,8 +29,8 @@
     BlinkMacSystemFont, "Segoe UI", sans-serif;
 
   /* Layout */
-  --page-max: 1120px;
-  --reading-max: 680px;
+  --page-max: 1280px;
+  --reading-max: 920px;
   --mobile-gutter: 20px;
   --desktop-gutter: 40px;
 
@@ -987,6 +987,10 @@ dialog {
 
   .section {
     padding-block: var(--space-10);
+  }
+
+  .library-page .section {
+    padding-block: var(--space-5) var(--space-6);
   }
 
   .hero {

@@ -7,4 +7,5 @@ Thumbs.db
 node_modules
 .next
 out
+output/
 neon-studio-exporter
