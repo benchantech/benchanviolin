@@ -1061,8 +1061,13 @@ dialog {
   }
 }
 
-.library-page h1 {
-  max-width: 14ch;
+.library-page h1,
+.library-page h2,
+.library-page .lede,
+.library-page .note,
+.tag-aliases,
+.segment-card .meta-line {
+  max-width: none;
 }
 
 .library-hero {
@@ -1211,10 +1216,6 @@ input[type="search"]:focus {
   gap: var(--space-4);
 }
 
-.tag-detail h1 {
-  max-width: 18ch;
-}
-
 .tag-aliases {
   margin: 0;
   color: var(--ink-soft);
@@ -1266,7 +1267,7 @@ input[type="search"]:focus {
 }
 
 .segment-card h2 {
-  max-width: 28ch;
+  max-width: none;
   font-family: var(--font-display);
   font-size: clamp(1.35rem, 3vw, 2rem);
   line-height: 1.08;
