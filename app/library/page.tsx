@@ -37,7 +37,6 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       <main id="main" className="library-page">
         <section className="section library-hero">
           <p className="kicker">Reviewed clips</p>
-          <h1>What are you working on?</h1>
           <p className="lede">Search a technique, a problem, or the words you would use in practice.</p>
           <TagSearchInput initialQuery={initialQuery} />
         </section>

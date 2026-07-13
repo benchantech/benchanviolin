@@ -1072,14 +1072,14 @@ dialog {
 
 .library-hero {
   display: grid;
-  gap: var(--space-5);
+  gap: var(--space-3);
 }
 
 .tag-search {
   width: min(100%, 760px);
   display: grid;
   gap: var(--space-3);
-  margin-top: var(--space-3);
+  margin-top: 0;
 }
 
 .tag-search label {
