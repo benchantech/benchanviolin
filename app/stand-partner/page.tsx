@@ -1,4 +1,5 @@
 import StandPartnerApp from "@/components/StandPartnerApp";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata = {
   title: "Stand Partner — Ben Chan Violin",
@@ -11,16 +12,7 @@ export default function StandPartnerPage() {
       <a className="skip" href="#app">
         Skip to Stand Partner
       </a>
-      <header className="site-header">
-        <a className="brand" href="./">
-          <b>Ben Chan Violin</b>
-          <small>Stand Partner</small>
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="https://youtube.com/benchanviolin">YouTube</a>
-          <a href="privacy.html">Privacy</a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main>
         <section className="stand-intro" aria-labelledby="stand-page-title">
           <div>

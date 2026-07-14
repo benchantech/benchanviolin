@@ -1,4 +1,5 @@
 import ClipBuilder from "@/components/ClipBuilder";
+import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata = {
   title: "Clip Builder",
@@ -13,12 +14,7 @@ export default function ClipBuilderPage() {
         textarea{min-height:70px}
         pre{white-space:pre-wrap;background:#182236;color:#fff;padding:14px;border-radius:10px;overflow:auto}
       `}</style>
-      <header>
-        <a className="brand" href="../">
-          <b>Ben Chan Violin</b>
-          <small>Local clip metadata builder</small>
-        </a>
-      </header>
+      <SiteHeader />
       <main>
         <article className="card">
           <p className="eyebrow">Maintainer tool · local only</p>

@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { SegmentFilter } from "@/components/SegmentFilter";
+import { SiteHeader } from "@/components/SiteHeader";
 import { getSegmentsForTag } from "@/lib/segments";
 import { getTagDetail } from "@/lib/tags";
 
@@ -32,16 +33,7 @@ export default async function TagPage({ params }: Props) {
       <a className="skip" href="#main">
         Skip to clips
       </a>
-      <header className="site-header">
-        <a className="brand" href="/">
-          <b>Ben Chan Violin</b>
-          <small>Teaching archive</small>
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="/library">Library</a>
-          <a href="https://youtube.com/benchanviolin">YouTube</a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main id="main" className="library-page">
         <section className="section tag-detail">
           <p className="kicker">{tag.group_label}</p>

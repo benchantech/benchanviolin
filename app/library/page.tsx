@@ -1,5 +1,6 @@
 import { TagDirectory } from "@/components/TagDirectory";
 import { TagSearchInput } from "@/components/TagSearchInput";
+import { SiteHeader } from "@/components/SiteHeader";
 import { getTagDirectory } from "@/lib/tags";
 
 export const dynamic = "force-dynamic";
@@ -24,16 +25,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       <a className="skip" href="#main">
         Skip to library
       </a>
-      <header className="site-header">
-        <a className="brand" href="/">
-          <b>Ben Chan Violin</b>
-          <small>Teaching archive</small>
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="https://youtube.com/benchanviolin">YouTube</a>
-          <a href="/stand-partner">Stand Partner</a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main id="main" className="library-page">
         <section className="section library-hero">
           <p className="kicker">Reviewed clips</p>

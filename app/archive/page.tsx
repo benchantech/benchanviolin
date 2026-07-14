@@ -1,3 +1,5 @@
+import { SiteHeader } from "@/components/SiteHeader";
+
 export const metadata = {
   title: "Teaching Archive — Ben Chan Violin",
   description: "Ben Chan Violin teaching archive index.",
@@ -9,17 +11,7 @@ export default function ArchivePage() {
       <a className="skip" href="#main">
         Skip to archive
       </a>
-      <header className="site-header">
-        <a className="brand" href="./">
-          <b>Ben Chan Violin</b>
-          <small>Teaching archive</small>
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="/library">Library</a>
-          <a href="stand-partner.html">Stand Partner</a>
-          <a href="privacy.html">Privacy</a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main id="main">
         <section className="section">
           <p className="kicker">Reference shelf</p>

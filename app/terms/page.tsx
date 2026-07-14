@@ -1,3 +1,5 @@
+import { SiteHeader } from "@/components/SiteHeader";
+
 export const metadata = {
   title: "Terms — Ben Chan Violin",
 };
@@ -5,16 +7,7 @@ export const metadata = {
 export default function TermsPage() {
   return (
     <div className="text-page">
-      <header className="site-header">
-        <a className="brand" href="./">
-          <b>Ben Chan Violin</b>
-          <small>Terms</small>
-        </a>
-        <nav className="nav" aria-label="Primary">
-          <a href="https://youtube.com/benchanviolin">YouTube</a>
-          <a href="privacy.html">Privacy</a>
-        </nav>
-      </header>
+      <SiteHeader />
       <main>
         <article className="card">
           <p className="eyebrow">Terms</p>
