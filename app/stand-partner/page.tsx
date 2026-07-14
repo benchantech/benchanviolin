@@ -17,7 +17,7 @@ export default function StandPartnerPage() {
           <small>Stand Partner</small>
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="archive.html">Archive</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
           <a href="privacy.html">Privacy</a>
         </nav>
       </header>
@@ -40,8 +40,8 @@ export default function StandPartnerPage() {
           <StandPartnerApp />
         </section>
         <p className="archive-escape">
-          <a className="text-link" href="archive.html">
-            Browse Ben’s teaching archive →
+          <a className="text-link" href="https://youtube.com/benchanviolin">
+            Watch Ben on YouTube →
           </a>
         </p>
       </main>

@@ -14,7 +14,7 @@ export default function HomePage() {
       <main id="main">
         <section className="hero section">
           <div>
-            <p className="kicker">Archive / Adult violin study</p>
+            <p className="kicker">YouTube / Adult violin study</p>
             <h1>Twenty Years of Violin Online.</h1>
             <p className="lede">
               A working archive of ideas, videos, and useful starting points for people trying to keep music in their
@@ -25,7 +25,7 @@ export default function HomePage() {
                 Search reviewed clips
               </a>
               <a className="btn" href="https://youtube.com/benchanviolin" target="_blank" rel="noopener">
-                Browse teaching archive
+                Watch on YouTube
               </a>
             </div>
             <p className="note">Busy life? Join the club — don&apos;t forget your violin.</p>
@@ -70,7 +70,7 @@ export default function HomePage() {
 
       <footer className="site-footer" id="subscribe">
         <section aria-labelledby="subscribe-title">
-          <h2 id="subscribe-title">ARCHIVE / WRITING</h2>
+          <h2 id="subscribe-title">YOUTUBE / WRITING</h2>
           <p className="copy">Useful ideas for people trying to keep music in their lives.</p>
           <p>
             <a className="btn footer-cta" href="https://benchanviolin.substack.com" target="_blank" rel="noopener">

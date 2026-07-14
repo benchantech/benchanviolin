@@ -11,7 +11,7 @@ export default function TermsPage() {
           <small>Terms</small>
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="archive.html">Archive</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
           <a href="privacy.html">Privacy</a>
         </nav>
       </header>

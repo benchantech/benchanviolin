@@ -39,7 +39,7 @@ export default async function TagPage({ params }: Props) {
         </a>
         <nav className="nav" aria-label="Primary">
           <a href="/library">Library</a>
-          <a href="/archive">Archive</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
         </nav>
       </header>
       <main id="main" className="library-page">

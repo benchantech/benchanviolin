@@ -11,7 +11,7 @@ export default function PrivacyPage() {
           <small>Privacy</small>
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="archive.html">Archive</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
           <a href="stand-partner.html">Stand Partner</a>
         </nav>
       </header>

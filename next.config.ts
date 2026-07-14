@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  async redirects() {
+    return [
+      { source: "/archive", destination: "https://youtube.com/benchanviolin", permanent: false },
+      { source: "/archive.html", destination: "https://youtube.com/benchanviolin", permanent: false },
+    ];
+  },
   async headers() {
     return [
       {
@@ -34,7 +40,6 @@ const nextConfig: NextConfig = {
   },
   async rewrites() {
     return [
-      { source: "/archive.html", destination: "/archive" },
       { source: "/library.html", destination: "/library" },
       { source: "/q=:q", destination: "/library?q=:q" },
       { source: "/stand-partner.html", destination: "/stand-partner" },

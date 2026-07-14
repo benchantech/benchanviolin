@@ -30,7 +30,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
           <small>Teaching archive</small>
         </a>
         <nav className="nav" aria-label="Primary">
-          <a href="/archive">Archive</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
           <a href="/stand-partner">Stand Partner</a>
         </nav>
       </header>
