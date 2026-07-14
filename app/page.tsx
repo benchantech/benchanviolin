@@ -14,7 +14,7 @@ export default function HomePage() {
       <main id="main">
         <section className="hero section">
           <div>
-            <p className="kicker">YouTube / Adult violin study</p>
+            <p className="kicker">Adult violin study</p>
             <h1>Twenty Years of Violin Online.</h1>
             <p className="lede">
               A working archive of ideas, videos, and useful starting points for people trying to keep music in their
