@@ -44,7 +44,7 @@ No LLM, embeddings, user accounts, personalized routing, or bulk archive process
 
 Do not build:
 
-- YY Method pages or routing.
+- YY Method™ pages or routing.
 - Violin Stand Partner integration.
 - User profiles.
 - Practice memory.
