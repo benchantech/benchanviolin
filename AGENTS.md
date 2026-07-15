@@ -18,3 +18,7 @@ For every deploy that modifies JavaScript files (`.js`, `.cjs`, or `.mjs`):
 - Run `npm run js:minify` after JavaScript changes.
 - Run `npm run js:deploy-check` before committing or deploying JavaScript changes.
 - `npm run js:cache-hints:check` enforces numeric `?v=` cache hints for local JavaScript asset URLs outside Next's generated `/_next/` bundles.
+
+## Local Testing Cache Rule
+
+- When testing any code change locally, restart the dev server before asking the user to verify it. The local browser/dev stack can serve stale generated JavaScript chunks, including `331.js`, so a running `next dev` session is not a reliable proof that the newest code is loaded.

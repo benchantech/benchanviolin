@@ -221,7 +221,7 @@ export default function StandPartnerApp() {
         <p className="helper">
           Choose the closest starting point. The same choices lead to the same route, and routing choices are not stored.
         </p>
-        <p className="meta-line">No account. No AI. Routing choices are not stored.</p>
+        <p className="meta-line">No account. No AI. Routing choices stay in this browser.</p>
         <ChoiceList
           items={E}
           onChoose={(value) => {

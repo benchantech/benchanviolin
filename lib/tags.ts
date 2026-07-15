@@ -38,7 +38,7 @@ export type TagDetail = TagDirectoryItem & {
 };
 
 export async function searchLibrary(query: string): Promise<LibrarySearchResult[]> {
-  const sql = getSql();
+  const sql = await getSql();
   return (await sql.query(
     `
       with q as (
@@ -228,7 +228,7 @@ export async function searchTags(query: string): Promise<TagSearchResult[]> {
 }
 
 export async function getTagDirectory(): Promise<TagDirectoryItem[]> {
-  const sql = getSql();
+  const sql = await getSql();
   return (await sql.query(`
     select
       t.id as tag_id,
@@ -251,7 +251,7 @@ export async function getTagDirectory(): Promise<TagDirectoryItem[]> {
 }
 
 export async function getTagDetail(slug: string): Promise<TagDetail | null> {
-  const sql = getSql();
+  const sql = await getSql();
   const rows = (await sql.query(
     `
       with tag_counts as (

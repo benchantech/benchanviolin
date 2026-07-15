@@ -1,4 +1,5 @@
 import StandPartnerApp from "@/components/StandPartnerApp";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 
 export const metadata = {
@@ -19,7 +20,7 @@ export default function StandPartnerPage() {
             <p className="kicker">Private field guide</p>
             <h1 id="stand-page-title">Stand Partner</h1>
             <p className="lede">Turn to the right page for violin.</p>
-            <p className="meta-line">No account. No AI. Routing choices are not stored.</p>
+            <p className="meta-line">No account. No AI. Routing choices stay in this browser.</p>
           </div>
           <figure className="media-slot compact">
             <div aria-hidden="true">
@@ -37,6 +38,7 @@ export default function StandPartnerPage() {
           </a>
         </p>
       </main>
+      <SiteFooter />
     </div>
   );
 }

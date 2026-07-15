@@ -8,11 +8,13 @@ The public behavior remains deliberately small: a visitor gets one deterministic
 
 ## What This Site Does
 
-- Next.js App Router pages for the homepage, archive, Stand Partner, privacy, terms, and clip builder.
+- Next.js App Router pages for the homepage, library, archive, Stand Partner, legal pages, and clip builder.
 - Legacy `.html` URLs are preserved with rewrites in `next.config.ts`.
 - The Stand Partner router is a browser-only React client component.
 - Routing choices remain local React state only. They are not stored.
-- No account, cookies, analytics, localStorage, AI API, uploads, or free-text personal input.
+- No account, AI API, uploads, or free-text personal input.
+- Browser storage is limited to the visitor's analytics consent choice.
+- GA4 measures aggregate page and library behavior with normalized, length-limited search terms.
 - Neon is available through `lib/db.ts` for future server-side features that use `DATABASE_URL`.
 
 ## What It Does Not Do
@@ -20,7 +22,7 @@ The public behavior remains deliberately small: a visitor gets one deterministic
 - No diagnosis, teacher replacement, health/injury advice, uploads, recordings, or user memory.
 - No free-text personal input.
 - No full personal playbook or Studio implementation.
-- No unpublished taxonomy, prompts, private research, analytics, source notes, or user feedback.
+- No unpublished taxonomy, prompts, private research, analytics credentials, source notes, or user feedback.
 
 ## Development
 
@@ -50,9 +52,9 @@ Set `DATABASE_URL` in Vercel when a server-side feature needs Neon. Use `getSql(
 
 ## Suggested public trust claim
 
-> **This free guide is public and inspectable.** Its routing happens locally in your browser. It does not store your answers or use AI to make recommendations.
+> **This free guide is public and inspectable.** Stand Partner routing happens locally in your browser. It does not use AI to make recommendations, and routing choices are not stored by the app.
 
-Do not use that wording if you later add analytics, forms, cookies, server calls, database writes, or third-party scripts without revising the privacy page.
+Do not use that wording if you later add forms, accounts, server-side routing writes, database writes, or additional third-party scripts without revising the privacy page.
 
 ## Rollout
 

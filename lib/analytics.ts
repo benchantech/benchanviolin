@@ -32,7 +32,11 @@ const phonePattern = /(?:\+?\d[\s().-]*){7,}/;
 
 declare global {
   interface Window {
-    gtag?: (command: "event", eventName: string, params?: Record<string, string | number>) => void;
+    gtag?: (
+      command: "event" | "consent",
+      eventName: string,
+      params?: Record<string, string | number>,
+    ) => void;
   }
 }
 
@@ -50,6 +54,7 @@ export function isSafeAnalyticsSearchTerm(value: string) {
 }
 
 function cleanString(value: string) {
+  if (emailPattern.test(value) || phonePattern.test(value)) return undefined;
   const normalized = normalizeAnalyticsString(value);
   return normalized || undefined;
 }

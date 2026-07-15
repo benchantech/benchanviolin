@@ -1,11 +1,20 @@
-import { neon } from "@neondatabase/serverless";
+import type { neon as createNeonClient } from "@neondatabase/serverless";
 
-export function getSql() {
+type SqlClient = ReturnType<typeof createNeonClient>;
+
+let cachedSql: SqlClient | null = null;
+
+export async function getSql() {
   const connectionString = process.env.DATABASE_URL;
 
   if (!connectionString) {
     throw new Error("DATABASE_URL is not configured.");
   }
 
-  return neon(connectionString);
+  if (!cachedSql) {
+    const { neon } = await import("@neondatabase/serverless");
+    cachedSql = neon(connectionString);
+  }
+
+  return cachedSql;
 }

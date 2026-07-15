@@ -2,6 +2,7 @@ import Script from "next/script";
 
 export function GoogleAnalytics() {
   const measurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+  const requireConsent = process.env.NEXT_PUBLIC_GA_REQUIRE_CONSENT !== "false";
 
   if (!measurementId) return null;
 
@@ -14,9 +15,19 @@ export function GoogleAnalytics() {
           function gtag(){dataLayer.push(arguments);}
           window.gtag = window.gtag || gtag;
           gtag('js', new Date());
+          gtag('consent', 'default', {
+            analytics_storage: '${requireConsent ? "denied" : "granted"}',
+            ad_storage: 'denied',
+            ad_user_data: 'denied',
+            ad_personalization: 'denied',
+            wait_for_update: 500
+          });
+          gtag('set', 'ads_data_redaction', true);
           gtag('config', '${measurementId}', {
             anonymize_ip: true,
-            send_page_view: true
+            send_page_view: true,
+            allow_google_signals: false,
+            allow_ad_personalization_signals: false
           });
         `}
       </Script>

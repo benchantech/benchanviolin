@@ -25,7 +25,7 @@ type SegmentRow = Omit<Segment, "tags"> & {
 };
 
 export async function getSegmentsForTag(slug: string): Promise<Segment[]> {
-  const sql = getSql();
+  const sql = await getSql();
   const rows = (await sql.query(
     `
       select

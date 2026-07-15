@@ -1,5 +1,6 @@
 import { TagDirectory } from "@/components/TagDirectory";
 import { TagSearchInput } from "@/components/TagSearchInput";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getTagDirectory } from "@/lib/tags";
 
@@ -39,6 +40,7 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
           <TagDirectory tags={tags} />
         </section>
       </main>
+      <SiteFooter />
     </>
   );
 }

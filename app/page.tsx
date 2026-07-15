@@ -1,4 +1,5 @@
 import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 
 export default function HomePage() {
   return (
@@ -186,16 +187,7 @@ export default function HomePage() {
         </section>
       </main>
 
-      <footer className="site-footer" id="subscribe">
-        <section aria-labelledby="subscribe-title">
-          <h2 id="subscribe-title">Useful ideas for people trying to keep music in their lives.</h2>
-          <p>
-            <a className="btn footer-cta" href="https://benchanviolin.substack.com" target="_blank" rel="noopener">
-              Read on Substack
-            </a>
-          </p>
-        </section>
-      </footer>
+      <SiteFooter showSubscribe />
     </div>
   );
 }

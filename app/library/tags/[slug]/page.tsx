@@ -1,5 +1,6 @@
 import { notFound } from "next/navigation";
 import { SegmentFilter } from "@/components/SegmentFilter";
+import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getSegmentsForTag } from "@/lib/segments";
 import { getTagDetail } from "@/lib/tags";
@@ -50,6 +51,7 @@ export default async function TagPage({ params }: Props) {
 
         <SegmentFilter tagLabel={tag.label} segments={segments} />
       </main>
+      <SiteFooter />
     </>
   );
 }

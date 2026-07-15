@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ConsentBanner } from "@/components/ConsentBanner";
 import { GoogleAnalytics } from "@/components/GoogleAnalytics";
 import "./globals.css";
 
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body>
         {children}
         <GoogleAnalytics />
+        <ConsentBanner />
       </body>
     </html>
   );
