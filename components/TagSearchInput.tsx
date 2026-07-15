@@ -28,6 +28,14 @@ type SegmentResult = {
 type SearchResult = Result | SegmentResult;
 
 const examples = ["fifths", "bow bounce", "tense bow hand", "string changes", "snap pizzicato"];
+const minSearchLength = 2;
+const loadingDelayMs = 160;
+
+function debounceMsFor(query: string) {
+  if (query.length < 5) return 320;
+  if (query.length < 12) return 240;
+  return 180;
+}
 
 function matchReason(result: Result) {
   if (result.match_type.includes("alias")) return `matched "${result.match_text}"`;
@@ -41,37 +49,79 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
   const [loading, setLoading] = useState(false);
   const firstResultRef = useRef<HTMLAnchorElement | null>(null);
   const shouldScrollToInitialResult = useRef(Boolean(initialQuery.trim()));
+  const cacheRef = useRef(new Map<string, SearchResult[]>());
+  const inFlightRef = useRef(new Map<string, Promise<SearchResult[]>>());
+  const requestIdRef = useRef(0);
 
   const trimmedQuery = useMemo(() => query.trim(), [query]);
+  const normalizedQuery = useMemo(() => trimmedQuery.toLowerCase().replace(/\s+/g, " "), [trimmedQuery]);
 
   useEffect(() => {
-    if (!trimmedQuery) {
+    const requestId = requestIdRef.current + 1;
+    requestIdRef.current = requestId;
+
+    if (!normalizedQuery) {
       setResults([]);
       setLoading(false);
       return;
     }
 
+    if (normalizedQuery.length < minSearchLength) {
+      setResults([]);
+      setLoading(false);
+      return;
+    }
+
+    const cached = cacheRef.current.get(normalizedQuery);
+    if (cached) {
+      setResults(cached);
+      setLoading(false);
+      return;
+    }
+
     const controller = new AbortController();
-    const timer = window.setTimeout(async () => {
-      setLoading(true);
+    const loadingTimer = window.setTimeout(() => {
+      if (requestIdRef.current === requestId) setLoading(true);
+    }, loadingDelayMs);
+    const searchTimer = window.setTimeout(async () => {
       try {
-        const response = await fetch(`/api/tags/search?q=${encodeURIComponent(trimmedQuery)}`, {
-          signal: controller.signal,
-        });
-        const data = (await response.json()) as { results?: SearchResult[] };
-        setResults(Array.isArray(data.results) ? data.results : []);
+        let request = inFlightRef.current.get(normalizedQuery);
+
+        if (!request) {
+          request = fetch(`/api/tags/search?q=${encodeURIComponent(normalizedQuery)}`, {
+            signal: controller.signal,
+          })
+            .then(async (response) => {
+              if (!response.ok) return [];
+              const data = (await response.json()) as { results?: SearchResult[] };
+              return Array.isArray(data.results) ? data.results : [];
+            })
+            .finally(() => {
+              inFlightRef.current.delete(normalizedQuery);
+            });
+          inFlightRef.current.set(normalizedQuery, request);
+        }
+
+        const nextResults = await request;
+        cacheRef.current.set(normalizedQuery, nextResults);
+
+        if (requestIdRef.current === requestId) {
+          setResults(nextResults);
+        }
       } catch (error) {
-        if (!controller.signal.aborted) setResults([]);
+        if (!controller.signal.aborted && requestIdRef.current === requestId) setResults([]);
       } finally {
-        if (!controller.signal.aborted) setLoading(false);
+        window.clearTimeout(loadingTimer);
+        if (!controller.signal.aborted && requestIdRef.current === requestId) setLoading(false);
       }
-    }, 180);
+    }, debounceMsFor(normalizedQuery));
 
     return () => {
-      window.clearTimeout(timer);
+      window.clearTimeout(searchTimer);
+      window.clearTimeout(loadingTimer);
       controller.abort();
     };
-  }, [trimmedQuery]);
+  }, [normalizedQuery]);
 
   useEffect(() => {
     if (!shouldScrollToInitialResult.current || loading || results.length === 0) return;
@@ -106,7 +156,9 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
       {trimmedQuery ? (
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
-          {!loading && results.length === 0 ? <p className="fine-print">No matching tags or transcript context yet.</p> : null}
+          {!loading && normalizedQuery.length >= minSearchLength && results.length === 0 ? (
+            <p className="fine-print">No matching tags or transcript context yet.</p>
+          ) : null}
           {results.map((result, index) => (
             result.result_type === "tag" ? (
               <a
