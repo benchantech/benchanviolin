@@ -179,6 +179,16 @@ function listJsonFiles(dir) {
   return out.sort();
 }
 
+function transcriptDurationMap(files) {
+  const durations = new Map();
+  for (const file of files) {
+    const match = path.basename(file).match(/^(.+)__chunk_\d+__\d{6}-(\d{6})\.json$/);
+    if (!match) continue;
+    durations.set(match[1], Math.max(durations.get(match[1]) ?? 0, Number(match[2])));
+  }
+  return durations;
+}
+
 function routeKeywords(route) {
   return [
     route.label,
@@ -531,6 +541,22 @@ async function loadVideoDurations(client) {
   return new Map(rows.rows.map((row) => [row.youtube_video_id, Number(row.duration_seconds) || 0]));
 }
 
+async function syncVideoDurationsFromTranscripts(client, durations) {
+  let updated = 0;
+  for (const [youtubeId, duration] of durations) {
+    const result = await client.query(
+      `
+        update videos
+        set duration_seconds = greatest(duration_seconds, $2)
+        where youtube_video_id = $1 and duration_seconds < $2
+      `,
+      [youtubeId, duration],
+    );
+    updated += result.rowCount;
+  }
+  return updated;
+}
+
 function filterCandidatesWithinKnownDurations(candidates, durations) {
   return candidates.filter((candidate) => {
     const duration = durations.get(candidate.youtubeId) ?? 0;
@@ -576,6 +602,7 @@ function inferGapCandidates(file) {
 
 const allFiles = listJsonFiles(transcriptRoot);
 const files = maxFiles > 0 ? allFiles.slice(0, maxFiles) : allFiles;
+const transcriptDurations = transcriptDurationMap(files);
 const allCandidates = [];
 const allGaps = [];
 for (const [index, file] of files.entries()) {
@@ -604,6 +631,7 @@ if (mode !== "export") {
   const durationClient = new Client(databaseUrl);
   await durationClient.connect();
   try {
+    await syncVideoDurationsFromTranscripts(durationClient, transcriptDurations);
     const durations = await loadVideoDurations(durationClient);
     const filtered = filterCandidatesWithinKnownDurations(selected, durations);
     durationFilteredCount = selected.length - filtered.length;

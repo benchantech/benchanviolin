@@ -18,7 +18,8 @@
     "js:deploy-check": "npm run js:minify:check && npm run js:cache-hints:check",
     "analytics:searches": "node scripts/ga4-searches.mjs",
     "analytics:gaps": "node scripts/ga4-routing-gaps.mjs",
-    "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs"
+    "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs",
+    "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
