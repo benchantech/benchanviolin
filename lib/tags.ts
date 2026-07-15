@@ -213,6 +213,7 @@ export async function searchLibrary(query: string): Promise<LibrarySearchResult[
         cross join q
         where q.normalized <> ''
           and v.is_public = true
+          and (v.duration_seconds = 0 or s.end_seconds <= v.duration_seconds)
           and (
             (s.is_public = true and s.review_status = 'manual_reviewed')
             or s.owner_visible = true
@@ -266,6 +267,7 @@ export async function getRouteEvidence(routeId: string, routeNodeId?: string): P
       where s.route_id = $1
         and ($2::text is null or s.route_node_id = $2)
         and v.is_public = true
+        and (v.duration_seconds = 0 or s.end_seconds <= v.duration_seconds)
         and (
           (s.is_public = true and s.review_status = 'manual_reviewed')
           or s.owner_visible = true

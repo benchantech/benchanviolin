@@ -526,6 +526,18 @@ function selectCandidates(candidates) {
   });
 }
 
+async function loadVideoDurations(client) {
+  const rows = await client.query("select youtube_video_id, duration_seconds from videos");
+  return new Map(rows.rows.map((row) => [row.youtube_video_id, Number(row.duration_seconds) || 0]));
+}
+
+function filterCandidatesWithinKnownDurations(candidates, durations) {
+  return candidates.filter((candidate) => {
+    const duration = durations.get(candidate.youtubeId) ?? 0;
+    return duration <= 0 || candidate.endSeconds <= duration;
+  });
+}
+
 function inferGapCandidates(file) {
   const chunkStart = chunkStartFromFilename(file);
   const youtubeId = path.basename(file).split("__chunk_")[0];
@@ -573,7 +585,7 @@ for (const [index, file] of files.entries()) {
     console.log(`scanned transcript files: ${index + 1}/${files.length}; raw candidates: ${allCandidates.length}; gaps: ${allGaps.length}`);
   }
 }
-const selected = selectCandidates(allCandidates);
+let selected = selectCandidates(allCandidates);
 
 if (mode === "export") {
   writeCandidateBatches(selected);
@@ -585,6 +597,20 @@ if (mode === "export") {
   console.log(`selected candidates: ${selectedCandidatesPath}`);
   console.log(`batch directory: ${candidateBatchDir}`);
   process.exit(0);
+}
+
+let durationFilteredCount = 0;
+if (mode !== "export") {
+  const durationClient = new Client(databaseUrl);
+  await durationClient.connect();
+  try {
+    const durations = await loadVideoDurations(durationClient);
+    const filtered = filterCandidatesWithinKnownDurations(selected, durations);
+    durationFilteredCount = selected.length - filtered.length;
+    selected = filtered;
+  } finally {
+    await durationClient.end();
+  }
 }
 
 const enrichment = mode === "import"
@@ -841,6 +867,7 @@ try {
 console.log(`transcript files: ${files.length}`);
 console.log(`raw route candidates: ${allCandidates.length}`);
 console.log(`selected route candidates: ${selected.length}`);
+console.log(`duration-filtered route candidates: ${durationFilteredCount}`);
 console.log(`llm payloads generated: ${enrichment.generated}`);
 console.log(`llm payloads reused: ${enrichment.reused}`);
 console.log(`gap candidates: ${allGaps.length}`);

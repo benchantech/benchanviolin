@@ -1,8 +1,7 @@
-import { TagDirectory } from "@/components/TagDirectory";
+import { RouteDirectory } from "@/components/RouteDirectory";
 import { TagSearchInput } from "@/components/TagSearchInput";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { getTagDirectory } from "@/lib/tags";
 
 export const dynamic = "force-dynamic";
 
@@ -23,7 +22,6 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
   const initialQuery = rawQuery?.trim() ?? "";
   const initialRouteId = rawRoute?.trim() ?? "";
   const initialNodeId = rawNode?.trim() ?? "";
-  const tags = await getTagDirectory();
 
   return (
     <>
@@ -39,9 +37,9 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
         </section>
 
         <section className="section" aria-labelledby="directory-title">
-          <p className="section-number">01 / Concept index</p>
-          <h2 id="directory-title">Browse the older taxonomy.</h2>
-          <TagDirectory tags={tags} />
+          <p className="section-number">01 / Governed routes</p>
+          <h2 id="directory-title">Start from what you notice.</h2>
+          <RouteDirectory />
         </section>
       </main>
       <SiteFooter />
