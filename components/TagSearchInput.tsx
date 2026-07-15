@@ -266,28 +266,27 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
           {!loading && searchResponse?.route ? (
-            <a
-              className="search-result"
-              href={`/library?q=${encodeURIComponent(searchResponse.route.searchTerms[0] ?? normalizedQuery)}`}
-              onClick={() => {
-                const route = searchResponse.route;
-                if (!routingOutcome || !canTrackCurrentQuery || !route) return;
-                trackLibraryResultClick({
-                  search_term: normalizedQuery,
-                  routing_outcome: routingOutcome,
-                  route_id: route.routeId,
-                  result_type: "governed_route",
-                  result_id: route.routeId,
-                  result_position: 1,
-                });
-              }}
-            >
-              <span>
+            <div className="search-result governed-route">
+              <div>
                 <b>{searchResponse.route.label}</b>
-                <small>{searchResponse.route.summary}</small>
-              </span>
+                <p>{searchResponse.route.summary}</p>
+                <dl>
+                  <div>
+                    <dt>First action</dt>
+                    <dd>{searchResponse.route.firstAction}</dd>
+                  </div>
+                  <div>
+                    <dt>Check</dt>
+                    <dd>{searchResponse.route.verification}</dd>
+                  </div>
+                  <div>
+                    <dt>Stop when</dt>
+                    <dd>{searchResponse.route.stopCondition}</dd>
+                  </div>
+                </dl>
+              </div>
               <em>{searchResponse.kind?.toLowerCase()}</em>
-            </a>
+            </div>
           ) : null}
           {!loading && searchResponse?.branch ? (
             <div className="search-result transcript-hit">

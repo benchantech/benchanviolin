@@ -1201,6 +1201,51 @@ input[type="search"]:focus {
   background: var(--focus-wash);
 }
 
+.search-result.governed-route {
+  align-items: flex-start;
+  cursor: default;
+}
+
+.search-result.governed-route:hover {
+  border-color: var(--rule);
+  background: var(--paper-raised);
+  color: inherit;
+}
+
+.governed-route p {
+  margin: 6px 0 10px;
+  color: var(--ink-soft);
+  font-size: 0.86rem;
+  line-height: 1.45;
+}
+
+.governed-route dl {
+  display: grid;
+  gap: 8px;
+  margin: 0;
+}
+
+.governed-route dl div {
+  display: grid;
+  gap: 2px;
+}
+
+.governed-route dt {
+  color: var(--rust);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  line-height: 1.25;
+  text-transform: uppercase;
+}
+
+.governed-route dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
 .search-result b,
 .tag-list span {
   display: block;
