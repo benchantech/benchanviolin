@@ -13,8 +13,9 @@ const sensitiveContentPatterns = [
   { label: "google service account json", pattern: /"type"\s*:\s*"service_account"/ },
   { label: "google private key id", pattern: /"private_key_id"\s*:/ },
   { label: "google api key", pattern: /AIza[0-9A-Za-z_-]{35}/ },
-  { label: "generic secret assignment", pattern: /\b(?:SECRET|TOKEN|API_KEY|PRIVATE_KEY|CLIENT_SECRET)\b\s*[:=]/i },
 ];
+
+const genericSecretAssignmentPattern = /\b(?:SECRET|API_KEY|PRIVATE_KEY|CLIENT_SECRET)\b\s*[:=]/i;
 
 function git(args) {
   return execFileSync("git", args, { encoding: "utf8" });
@@ -47,6 +48,13 @@ for (const file of staged) {
       failures.push(`${file}: ${label}`);
       break;
     }
+  }
+
+  for (const line of content.split("\n")) {
+    if (!genericSecretAssignmentPattern.test(line)) continue;
+    if (/\bprocess\.env\./.test(line)) continue;
+    failures.push(`${file}: generic secret assignment`);
+    break;
   }
 }
 

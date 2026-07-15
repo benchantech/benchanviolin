@@ -70,10 +70,19 @@ function phraseIn(text, phrase) {
   return normalizedPhrase && normalizedText.includes(` ${normalizedPhrase} `);
 }
 
+function parseTimestampToken(token) {
+  if (!/^\d{6}$/.test(token)) throw new Error(`Invalid timestamp token: ${token}`);
+  const hours = Number(token.slice(0, 2));
+  const minutes = Number(token.slice(2, 4));
+  const seconds = Number(token.slice(4, 6));
+  if (minutes >= 60 || seconds >= 60) throw new Error(`Invalid HHMMSS timestamp token: ${token}`);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
 function chunkStartFromFilename(file) {
   const match = path.basename(file).match(/__chunk_\d+__(\d{6})-\d{6}\.json$/);
   if (!match) throw new Error(`Cannot parse chunk offset: ${file}`);
-  return Number(match[1]);
+  return parseTimestampToken(match[1]);
 }
 
 function secondsLabel(total) {
@@ -177,16 +186,6 @@ function listJsonFiles(dir) {
     else if (entry.isFile() && entry.name.endsWith(".json")) out.push(full);
   }
   return out.sort();
-}
-
-function transcriptDurationMap(files) {
-  const durations = new Map();
-  for (const file of files) {
-    const match = path.basename(file).match(/^(.+)__chunk_\d+__\d{6}-(\d{6})\.json$/);
-    if (!match) continue;
-    durations.set(match[1], Math.max(durations.get(match[1]) ?? 0, Number(match[2])));
-  }
-  return durations;
 }
 
 function routeKeywords(route) {
@@ -541,22 +540,6 @@ async function loadVideoDurations(client) {
   return new Map(rows.rows.map((row) => [row.youtube_video_id, Number(row.duration_seconds) || 0]));
 }
 
-async function syncVideoDurationsFromTranscripts(client, durations) {
-  let updated = 0;
-  for (const [youtubeId, duration] of durations) {
-    const result = await client.query(
-      `
-        update videos
-        set duration_seconds = greatest(duration_seconds, $2)
-        where youtube_video_id = $1 and duration_seconds < $2
-      `,
-      [youtubeId, duration],
-    );
-    updated += result.rowCount;
-  }
-  return updated;
-}
-
 function filterCandidatesWithinKnownDurations(candidates, durations) {
   return candidates.filter((candidate) => {
     const duration = durations.get(candidate.youtubeId) ?? 0;
@@ -602,7 +585,6 @@ function inferGapCandidates(file) {
 
 const allFiles = listJsonFiles(transcriptRoot);
 const files = maxFiles > 0 ? allFiles.slice(0, maxFiles) : allFiles;
-const transcriptDurations = transcriptDurationMap(files);
 const allCandidates = [];
 const allGaps = [];
 for (const [index, file] of files.entries()) {
@@ -612,33 +594,35 @@ for (const [index, file] of files.entries()) {
     console.log(`scanned transcript files: ${index + 1}/${files.length}; raw candidates: ${allCandidates.length}; gaps: ${allGaps.length}`);
   }
 }
-let selected = selectCandidates(allCandidates);
+
+let candidatePool = allCandidates;
+let durationFilteredCount = 0;
+if (databaseUrl) {
+  const durationClient = new Client(databaseUrl);
+  await durationClient.connect();
+  try {
+    const durations = await loadVideoDurations(durationClient);
+    const filtered = filterCandidatesWithinKnownDurations(allCandidates, durations);
+    durationFilteredCount = allCandidates.length - filtered.length;
+    candidatePool = filtered;
+  } finally {
+    await durationClient.end();
+  }
+}
+
+let selected = selectCandidates(candidatePool);
 
 if (mode === "export") {
   writeCandidateBatches(selected);
   console.log(`transcript files: ${files.length}`);
   console.log(`raw route candidates: ${allCandidates.length}`);
+  console.log(`duration-filtered route candidates: ${durationFilteredCount}`);
   console.log(`selected route candidates: ${selected.length}`);
   console.log(`gap candidates: ${allGaps.length}`);
   console.log(`candidate batches written: ${Math.ceil(selected.length / batchSize)}`);
   console.log(`selected candidates: ${selectedCandidatesPath}`);
   console.log(`batch directory: ${candidateBatchDir}`);
   process.exit(0);
-}
-
-let durationFilteredCount = 0;
-if (mode !== "export") {
-  const durationClient = new Client(databaseUrl);
-  await durationClient.connect();
-  try {
-    await syncVideoDurationsFromTranscripts(durationClient, transcriptDurations);
-    const durations = await loadVideoDurations(durationClient);
-    const filtered = filterCandidatesWithinKnownDurations(selected, durations);
-    durationFilteredCount = selected.length - filtered.length;
-    selected = filtered;
-  } finally {
-    await durationClient.end();
-  }
 }
 
 const enrichment = mode === "import"

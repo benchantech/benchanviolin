@@ -21,11 +21,20 @@ function listJsonFiles(dir) {
   return files.sort();
 }
 
+function parseTimestampToken(token) {
+  if (!/^\d{6}$/.test(token)) throw new Error(`Invalid timestamp token: ${token}`);
+  const hours = Number(token.slice(0, 2));
+  const minutes = Number(token.slice(2, 4));
+  const seconds = Number(token.slice(4, 6));
+  if (minutes >= 60 || seconds >= 60) throw new Error(`Invalid HHMMSS timestamp token: ${token}`);
+  return hours * 3600 + minutes * 60 + seconds;
+}
+
 const durations = new Map();
 for (const file of listJsonFiles(transcriptRoot)) {
   const match = path.basename(file).match(/^(.+)__chunk_\d+__\d{6}-(\d{6})\.json$/);
   if (!match) continue;
-  durations.set(match[1], Math.max(durations.get(match[1]) ?? 0, Number(match[2])));
+  durations.set(match[1], Math.max(durations.get(match[1]) ?? 0, parseTimestampToken(match[2])));
 }
 
 const client = new Client(databaseUrl);
@@ -38,8 +47,8 @@ try {
     const result = await client.query(
       `
         update videos
-        set duration_seconds = greatest(duration_seconds, $2)
-        where youtube_video_id = $1 and duration_seconds < $2
+        set duration_seconds = $2
+        where youtube_video_id = $1 and duration_seconds is distinct from $2
       `,
       [youtubeId, duration],
     );
