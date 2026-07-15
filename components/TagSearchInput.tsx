@@ -58,8 +58,8 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
         const response = await fetch(`/api/tags/search?q=${encodeURIComponent(trimmedQuery)}`, {
           signal: controller.signal,
         });
-        const data = (await response.json()) as { results: SearchResult[] };
-        setResults(data.results);
+        const data = (await response.json()) as { results?: SearchResult[] };
+        setResults(Array.isArray(data.results) ? data.results : []);
       } catch (error) {
         if (!controller.signal.aborted) setResults([]);
       } finally {
