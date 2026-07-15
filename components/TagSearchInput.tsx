@@ -118,6 +118,7 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
   const inFlightRef = useRef(new Map<string, Promise<SearchState>>());
   const requestIdRef = useRef(0);
   const trackedSearchesRef = useRef(new Set<string>());
+  const branchRequestIdRef = useRef(0);
 
   const trimmedQuery = useMemo(() => query.trim(), [query]);
   const normalizedQuery = useMemo(() => trimmedQuery.toLowerCase().replace(/\s+/g, " "), [trimmedQuery]);
@@ -223,6 +224,23 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
   const routeId = searchResponse ? governedRouteId(searchResponse) : undefined;
   const canTrackCurrentQuery = isSafeAnalyticsSearchTerm(normalizedQuery);
 
+  async function applyGovernedChoice(url: string) {
+    const choiceRequestId = branchRequestIdRef.current + 1;
+    branchRequestIdRef.current = choiceRequestId;
+    setLoading(true);
+
+    try {
+      const response = await fetch(url);
+      if (!response.ok) return;
+      const data = (await response.json()) as SearchResponse;
+      if (branchRequestIdRef.current !== choiceRequestId) return;
+      setResults(Array.isArray(data.results) ? data.results : []);
+      setSearchResponse(data);
+    } finally {
+      if (branchRequestIdRef.current === choiceRequestId) setLoading(false);
+    }
+  }
+
   return (
     <div className="tag-search" role="search">
       <label htmlFor="library-search">What are you working on?</label>
@@ -281,13 +299,19 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
                       key={option.id}
                       type="button"
                       onClick={() => {
-                        if (!canTrackCurrentQuery) return;
-                        trackEvent("technical_branch_choice", {
-                          search_term: normalizedQuery,
-                          routing_outcome: "governed_branch",
-                          route_id: searchResponse.route?.routeId,
-                          branch_option: option.id,
-                        });
+                        const currentRouteId = searchResponse.route?.routeId;
+                        if (!currentRouteId) return;
+                        if (canTrackCurrentQuery) {
+                          trackEvent("technical_branch_choice", {
+                            search_term: normalizedQuery,
+                            routing_outcome: "governed_branch",
+                            route_id: currentRouteId,
+                            branch_option: option.id,
+                          });
+                        }
+                        applyGovernedChoice(
+                          `/api/tags/search?routeId=${encodeURIComponent(currentRouteId)}&branchOption=${encodeURIComponent(option.id)}`,
+                        );
                       }}
                     >
                       {option.label}
@@ -308,13 +332,17 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
                       key={candidate.routeId}
                       type="button"
                       onClick={() => {
-                        if (!canTrackCurrentQuery) return;
-                        trackEvent("technical_branch_choice", {
-                          search_term: normalizedQuery,
-                          routing_outcome: "governed_confirm",
-                          route_id: candidate.routeId,
-                          branch_option: candidate.routeId,
-                        });
+                        if (canTrackCurrentQuery) {
+                          trackEvent("technical_branch_choice", {
+                            search_term: normalizedQuery,
+                            routing_outcome: "governed_confirm",
+                            route_id: candidate.routeId,
+                            branch_option: candidate.routeId,
+                          });
+                        }
+                        applyGovernedChoice(
+                          `/api/tags/search?confirmRouteId=${encodeURIComponent(candidate.routeId)}`,
+                        );
                       }}
                     >
                       {candidate.label}
