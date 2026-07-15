@@ -1,4 +1,4 @@
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { SegmentFilter } from "@/components/SegmentFilter";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
@@ -9,6 +9,10 @@ export const dynamic = "force-dynamic";
 
 type Props = {
   params: Promise<{ slug: string }>;
+};
+
+const legacyTagRouteRedirects: Record<string, string> = {
+  "string-crossing": "string-crossing-accent",
 };
 
 export async function generateMetadata({ params }: Props) {
@@ -25,6 +29,10 @@ export async function generateMetadata({ params }: Props) {
 
 export default async function TagPage({ params }: Props) {
   const { slug } = await params;
+
+  const routeId = legacyTagRouteRedirects[slug];
+  if (routeId) redirect(`/library?route=${encodeURIComponent(routeId)}`);
+
   const [tag, segments] = await Promise.all([getTagDetail(slug), getSegmentsForTag(slug)]);
 
   if (!tag) notFound();
