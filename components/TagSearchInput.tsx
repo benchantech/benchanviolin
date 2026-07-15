@@ -265,7 +265,7 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
       {trimmedQuery ? (
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
-          {!loading && searchResponse?.route ? (
+          {!loading && searchResponse?.route && searchResponse.kind !== "BRANCH" ? (
             <div className="search-result governed-route">
               <div>
                 <b>{searchResponse.route.label}</b>
