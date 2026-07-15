@@ -40,6 +40,24 @@ type RouterModule = {
     searchTerms: string[];
     hasBranch: boolean;
   }[];
+  listTechnicalRouteDetails(): {
+    id: string;
+    label: string;
+    domain: string;
+    priority: number;
+    exact: string[];
+    tokenGroups: string[][];
+    exclude: string[];
+    summary: string;
+    firstAction: string;
+    verification: string;
+    stopCondition: string;
+    searchTerms: string[];
+    branch: null | {
+      prompt: string;
+      options: { id: string; label: string; result: Record<string, unknown> }[];
+    };
+  }[];
   validateTechnicalRouter(): {
     routeCount: number;
     exactPhraseCount: number;
@@ -56,5 +74,6 @@ export const {
   resolveTechnicalBranch,
   confirmTechnicalRoute,
   listTechnicalRoutes,
+  listTechnicalRouteDetails,
   validateTechnicalRouter,
 } = router;

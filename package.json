@@ -17,7 +17,8 @@
     "js:cache-hints:check": "node scripts/validate-js-cache-hints.mjs",
     "js:deploy-check": "npm run js:minify:check && npm run js:cache-hints:check",
     "analytics:searches": "node scripts/ga4-searches.mjs",
-    "analytics:gaps": "node scripts/ga4-routing-gaps.mjs"
+    "analytics:gaps": "node scripts/ga4-routing-gaps.mjs",
+    "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

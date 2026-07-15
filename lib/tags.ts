@@ -24,6 +24,11 @@ export type SegmentSearchResult = {
   youtube_video_id: string;
   match_type: "transcript_context";
   match_text: string;
+  route_id: string | null;
+  route_node_id: string | null;
+  branch_option_id: string | null;
+  review_status: string | null;
+  validation_status: string | null;
 };
 
 export type LibrarySearchResult = TagSearchResult | SegmentSearchResult;
@@ -149,7 +154,12 @@ export async function searchLibrary(query: string): Promise<LibrarySearchResult[
           null::integer as start_seconds,
           null::text as start_url,
           null::text as video_title,
-          null::text as youtube_video_id
+          null::text as youtube_video_id,
+          null::text as route_id,
+          null::text as route_node_id,
+          null::text as branch_option_id,
+          null::text as review_status,
+          null::text as validation_status
         from ranked
         where rn = 1
       ),
@@ -192,12 +202,21 @@ export async function searchLibrary(query: string): Promise<LibrarySearchResult[
           s.start_seconds,
           s.start_url,
           v.title as video_title,
-          v.youtube_video_id
+          v.youtube_video_id,
+          s.route_id,
+          s.route_node_id,
+          s.branch_option_id,
+          s.review_status,
+          s.validation_status
         from segments s
         join videos v on v.id = s.video_id
         cross join q
         where q.normalized <> ''
           and v.is_public = true
+          and (
+            (s.is_public = true and s.review_status = 'manual_reviewed')
+            or s.owner_visible = true
+          )
           and (
             s.contextual_search_document @@ q.ts_query
             or exists (
@@ -220,6 +239,63 @@ export async function searchLibrary(query: string): Promise<LibrarySearchResult[
     `,
     [query],
   )) as LibrarySearchResult[];
+}
+
+export async function getRouteEvidence(routeId: string, routeNodeId?: string): Promise<SegmentSearchResult[]> {
+  const sql = await getSql();
+  return (await sql.query(
+    `
+      select
+        'segment' as result_type,
+        s.id as segment_id,
+        s.segment_title,
+        s.timestamp_label,
+        s.start_seconds,
+        s.start_url,
+        v.title as video_title,
+        v.youtube_video_id,
+        'transcript_context' as match_type,
+        coalesce(nullif(s.evidence_text, ''), s.contextual_clues[1], s.teaching_summary) as match_text,
+        s.route_id,
+        s.route_node_id,
+        s.branch_option_id,
+        s.review_status,
+        s.validation_status
+      from segments s
+      join videos v on v.id = s.video_id
+      where s.route_id = $1
+        and ($2::text is null or s.route_node_id = $2)
+        and v.is_public = true
+        and (
+          (s.is_public = true and s.review_status = 'manual_reviewed')
+          or s.owner_visible = true
+        )
+      order by
+        case when s.review_status = 'manual_reviewed' then 0 else 1 end,
+        s.route_match_score desc,
+        s.start_seconds asc
+      limit 8
+    `,
+    [routeId, routeNodeId ?? null],
+  )) as SegmentSearchResult[];
+}
+
+export async function getRouteNodeEvidence(routeNodeId: string): Promise<SegmentSearchResult[]> {
+  const sql = await getSql();
+  const rows = (await sql.query(
+    `
+      select route_id
+      from technical_route_nodes
+      where node_id = $1 and is_active = true
+      limit 1
+    `,
+    [routeNodeId],
+  )) as { route_id: string }[];
+
+  const routeId = rows[0]?.route_id;
+  if (!routeId) return [];
+
+  return getRouteEvidence(routeId, routeNodeId);
 }
 
 export async function searchTags(query: string): Promise<TagSearchResult[]> {

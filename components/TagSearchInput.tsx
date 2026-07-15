@@ -107,13 +107,21 @@ function visibleResultCount(response: SearchResponse, resultCount: number) {
   return resultCount;
 }
 
-export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string }) {
+export function TagSearchInput({
+  initialQuery = "",
+  initialRouteId = "",
+  initialNodeId = "",
+}: {
+  initialQuery?: string;
+  initialRouteId?: string;
+  initialNodeId?: string;
+}) {
   const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [searchResponse, setSearchResponse] = useState<SearchResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const firstResultRef = useRef<HTMLAnchorElement | null>(null);
-  const shouldScrollToInitialResult = useRef(Boolean(initialQuery.trim()));
+  const shouldScrollToInitialResult = useRef(Boolean(initialQuery.trim() || initialRouteId.trim() || initialNodeId.trim()));
   const cacheRef = useRef(new Map<string, SearchState>());
   const inFlightRef = useRef(new Map<string, Promise<SearchState>>());
   const requestIdRef = useRef(0);
@@ -122,26 +130,35 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
 
   const trimmedQuery = useMemo(() => query.trim(), [query]);
   const normalizedQuery = useMemo(() => trimmedQuery.toLowerCase().replace(/\s+/g, " "), [trimmedQuery]);
+  const initialRouteLookup = useMemo(() => {
+    const routeId = initialRouteId.trim();
+    const nodeId = initialNodeId.trim();
+    if (nodeId) return { key: `node:${nodeId}`, url: `/api/tags/search?node=${encodeURIComponent(nodeId)}` };
+    if (routeId) return { key: `route:${routeId}`, url: `/api/tags/search?route=${encodeURIComponent(routeId)}` };
+    return null;
+  }, [initialRouteId, initialNodeId]);
+  const routeLookup = normalizedQuery ? null : initialRouteLookup;
+  const lookupKey = normalizedQuery || routeLookup?.key || "";
 
   useEffect(() => {
     const requestId = requestIdRef.current + 1;
     requestIdRef.current = requestId;
 
-    if (!normalizedQuery) {
+    if (!lookupKey) {
       setResults([]);
       setSearchResponse(null);
       setLoading(false);
       return;
     }
 
-    if (normalizedQuery.length < minSearchLength) {
+    if (!routeLookup && normalizedQuery.length < minSearchLength) {
       setResults([]);
       setSearchResponse(null);
       setLoading(false);
       return;
     }
 
-    const cached = cacheRef.current.get(normalizedQuery);
+    const cached = cacheRef.current.get(lookupKey);
     if (cached) {
       setResults(cached.results);
       setSearchResponse(cached.response);
@@ -155,10 +172,11 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
     }, loadingDelayMs);
     const searchTimer = window.setTimeout(async () => {
       try {
-        let request = inFlightRef.current.get(normalizedQuery);
+        let request = inFlightRef.current.get(lookupKey);
 
         if (!request) {
-          request = fetch(`/api/tags/search?q=${encodeURIComponent(normalizedQuery)}`, {
+          const url = routeLookup?.url ?? `/api/tags/search?q=${encodeURIComponent(normalizedQuery)}`;
+          request = fetch(url, {
             signal: controller.signal,
           })
             .then(async (response) => {
@@ -170,19 +188,19 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
               };
             })
             .finally(() => {
-              inFlightRef.current.delete(normalizedQuery);
+              inFlightRef.current.delete(lookupKey);
             });
-          inFlightRef.current.set(normalizedQuery, request);
+          inFlightRef.current.set(lookupKey, request);
         }
 
         const nextState = await request;
-        cacheRef.current.set(normalizedQuery, nextState);
+        cacheRef.current.set(lookupKey, nextState);
 
         if (requestIdRef.current === requestId) {
           setResults(nextState.results);
           setSearchResponse(nextState.response);
 
-          if (nextState.response && !trackedSearchesRef.current.has(normalizedQuery)) {
+          if (normalizedQuery && nextState.response && !trackedSearchesRef.current.has(normalizedQuery)) {
             const outcome = routingOutcomeFor(nextState.response, nextState.results.length);
             trackedSearchesRef.current.add(normalizedQuery);
             trackLibrarySearch({
@@ -209,7 +227,7 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
       window.clearTimeout(loadingTimer);
       controller.abort();
     };
-  }, [normalizedQuery]);
+  }, [lookupKey, normalizedQuery, routeLookup]);
 
   useEffect(() => {
     if (!shouldScrollToInitialResult.current || loading || results.length === 0) return;
@@ -262,7 +280,7 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
         ))}
       </div>
 
-      {trimmedQuery ? (
+      {trimmedQuery || routeLookup ? (
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
           {!loading && searchResponse?.route && searchResponse.kind !== "BRANCH" ? (
