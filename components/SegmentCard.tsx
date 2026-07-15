@@ -2,11 +2,20 @@
 
 import { useState } from "react";
 import type { Segment } from "@/lib/segments";
+import { trackEvent } from "@/lib/analytics";
 import { getYouTubeWatchUrl } from "@/lib/youtube";
 import { YouTubeSegmentEmbed } from "@/components/YouTubeSegmentEmbed";
 
 export function SegmentCard({ segment }: { segment: Segment }) {
   const [isWatching, setIsWatching] = useState(false);
+  const trackVideoStart = () => {
+    trackEvent("video_start", {
+      result_type: "segment",
+      result_id: segment.segment_id,
+      segment_id: segment.segment_id,
+      video_id: segment.youtube_video_id,
+    });
+  };
 
   return (
     <article className="segment-card">
@@ -63,7 +72,14 @@ export function SegmentCard({ segment }: { segment: Segment }) {
       ) : null}
 
       <div className="segment-actions">
-        <button className="btn" type="button" onClick={() => setIsWatching((value) => !value)}>
+        <button
+          className="btn"
+          type="button"
+          onClick={() => {
+            if (!isWatching) trackVideoStart();
+            setIsWatching((value) => !value);
+          }}
+        >
           {isWatching ? "Hide segment" : "Watch segment"}
         </button>
         <a
@@ -71,6 +87,7 @@ export function SegmentCard({ segment }: { segment: Segment }) {
           href={getYouTubeWatchUrl(segment.youtube_video_id, segment.start_seconds)}
           target="_blank"
           rel="noopener"
+          onClick={trackVideoStart}
         >
           Open full video
         </a>

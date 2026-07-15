@@ -1,6 +1,14 @@
 "use client";
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import {
+  isSafeAnalyticsSearchTerm,
+  normalizeAnalyticsString,
+  trackEvent,
+  trackLibraryResultClick,
+  trackLibrarySearch,
+  type RoutingOutcome,
+} from "@/lib/analytics";
 
 type Result = {
   result_type: "tag";
@@ -27,6 +35,40 @@ type SegmentResult = {
 
 type SearchResult = Result | SegmentResult;
 
+type GovernedRoute = {
+  routeId: string;
+  label: string;
+  domain: string;
+  summary: string;
+  firstAction: string;
+  verification: string;
+  stopCondition: string;
+  searchTerms: string[];
+};
+
+type BranchOption = {
+  id: string;
+  label: string;
+};
+
+type SearchResponse = {
+  kind?: "DIRECT" | "BRANCH" | "CONFIRM" | "FALLBACK";
+  authority?: "governed" | "archive";
+  normalizedQuery?: string;
+  route?: GovernedRoute;
+  branch?: {
+    prompt: string;
+    options: BranchOption[];
+  };
+  candidates?: { routeId: string; label: string }[];
+  results?: SearchResult[];
+};
+
+type SearchState = {
+  results: SearchResult[];
+  response: SearchResponse | null;
+};
+
 const examples = ["fifths", "bow bounce", "tense bow hand", "string changes", "snap pizzicato"];
 const minSearchLength = 2;
 const loadingDelayMs = 160;
@@ -43,15 +85,39 @@ function matchReason(result: Result) {
   return `matched "${result.match_text}"`;
 }
 
+function routingOutcomeFor(response: SearchResponse, resultCount: number): RoutingOutcome {
+  if (response.kind === "DIRECT") return "governed_direct";
+  if (response.kind === "BRANCH") return "governed_branch";
+  if (response.kind === "CONFIRM") return "governed_confirm";
+  if (resultCount === 0) return "no_results";
+  return "archive_fallback";
+}
+
+function governedRouteId(response: SearchResponse) {
+  return response.route?.routeId ?? response.candidates?.[0]?.routeId;
+}
+
+function resultIdFor(result: SearchResult) {
+  return result.result_type === "tag" ? result.slug : result.segment_id;
+}
+
+function visibleResultCount(response: SearchResponse, resultCount: number) {
+  if (response.kind === "DIRECT" || response.kind === "BRANCH") return 1;
+  if (response.kind === "CONFIRM") return response.candidates?.length ?? 0;
+  return resultCount;
+}
+
 export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string }) {
   const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
+  const [searchResponse, setSearchResponse] = useState<SearchResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const firstResultRef = useRef<HTMLAnchorElement | null>(null);
   const shouldScrollToInitialResult = useRef(Boolean(initialQuery.trim()));
-  const cacheRef = useRef(new Map<string, SearchResult[]>());
-  const inFlightRef = useRef(new Map<string, Promise<SearchResult[]>>());
+  const cacheRef = useRef(new Map<string, SearchState>());
+  const inFlightRef = useRef(new Map<string, Promise<SearchState>>());
   const requestIdRef = useRef(0);
+  const trackedSearchesRef = useRef(new Set<string>());
 
   const trimmedQuery = useMemo(() => query.trim(), [query]);
   const normalizedQuery = useMemo(() => trimmedQuery.toLowerCase().replace(/\s+/g, " "), [trimmedQuery]);
@@ -62,19 +128,22 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
 
     if (!normalizedQuery) {
       setResults([]);
+      setSearchResponse(null);
       setLoading(false);
       return;
     }
 
     if (normalizedQuery.length < minSearchLength) {
       setResults([]);
+      setSearchResponse(null);
       setLoading(false);
       return;
     }
 
     const cached = cacheRef.current.get(normalizedQuery);
     if (cached) {
-      setResults(cached);
+      setResults(cached.results);
+      setSearchResponse(cached.response);
       setLoading(false);
       return;
     }
@@ -92,9 +161,12 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
             signal: controller.signal,
           })
             .then(async (response) => {
-              if (!response.ok) return [];
-              const data = (await response.json()) as { results?: SearchResult[] };
-              return Array.isArray(data.results) ? data.results : [];
+              if (!response.ok) return { results: [], response: null };
+              const data = (await response.json()) as SearchResponse;
+              return {
+                results: Array.isArray(data.results) ? data.results : [],
+                response: data,
+              };
             })
             .finally(() => {
               inFlightRef.current.delete(normalizedQuery);
@@ -102,14 +174,29 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
           inFlightRef.current.set(normalizedQuery, request);
         }
 
-        const nextResults = await request;
-        cacheRef.current.set(normalizedQuery, nextResults);
+        const nextState = await request;
+        cacheRef.current.set(normalizedQuery, nextState);
 
         if (requestIdRef.current === requestId) {
-          setResults(nextResults);
+          setResults(nextState.results);
+          setSearchResponse(nextState.response);
+
+          if (nextState.response && !trackedSearchesRef.current.has(normalizedQuery)) {
+            const outcome = routingOutcomeFor(nextState.response, nextState.results.length);
+            trackedSearchesRef.current.add(normalizedQuery);
+            trackLibrarySearch({
+              search_term: normalizedQuery,
+              result_count: visibleResultCount(nextState.response, nextState.results.length),
+              routing_outcome: outcome,
+              route_id: governedRouteId(nextState.response),
+            });
+          }
         }
       } catch (error) {
-        if (!controller.signal.aborted && requestIdRef.current === requestId) setResults([]);
+        if (!controller.signal.aborted && requestIdRef.current === requestId) {
+          setResults([]);
+          setSearchResponse(null);
+        }
       } finally {
         window.clearTimeout(loadingTimer);
         if (!controller.signal.aborted && requestIdRef.current === requestId) setLoading(false);
@@ -131,6 +218,10 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
       firstResultRef.current?.scrollIntoView({ block: "start", behavior: "smooth" });
     });
   }, [loading, results.length]);
+
+  const routingOutcome = searchResponse ? routingOutcomeFor(searchResponse, results.length) : undefined;
+  const routeId = searchResponse ? governedRouteId(searchResponse) : undefined;
+  const canTrackCurrentQuery = isSafeAnalyticsSearchTerm(normalizedQuery);
 
   return (
     <div className="tag-search" role="search">
@@ -156,7 +247,85 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
       {trimmedQuery ? (
         <div className="search-results" aria-live="polite">
           {loading ? <p className="fine-print">Searching...</p> : null}
-          {!loading && normalizedQuery.length >= minSearchLength && results.length === 0 ? (
+          {!loading && searchResponse?.route ? (
+            <a
+              className="search-result"
+              href={`/library?q=${encodeURIComponent(searchResponse.route.searchTerms[0] ?? normalizedQuery)}`}
+              onClick={() => {
+                const route = searchResponse.route;
+                if (!routingOutcome || !canTrackCurrentQuery || !route) return;
+                trackLibraryResultClick({
+                  search_term: normalizedQuery,
+                  routing_outcome: routingOutcome,
+                  route_id: route.routeId,
+                  result_type: "governed_route",
+                  result_id: route.routeId,
+                  result_position: 1,
+                });
+              }}
+            >
+              <span>
+                <b>{searchResponse.route.label}</b>
+                <small>{searchResponse.route.summary}</small>
+              </span>
+              <em>{searchResponse.kind?.toLowerCase()}</em>
+            </a>
+          ) : null}
+          {!loading && searchResponse?.branch ? (
+            <div className="search-result transcript-hit">
+              <span>
+                <b>{searchResponse.branch.prompt}</b>
+                <small>
+                  {searchResponse.branch.options.map((option) => (
+                    <button
+                      key={option.id}
+                      type="button"
+                      onClick={() => {
+                        if (!canTrackCurrentQuery) return;
+                        trackEvent("technical_branch_choice", {
+                          search_term: normalizedQuery,
+                          routing_outcome: "governed_branch",
+                          route_id: searchResponse.route?.routeId,
+                          branch_option: option.id,
+                        });
+                      }}
+                    >
+                      {option.label}
+                    </button>
+                  ))}
+                </small>
+              </span>
+              <em>Choose</em>
+            </div>
+          ) : null}
+          {!loading && searchResponse?.kind === "CONFIRM" && searchResponse.candidates?.length ? (
+            <div className="search-result transcript-hit">
+              <span>
+                <b>Choose the problem you mean</b>
+                <small>
+                  {searchResponse.candidates.map((candidate) => (
+                    <button
+                      key={candidate.routeId}
+                      type="button"
+                      onClick={() => {
+                        if (!canTrackCurrentQuery) return;
+                        trackEvent("technical_branch_choice", {
+                          search_term: normalizedQuery,
+                          routing_outcome: "governed_confirm",
+                          route_id: candidate.routeId,
+                          branch_option: candidate.routeId,
+                        });
+                      }}
+                    >
+                      {candidate.label}
+                    </button>
+                  ))}
+                </small>
+              </span>
+              <em>Confirm</em>
+            </div>
+          ) : null}
+          {!loading && normalizedQuery.length >= minSearchLength && !searchResponse?.route && searchResponse?.kind !== "CONFIRM" && results.length === 0 ? (
             <p className="fine-print">No matching tags or transcript context yet.</p>
           ) : null}
           {results.map((result, index) => (
@@ -166,6 +335,17 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
                 key={result.slug}
                 href={`/library/tags/${result.slug}`}
                 ref={index === 0 ? firstResultRef : undefined}
+                onClick={() => {
+                  if (!routingOutcome || !canTrackCurrentQuery) return;
+                  trackLibraryResultClick({
+                    search_term: normalizeAnalyticsString(normalizedQuery),
+                    routing_outcome: routingOutcome,
+                    route_id: routeId,
+                    result_type: "tag",
+                    result_id: resultIdFor(result),
+                    result_position: index + 1,
+                  });
+                }}
               >
                 <span>
                   <b>{result.label}</b>
@@ -179,6 +359,18 @@ export function TagSearchInput({ initialQuery = "" }: { initialQuery?: string })
                 key={result.segment_id}
                 href={result.start_url}
                 ref={index === 0 ? firstResultRef : undefined}
+                onClick={() => {
+                  if (!routingOutcome || !canTrackCurrentQuery) return;
+                  trackLibraryResultClick({
+                    search_term: normalizeAnalyticsString(normalizedQuery),
+                    routing_outcome: routingOutcome,
+                    route_id: routeId,
+                    result_type: "segment",
+                    result_id: resultIdFor(result),
+                    result_position: index + 1,
+                    segment_id: result.segment_id,
+                  });
+                }}
               >
                 <span>
                   <b>{result.segment_title}</b>

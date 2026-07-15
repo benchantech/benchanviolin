@@ -11,9 +11,16 @@
     "db:import:tan-dun": "node scripts/import-tan-dun.mjs",
     "db:setup:tan-dun": "npm run db:migrate && npm run db:import:tan-dun",
     "validate:tan-dun": "node scripts/validate-tan-dun.mjs",
-    "export:library-search-urls": "node scripts/export-library-search-urls.mjs"
+    "export:library-search-urls": "node scripts/export-library-search-urls.mjs",
+    "js:minify": "node scripts/minify-js.mjs",
+    "js:minify:check": "node scripts/minify-js.mjs --check",
+    "js:cache-hints:check": "node scripts/validate-js-cache-hints.mjs",
+    "js:deploy-check": "npm run js:minify:check && npm run js:cache-hints:check",
+    "analytics:searches": "node scripts/ga4-searches.mjs",
+    "analytics:gaps": "node scripts/ga4-routing-gaps.mjs"
   },
   "dependencies": {
+    "@google-analytics/data": "^6.1.0",
     "@neondatabase/serverless": "^1.0.1",
     "next": "^15.3.5",
     "react": "^19.0.0",
@@ -23,6 +30,7 @@
     "@types/node": "^24.0.10",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
+    "terser": "^5.49.0",
     "typescript": "^5.8.3"
   }
 }

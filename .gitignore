@@ -3,6 +3,15 @@ Thumbs.db
 .env
 .env.*
 *.local
+credentials/
+*.credentials.json
+*service-account*.json
+*service_account*.json
+*google-application-credentials*.json
+*.pem
+*.key
+*.p12
+*.pfx
 .vercel
 node_modules
 .next
