@@ -370,7 +370,12 @@ export function TagSearchInput({
               <em>Confirm</em>
             </div>
           ) : null}
-          {!loading && normalizedQuery.length >= minSearchLength && !searchResponse?.route && searchResponse?.kind !== "CONFIRM" && results.length === 0 ? (
+          {!loading && searchResponse && results.length > 0 ? (
+            <p className="fine-print">
+              Showing {results.length} related {results.length === 1 ? "clip" : "clips"}.
+            </p>
+          ) : null}
+          {!loading && searchResponse && normalizedQuery.length >= minSearchLength && !searchResponse.route && searchResponse.kind !== "CONFIRM" && results.length === 0 ? (
             <p className="fine-print">No matching tags or transcript context yet.</p>
           ) : null}
           {results.map((result, index) => (
