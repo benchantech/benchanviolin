@@ -18,7 +18,7 @@ export function TagDirectory({ tags }: { tags: TagDirectoryItem[] }) {
             {groupTags.map((tag) => (
               <a key={tag.slug} href={`/library/tags/${tag.slug}`}>
                 <span>{tag.label}</span>
-                <small>{tag.clip_count} clips</small>
+                <small>Concept index</small>
               </a>
             ))}
           </div>

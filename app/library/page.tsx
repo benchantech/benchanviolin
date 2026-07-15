@@ -8,7 +8,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Technique Library - Ben Chan Violin",
-  description: "Search reviewed Ben Chan Violin technique clips by canonical tags and learner phrases.",
+  description: "Search Ben Chan Violin technique routes and transcript-aligned candidate clips by learner phrases.",
 };
 
 type LibraryPageProps = {
@@ -33,14 +33,14 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       <SiteHeader />
       <main id="main" className="library-page">
         <section className="section library-hero">
-          <p className="kicker">Reviewed clips</p>
+          <p className="kicker">Technique routes</p>
           <p className="lede">Search a technique, a problem, or the words you would use in practice.</p>
           <TagSearchInput initialQuery={initialQuery} initialRouteId={initialRouteId} initialNodeId={initialNodeId} />
         </section>
 
         <section className="section" aria-labelledby="directory-title">
-          <p className="section-number">01 / Canonical tags</p>
-          <h2 id="directory-title">Start from a validated concept.</h2>
+          <p className="section-number">01 / Concept index</p>
+          <h2 id="directory-title">Browse the older taxonomy.</h2>
           <TagDirectory tags={tags} />
         </section>
       </main>
