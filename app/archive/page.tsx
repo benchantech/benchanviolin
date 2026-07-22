@@ -31,26 +31,8 @@ export default function ArchivePage() {
             </div>
           </form>
         </section>
-        <section className="section archive-preview" aria-labelledby="pathways-title">
-          <p className="section-number">01 / Curated pathways</p>
-          <h2 id="pathways-title">Small structures for common starting points.</h2>
-          <div className="index-list">
-            <a href="stand-partner.html">
-              <span>Returning after time away</span>
-              <small>start with one grounded reset</small>
-            </a>
-            <a href="stand-partner.html">
-              <span>Stuck on something</span>
-              <small>separate observation from correction</small>
-            </a>
-            <a href="stand-partner.html">
-              <span>Starting fresh</span>
-              <small>choose one first page</small>
-            </a>
-          </div>
-        </section>
         <section className="section archive-preview" aria-labelledby="index-title">
-          <p className="section-number">02 / Index</p>
+          <p className="section-number">01 / Index</p>
           <h2 id="index-title">Categories, not a dashboard.</h2>
           <div className="index-list">
             <a href="#">

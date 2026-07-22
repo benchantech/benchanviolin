@@ -7,7 +7,6 @@ export function SiteHeader() {
       </a>
       <nav className="nav" aria-label="Primary">
         <a href="https://youtube.com/benchanviolin">YouTube</a>
-        <a href="/stand-partner">Stand Partner</a>
       </nav>
     </header>
   );

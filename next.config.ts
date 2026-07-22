@@ -65,7 +65,6 @@ const nextConfig: NextConfig = {
     return [
       { source: "/library.html", destination: "/library" },
       { source: "/q=:q", destination: "/library?q=:q" },
-      { source: "/stand-partner.html", destination: "/stand-partner" },
       { source: "/privacy.html", destination: "/privacy" },
       { source: "/terms.html", destination: "/terms" },
       { source: "/cookies.html", destination: "/cookies" },

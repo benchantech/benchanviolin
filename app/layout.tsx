@@ -5,7 +5,7 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Ben Chan Violin",
-  description: "Ben Chan Violin teaching archive and Stand Partner first-turn guide.",
+  description: "Ben Chan Violin teaching archive.",
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
