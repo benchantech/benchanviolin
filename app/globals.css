@@ -2368,6 +2368,7 @@ dialog {
 
 .parent-answer-page .parent-principle {
   max-width: none;
+  width: calc(100% + 104px);
   margin-inline: -52px;
   padding-inline: 52px;
   background: var(--paper-muted);
@@ -2380,6 +2381,7 @@ dialog {
 
 .parent-answer-page .parent-cta {
   max-width: none;
+  width: calc(100% + 104px);
   margin-inline: -52px;
   padding-inline: 52px;
   border: 0;
@@ -2546,6 +2548,7 @@ dialog {
 
   .parent-answer-page .parent-principle,
   .parent-answer-page .parent-cta {
+    width: calc(100% + 48px);
     margin-inline: -24px;
     padding-inline: 24px;
   }
