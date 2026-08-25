@@ -10,6 +10,18 @@ export function SiteHeader() {
         <a href="/library">Library</a>
         <a href="https://youtube.com/benchanviolin">YouTube</a>
       </nav>
+      <details className="mobile-menu">
+        <summary aria-label="Open navigation">
+          <span />
+          <span />
+          <span />
+        </summary>
+        <nav aria-label="Mobile primary">
+          <a href="/parents">Parents</a>
+          <a href="/library">Library</a>
+          <a href="https://youtube.com/benchanviolin">YouTube</a>
+        </nav>
+      </details>
     </header>
   );
 }
