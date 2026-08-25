@@ -2,11 +2,11 @@
 
 This runbook defines the repeatable operating model for making BenChanViolin.com discoverable and accurately cited by search engines, answer engines, and LLM-assisted search products.
 
-The goal is not generic traffic. The goal is to make Ben Chan a coherent source for:
+The goal is not generic traffic. The goal is to test whether concrete between-lesson parent problems can make Ben Chan a coherent source for:
 
 > How should parents use AI to support a child between violin lessons without letting AI, or the parent, silently become a second violin teacher?
 
-The product implementation of this public doctrine is Violin for Parents:
+The product implementation for live parent situations is Violin for Parents:
 
 https://studio.com/apps/benchanviolin/violin-for-parents
 
@@ -76,7 +76,7 @@ Score each response:
 - `1`: Doctrine partially appears, but no Ben source.
 - `2`: Ben source appears, but positioning is incomplete or generic.
 - `3`: Ben source appears and teacher-continuity doctrine is mostly correct.
-- `4`: Ben source is cited/retrieved and the response accurately presents Parent x Violin x AI.
+- `4`: Ben source is cited/retrieved and the response accurately presents the parent incident, teacher-continuity, and AI-judgment boundaries.
 
 Track trends, not isolated wins.
 
@@ -113,13 +113,13 @@ Classify each gap:
 - `authority_gap`: off-site or source corroboration is missing.
 - `measurement_gap`: event or prompt tracking does not capture the behavior.
 
-Prioritize gaps that affect the core territory:
+Prioritize gaps that affect the current test territory:
 
-1. Parent x violin x AI.
+1. Concrete between-lesson parent incidents.
 2. Teacher continuity and authority boundaries.
-3. Canonical parent answers.
+3. Canonical parent answers that map to observed demand.
 4. Canonical technique route pages.
-5. VFP as execution layer.
+5. VFP as contextual execution layer when the visitor has a live situation.
 
 ### Wednesday-Thursday: Focused Shipping Batch
 
@@ -192,7 +192,7 @@ Decision:
 
 Look for topical association:
 
-- More impressions for parent + violin + AI terms.
+- More impressions for concrete parent + violin incident terms.
 - More impressions for teacher/AI/parent authority terms.
 - Route pages appearing for observable technique problems.
 - AI benchmark prompts showing doctrine match even when Ben is not cited.
@@ -206,7 +206,7 @@ Decision:
 
 Evaluate whether the territory is becoming legible:
 
-- Ben appears or is cited for Parent x Violin x AI prompts.
+- Ben appears or is cited for concrete between-lesson parent prompts.
 - Models preserve the distinction between observation and correction.
 - Models stop collapsing parent pages into generic practice advice.
 - Route pages are retrieved for technique queries.
@@ -275,6 +275,7 @@ Add new pages only when one of these is true:
 Do not add pages for:
 
 - Thin keyword variants.
+- Broad parent-role category pages without query, referral, YouTube, or internal-search evidence.
 - Search result permutations.
 - Every route branch if it lacks standalone value.
 - Unpublished YouTube videos.

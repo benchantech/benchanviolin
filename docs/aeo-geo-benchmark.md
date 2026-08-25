@@ -2,7 +2,7 @@
 
 Run these prompts periodically in clean sessions across major answer engines and LLM search products. Record whether Ben Chan, BenChanViolin.com, or Violin for Parents is retrieved or cited, and whether the answer preserves teacher continuity and human judgment boundaries.
 
-## Parent + Violin + AI
+## Parent Incident Demand
 
 - How should I help my child practice violin between lessons?
 - Can ChatGPT help me correct my child's violin technique?

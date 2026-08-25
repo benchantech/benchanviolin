@@ -4,16 +4,16 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { parentQuestions, plannedParentVideos, violinForParentsCta, violinForParentsUrl } from "@/lib/parent-questions";
 
 export const metadata: Metadata = {
-  title: "Violin Parents, AI, and Between-Lesson Judgment - Ben Chan Violin",
+  title: "Help Between Violin Lessons - Ben Chan Violin",
   description:
-    "Parent-facing answers on using AI around violin practice without replacing the child, parent, or current teacher's judgment.",
+    "Parent-facing answers for real between-lesson violin situations: practice refusal, forgotten instructions, pain, instrument questions, and teacher continuity.",
   alternates: {
     canonical: "https://benchanviolin.com/parents"
   },
   openGraph: {
-    title: "Violin Parents, AI, and Between-Lesson Judgment",
+    title: "Help Between Violin Lessons",
     description:
-      "How parents can use AI to see options and decide for themselves while preserving the violin teacher's role.",
+      "Concrete parent answers for violin practice situations that happen while the teacher is not in the room.",
     url: "https://benchanviolin.com/parents",
     siteName: "Ben Chan Violin",
     type: "website"
@@ -30,15 +30,15 @@ export default function ParentsHubPage() {
       <main id="main" className="parent-page">
         <section className="section parent-hero">
           <div>
-            <p className="kicker">Parents · violin · AI</p>
+            <p className="kicker">Violin parent situations</p>
             <h1>Help between violin lessons</h1>
             <p className="lede">
-              Parents are responsible for real moments between lessons, while the teacher often holds context the parent
-              and AI do not. These answers help you use AI to narrow the situation, organize evidence, and prepare better
-              questions without letting AI take over the lesson.
+              These answers start from things that actually happen at home: a child refuses to practice, nobody can
+              remember the teacher&apos;s instruction, the violin sounds wrong, or a parent hears a mistake and wants to
+              help. The aim is to observe clearly, preserve the teacher&apos;s context, and choose one bounded next move.
             </p>
             <p className="signature-note">
-              Violinist, teacher, parent, and CTO helping families use AI to see options and decide for themselves.{" "}
+              AI can help narrow a live situation when it is useful. It should not turn a parent into a second teacher.{" "}
               <span>— B.C.</span>
             </p>
             <div className="actions">
@@ -102,12 +102,12 @@ export default function ParentsHubPage() {
               <p>Refusal, escalation, forgotten instructions, and the first bounded move.</p>
             </article>
             <article>
-              <h3>Parent role</h3>
-              <p>Correction, teacher-delegated help, sitting nearby, and not becoming a second curriculum.</p>
+              <h3>Correction moments</h3>
+              <p>Hearing a mistake, deciding whether to speak, and staying inside what the teacher actually delegated.</p>
             </article>
             <article>
-              <h3>AI & authority</h3>
-              <p>Using AI to see options while preserving the teacher's individualized role.</p>
+              <h3>AI-specific questions</h3>
+              <p>When AI changes the question: ChatGPT, bow-hold advice, teacher authority, and missing context.</p>
             </article>
             <article>
               <h3>Safety & setup</h3>

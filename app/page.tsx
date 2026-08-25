@@ -17,8 +17,8 @@ export default function HomePage() {
             <p className="lede">
               I&apos;ve been playing violin almost forty years and teaching it in public since 2007 — twenty-four views
               on that first video, and I kept going. This is where I perform, teach, and run my experiments in how one
-              hard-won skill quietly transfers into the next, including how parents can use AI without replacing the
-              teacher in the room.
+              hard-won skill quietly transfers into the next: technique, repertoire, YouTube, YY and Me, and the
+              strange evidence that practice leaves behind.
             </p>
             <p className="signature-note">
               The strings were attached a long time ago. I&apos;m just seeing what else they can play. <span>— B.C.</span>

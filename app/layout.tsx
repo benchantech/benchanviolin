@@ -6,12 +6,12 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Ben Chan Violin",
   description:
-    "Ben Chan's violin teaching archive, parent-support answers, and AI-aware guidance for preserving teacher continuity between lessons.",
+    "Ben Chan's violin teaching archive, technique library, YouTube work, public learning experiments, and cross-domain practice notes.",
   metadataBase: new URL("https://benchanviolin.com"),
   openGraph: {
     title: "Ben Chan Violin",
     description:
-      "Violin teaching, parent-support answers, and AI-aware guidance for the space between lessons.",
+      "Violin teaching, technique library routes, YouTube performances, public learning experiments, and cross-domain practice notes.",
     url: "https://benchanviolin.com",
     siteName: "Ben Chan Violin",
     type: "website"
@@ -40,7 +40,7 @@ export default function RootLayout({
         name: "Ben Chan Violin",
         url: "https://benchanviolin.com",
         description:
-          "Ben Chan's violin teaching archive, parent-support answers, and AI-aware guidance for preserving teacher continuity between lessons.",
+          "Ben Chan's violin teaching archive, technique library, YouTube work, public learning experiments, and cross-domain practice notes.",
       },
       {
         "@type": "Person",
@@ -52,8 +52,9 @@ export default function RootLayout({
         knowsAbout: [
           "Violin teaching",
           "Violin practice",
-          "Parent support between music lessons",
-          "AI-assisted human judgment",
+          "Violin technique",
+          "Public learning",
+          "Cross-domain practice",
         ],
       },
     ],
