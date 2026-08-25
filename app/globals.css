@@ -2304,8 +2304,8 @@ dialog {
 .parent-answer-page article {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  max-width: 980px;
-  margin-inline: auto;
+  max-width: none;
+  margin-inline: 0;
 }
 
 .parent-answer-page .parent-hero {
@@ -2345,7 +2345,7 @@ dialog {
 }
 
 .parent-answer-page .answer-columns {
-  max-width: 980px;
+  max-width: none;
   gap: 24px;
   border: 0;
   background: transparent;
