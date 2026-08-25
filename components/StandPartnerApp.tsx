@@ -456,7 +456,7 @@ export default function StandPartnerApp() {
         />
         <div className="buttons">
           <button className="btn subtle" onClick={() => setView("studio")}>
-            What does Stand Partner add?
+            What does Violin for Parents add?
           </button>
         </div>
       </article>
@@ -483,7 +483,7 @@ export default function StandPartnerApp() {
 
   return (
     <article className="card">
-      <p className="eyebrow">Stand Partner</p>
+      <p className="eyebrow">Violin for Parents</p>
       <h2 tabIndex={-1}>One page can be enough. Your playing is longer than one page.</h2>
       <p className="lede">
         The fuller tool is for ongoing routes, saved pages, personal notes, and a working playbook built from what helps

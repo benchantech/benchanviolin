@@ -11,7 +11,13 @@ export type AnalyticsEventName =
   | "view_search_results"
   | "library_result_click"
   | "technical_branch_choice"
-  | "video_start";
+  | "video_start"
+  | "parent_answer_view"
+  | "parent_related_question_click"
+  | "parent_to_library_route"
+  | "library_route_view"
+  | "library_route_to_parent"
+  | "vfp_cta_click";
 
 export type AnalyticsParams = {
   search_term?: string;

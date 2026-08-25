@@ -1,4 +1,5 @@
 import { listTechnicalRoutes } from "@/lib/benchanviolin-deterministic-router";
+import { getRouteUrl } from "@/lib/technical-route-pages";
 
 export function RouteDirectory() {
   const groups = new Map<string, ReturnType<typeof listTechnicalRoutes>>();
@@ -18,7 +19,7 @@ export function RouteDirectory() {
             {routes
               .sort((a, b) => b.priority - a.priority || a.label.localeCompare(b.label))
               .map((route) => (
-                <a key={route.id} href={`/library?route=${encodeURIComponent(route.id)}`}>
+                <a key={route.id} href={getRouteUrl(route.id)}>
                   <span>{route.label}</span>
                   <small>{route.hasBranch ? "Choose path" : "Route"}</small>
                 </a>

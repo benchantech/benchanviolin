@@ -2,18 +2,48 @@ import { RouteDirectory } from "@/components/RouteDirectory";
 import { TagSearchInput } from "@/components/TagSearchInput";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { getBranchUrl, getRouteUrl, getTechnicalBranch, getTechnicalRoute } from "@/lib/technical-route-pages";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
-
-export const metadata = {
-  title: "Technique Library - Ben Chan Violin",
-  description:
-    "Search Ben Chan Violin technique routes and transcript-aligned clips. Use this archive as source material, not a replacement for a current teacher.",
-};
 
 type LibraryPageProps = {
   searchParams?: Promise<{ q?: string | string[]; route?: string | string[]; node?: string | string[] }>;
 };
+
+export async function generateMetadata({ searchParams }: LibraryPageProps): Promise<Metadata> {
+  const params = await searchParams;
+  const rawRoute = Array.isArray(params?.route) ? params?.route[0] : params?.route;
+  const rawNode = Array.isArray(params?.node) ? params?.node[0] : params?.node;
+  const routeId = rawRoute?.trim() ?? "";
+  const nodeId = rawNode?.trim() ?? "";
+  const [nodeRouteId, nodeBranchId] = nodeId.split(":");
+
+  if (nodeRouteId && nodeBranchId && getTechnicalBranch(nodeRouteId, nodeBranchId)) {
+    return {
+      title: "Technique Library - Ben Chan Violin",
+      description:
+        "Search Ben Chan Violin technique routes and transcript-aligned clips. Use this archive as source material, not a replacement for a current teacher.",
+      alternates: { canonical: `https://benchanviolin.com${getBranchUrl(nodeRouteId, nodeBranchId)}` },
+    };
+  }
+
+  if (routeId && getTechnicalRoute(routeId)) {
+    return {
+      title: "Technique Library - Ben Chan Violin",
+      description:
+        "Search Ben Chan Violin technique routes and transcript-aligned clips. Use this archive as source material, not a replacement for a current teacher.",
+      alternates: { canonical: `https://benchanviolin.com${getRouteUrl(routeId)}` },
+    };
+  }
+
+  return {
+    title: "Technique Library - Ben Chan Violin",
+    description:
+      "Search Ben Chan Violin technique routes and transcript-aligned clips. Use this archive as source material, not a replacement for a current teacher.",
+    alternates: { canonical: "https://benchanviolin.com/library" },
+  };
+}
 
 export default async function LibraryPage({ searchParams }: LibraryPageProps) {
   const params = await searchParams;

@@ -31,22 +31,25 @@ export default function ParentsHubPage() {
         <section className="section parent-hero">
           <div>
             <p className="kicker">Parents · violin · AI</p>
-            <h1>Use AI to see options. Keep the lesson human.</h1>
+            <h1>Help between violin lessons</h1>
             <p className="lede">
-              These answers are for parents and caregivers supporting a child between violin lessons. AI can help narrow
-              the situation, organize evidence, and prepare better questions. It should not silently become a second
-              violin teacher.
+              Parents are responsible for real moments between lessons, while the teacher often holds context the parent
+              and AI do not. These answers help you use AI to narrow the situation, organize evidence, and prepare better
+              questions without letting AI take over the lesson.
             </p>
             <p className="signature-note">
-              The useful move is not more advice. It is one clearer next move while the teacher is not in the room.{" "}
+              Violinist, teacher, parent, and CTO helping families use AI to see options and decide for themselves.{" "}
               <span>— B.C.</span>
             </p>
             <div className="actions">
-              <a className="btn" href={violinForParentsUrl} target="_blank" rel="noopener">
-                {violinForParentsCta}
+              <a className="btn" href="#answers-title">
+                Start with the question
               </a>
               <a className="btn" href="/library">
                 Search Ben's library
+              </a>
+              <a className="btn secondary" href={violinForParentsUrl} target="_blank" rel="noopener">
+                {violinForParentsCta}
               </a>
             </div>
           </div>
@@ -90,8 +93,31 @@ export default function ParentsHubPage() {
           </p>
         </section>
 
+        <section className="section" aria-labelledby="clusters-title">
+          <p className="section-number">03 / Question clusters</p>
+          <h2 id="clusters-title">Which situation are you in?</h2>
+          <div className="practice-grid">
+            <article>
+              <h3>Practice & conflict</h3>
+              <p>Refusal, escalation, forgotten instructions, and the first bounded move.</p>
+            </article>
+            <article>
+              <h3>Parent role</h3>
+              <p>Correction, teacher-delegated help, sitting nearby, and not becoming a second curriculum.</p>
+            </article>
+            <article>
+              <h3>AI & authority</h3>
+              <p>Using AI to see options while preserving the teacher's individualized role.</p>
+            </article>
+            <article>
+              <h3>Safety & setup</h3>
+              <p>Pain, instrument uncertainty, and when a teacher, clinician, shop, or luthier owns the next step.</p>
+            </article>
+          </div>
+        </section>
+
         <section className="section parent-video-section" aria-labelledby="videos-title">
-          <p className="section-number">03 / Video architecture</p>
+          <p className="section-number">04 / Video architecture</p>
           <h2 id="videos-title">Planned YouTube question series.</h2>
           <p className="copy">
             These topics are prepared for future BenChanViolin videos. Video embeds will be added only after public URLs

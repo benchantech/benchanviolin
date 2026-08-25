@@ -1,17 +1,12 @@
 import type { MetadataRoute } from "next";
-import { listTechnicalRouteDetails } from "@/lib/benchanviolin-deterministic-router";
 import { parentQuestions } from "@/lib/parent-questions";
 import { getTagDirectory } from "@/lib/tags";
+import { getBranchUrl, getRouteUrl, listTechnicalBranchPages, listTechnicalRoutePages } from "@/lib/technical-route-pages";
 
 const siteUrl = "https://benchanviolin.com";
 
 function absoluteUrl(path: string) {
   return new URL(path, siteUrl).toString();
-}
-
-function libraryRouteUrl(routeId: string, nodeId?: string) {
-  const params = new URLSearchParams(nodeId ? { node: nodeId } : { route: routeId });
-  return `${absoluteUrl("/library")}?${params.toString()}`;
 }
 
 function entry(
@@ -68,27 +63,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }),
   );
 
-  const routeEntries = listTechnicalRouteDetails().flatMap((route) => {
-    const entries: MetadataRoute.Sitemap = [
-      entry(libraryRouteUrl(route.id), {
+  const routeEntries = [
+    ...listTechnicalRoutePages().map((route) =>
+      entry(getRouteUrl(route.routeId), {
         changeFrequency: "weekly",
         priority: 0.72,
       }),
-    ];
-
-    if (route.branch) {
-      entries.push(
-        ...route.branch.options.map((option) =>
-          entry(libraryRouteUrl(route.id, `${route.id}:${option.id}`), {
-            changeFrequency: "weekly",
-            priority: 0.68,
-          }),
-        ),
-      );
-    }
-
-    return entries;
-  });
+    ),
+    ...listTechnicalBranchPages().map((branch) =>
+      entry(getBranchUrl(branch.routeId, branch.branchId), {
+        changeFrequency: "weekly",
+        priority: 0.68,
+      }),
+    ),
+  ];
 
   return [...staticEntries, ...parentEntries, ...routeEntries, ...(await tagEntries())];
 }

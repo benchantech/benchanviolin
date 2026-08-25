@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { PageViewTracker } from "@/components/PageViewTracker";
 import { getBenApprovedLessonsForParentQuestion } from "@/lib/ben-approved-lessons";
 import { getParentQuestion, parentQuestions, violinForParentsCta, violinForParentsUrl } from "@/lib/parent-questions";
+import { getRouteUrl, getTechnicalRoute } from "@/lib/technical-route-pages";
 
 type PageProps = {
   params: Promise<{ slug: string }>;
@@ -57,6 +59,7 @@ export default async function ParentQuestionPage({ params }: PageProps) {
       <SiteHeader />
       <main id="main" className="parent-page parent-answer-page">
         <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
+        <PageViewTracker eventName="parent_answer_view" params={{ route_id: question.slug }} />
         <article>
           <header className="section parent-hero">
             <p className="kicker">Violin parent question</p>
@@ -67,6 +70,12 @@ export default async function ParentQuestionPage({ params }: PageProps) {
 
           <section className={lessonPlayers.length ? "section answer-with-lessons" : "section"}>
             <div>
+              {question.keyDistinction ? (
+                <>
+                  <h2>What matters here</h2>
+                  <p>{question.keyDistinction}</p>
+                </>
+              ) : null}
               <h2>What to observe first</h2>
               <ul className="answer-list">
                 {question.observations.map((item) => (
@@ -102,12 +111,35 @@ export default async function ParentQuestionPage({ params }: PageProps) {
 
           <section className="section answer-columns">
             <div>
+              <h2>What not to assume</h2>
+              {question.doNotAssume?.length ? (
+                <ul className="source-list">
+                  {question.doNotAssume.map((item) => (
+                    <li key={item}>{item}</li>
+                  ))}
+                </ul>
+              ) : (
+                <p>{question.uncertainty}</p>
+              )}
+            </div>
+            <div>
               <h2>Important uncertainty</h2>
               <p>{question.uncertainty}</p>
             </div>
+          </section>
+
+          <section className="section answer-columns">
             <div>
               <h2>Who owns the decision?</h2>
               <p>{question.authority}</p>
+            </div>
+            <div>
+              <h2>When this belongs with a human</h2>
+              <p>
+                If the next step depends on individualized technique, assignment sequence, pain, instrument safety, or a
+                teacher-specific cue, use this page to prepare a clearer question rather than to replace that human
+                judgment.
+              </p>
             </div>
           </section>
 
@@ -127,6 +159,27 @@ export default async function ParentQuestionPage({ params }: PageProps) {
                 ))}
               </ul>
             </div>
+            {question.techniqueRoutes?.length ? (
+              <div>
+                <h2>From Ben's library</h2>
+                <ul className="source-list">
+                  {question.techniqueRoutes.map((link) => {
+                    const route = getTechnicalRoute(link.routeId);
+                    if (!route) return null;
+                    return (
+                      <li key={link.routeId}>
+                        <a href={getRouteUrl(route.id)}>{route.label}</a>
+                        <p>{link.relationship}</p>
+                        <p>{link.boundary}</p>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+            ) : null}
+          </section>
+
+          <section className="section answer-columns">
             <div>
               <h2>Related questions</h2>
               <ul className="source-list">

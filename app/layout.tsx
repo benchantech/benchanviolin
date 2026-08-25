@@ -31,9 +31,38 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const siteJsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        "@id": "https://benchanviolin.com/#website",
+        name: "Ben Chan Violin",
+        url: "https://benchanviolin.com",
+        description:
+          "Ben Chan's violin teaching archive, parent-support answers, and AI-aware guidance for preserving teacher continuity between lessons.",
+      },
+      {
+        "@type": "Person",
+        "@id": "https://benchanviolin.com/#ben-chan",
+        name: "Ben Chan",
+        url: "https://benchanviolin.com",
+        jobTitle: "Violinist, teacher, parent, and CTO",
+        sameAs: ["https://youtube.com/benchanviolin"],
+        knowsAbout: [
+          "Violin teaching",
+          "Violin practice",
+          "Parent support between music lessons",
+          "AI-assisted human judgment",
+        ],
+      },
+    ],
+  };
+
   return (
     <html lang="en">
       <body>
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(siteJsonLd) }} />
         {children}
         <GoogleAnalytics />
         <ConsentBanner />
