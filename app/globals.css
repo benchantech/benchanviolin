@@ -2786,18 +2786,23 @@ dialog {
   .parent-answer-page .parent-cta {
     position: relative;
     z-index: 0;
-    width: auto;
     margin-inline: -24px;
     padding-inline: 24px;
     background: transparent;
     overflow: visible;
   }
 
+  .parent-answer-page .section.parent-principle,
+  .parent-answer-page .section.parent-cta {
+    width: calc(100% + 48px);
+    max-width: none;
+  }
+
   .parent-answer-page .parent-principle::before,
   .parent-answer-page .parent-cta::before {
     position: absolute;
     inset-block: 0;
-    left: calc(50% + 24px);
+    left: 50%;
     z-index: 0;
     width: 100vw;
     transform: translateX(-50%);
