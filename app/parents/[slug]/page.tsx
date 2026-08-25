@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
+import { getBenApprovedLessonsForParentQuestion } from "@/lib/ben-approved-lessons";
 import { getParentQuestion, parentQuestions, violinForParentsCta, violinForParentsUrl } from "@/lib/parent-questions";
 
 type PageProps = {
@@ -36,6 +37,7 @@ export default async function ParentQuestionPage({ params }: PageProps) {
   const { slug } = await params;
   const question = getParentQuestion(slug);
   if (!question) notFound();
+  const lessonPlayers = getBenApprovedLessonsForParentQuestion(question.slug);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -63,7 +65,7 @@ export default async function ParentQuestionPage({ params }: PageProps) {
             <p className="meta-line">By Ben Chan · Updated {question.updated}</p>
           </header>
 
-          <section className={question.lessonPlayers?.length ? "section answer-with-lessons" : "section"}>
+          <section className={lessonPlayers.length ? "section answer-with-lessons" : "section"}>
             <div>
               <h2>What to observe first</h2>
               <ul className="answer-list">
@@ -73,11 +75,11 @@ export default async function ParentQuestionPage({ params }: PageProps) {
               </ul>
             </div>
 
-            {question.lessonPlayers?.length ? (
+            {lessonPlayers.length ? (
               <aside className="lesson-player-panel" aria-labelledby="lesson-player-title">
                 <p className="kicker">Ben-Approved Lessons</p>
                 <h2 id="lesson-player-title">Listen next</h2>
-                {question.lessonPlayers.map((lesson) => (
+                {lessonPlayers.map((lesson) => (
                   <div className="lesson-player-card" key={lesson.embedUrl}>
                     <iframe
                       title={`Apple Podcasts player: ${lesson.title}`}
