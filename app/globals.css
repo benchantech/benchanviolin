@@ -2412,8 +2412,60 @@ dialog {
   }
 
   .site-header {
-    min-height: 68px;
+    min-height: 52px;
     margin-top: 12px;
+    gap: 16px;
+    overflow: hidden;
+  }
+
+  .brand {
+    flex: 0 1 auto;
+    min-width: 0;
+    font-size: 1.06rem;
+    line-height: 1;
+    white-space: nowrap;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .nav {
+    flex: 0 0 auto;
+    gap: 14px;
+  }
+
+  .nav a,
+  .menu summary {
+    min-height: 40px;
+    font-size: 0.68rem;
+  }
+
+  .nav a[href*="youtube.com"] {
+    display: none;
+  }
+
+  .parent-answer-page .parent-hero h1 {
+    max-width: 9ch;
+    font-size: clamp(2.45rem, 10vw, 2.85rem);
+    text-wrap: wrap;
+    overflow-wrap: normal;
+  }
+
+  .parent-answer-page .parent-hero,
+  .parent-answer-page .section:not(.answer-columns),
+  .parent-answer-page .lede {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .parent-answer-page p,
+  .parent-answer-page li {
+    overflow-wrap: break-word;
+  }
+
+  .parent-answer-page .answer-list li {
+    overflow-wrap: anywhere;
   }
 
   .home-page .hero,
@@ -2505,5 +2557,11 @@ dialog {
   .section-head {
     align-items: flex-start;
     flex-direction: column;
+  }
+}
+
+@media (max-width: 700px) {
+  .site-header .nav {
+    display: none;
   }
 }
