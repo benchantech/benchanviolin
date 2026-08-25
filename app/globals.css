@@ -2083,7 +2083,7 @@ dialog {
 }
 
 .parent-page .section {
-  padding-block: 64px;
+  padding-block: var(--space-5) var(--space-6);
 }
 
 .parent-page .section > .section-number,
@@ -2097,12 +2097,17 @@ dialog {
 }
 
 .parent-hero {
-  padding-top: 72px;
-  padding-bottom: 72px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 360px);
+  gap: var(--space-5);
+  align-items: center;
+  padding-top: 58px;
+  padding-bottom: var(--space-7);
 }
 
 .parent-hero h1 {
-  max-width: 16ch;
+  max-width: 13ch;
+  font-size: clamp(2.25rem, 10vw, 3.5rem);
 }
 
 .parent-hero .lede {
@@ -2114,6 +2119,27 @@ dialog {
   margin-top: var(--space-6);
 }
 
+.parent-media-slot div {
+  min-height: 430px;
+  padding: var(--space-5);
+  place-content: end start;
+  background:
+    linear-gradient(145deg, rgba(36, 29, 19, 0.08), rgba(36, 29, 19, 0.36)),
+    repeating-linear-gradient(90deg, rgba(163, 74, 43, 0.34) 0 10px, transparent 10px 12px),
+    var(--paper-muted);
+  color: var(--paper-raised);
+  text-align: left;
+}
+
+.parent-media-slot span {
+  color: var(--paper-raised);
+  font-size: 1.1rem;
+}
+
+.parent-media-slot small {
+  color: #CABFA9;
+}
+
 .parent-answer-grid,
 .parent-video-grid,
 .answer-columns {
@@ -2123,14 +2149,18 @@ dialog {
 
 .parent-answer-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
   align-items: stretch;
   margin-top: var(--space-6);
+  border: 1px solid var(--rule);
+  background: var(--rule);
 }
 
 .parent-video-grid {
   grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-4);
   align-items: stretch;
-  margin-top: var(--space-6);
+  margin-top: 30px;
 }
 
 .answer-columns {
@@ -2141,7 +2171,6 @@ dialog {
 .parent-video-grid article,
 .parent-cta {
   border: 1px solid var(--rule-strong);
-  background: #FBF6EC;
   padding: var(--space-5);
 }
 
@@ -2150,7 +2179,17 @@ dialog {
   min-height: 180px;
   flex-direction: column;
   gap: var(--space-3);
+  border: 0;
+  background: var(--paper-muted);
   text-decoration: none;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.parent-answer-card:hover {
+  background: #FBF6EC;
+  color: var(--ink);
 }
 
 .parent-answer-card p {
@@ -2161,6 +2200,9 @@ dialog {
 
 .parent-video-grid article {
   padding: var(--space-4);
+  background: transparent;
+  border-color: rgba(244, 238, 227, 0.22);
+  color: var(--paper-raised);
 }
 
 .parent-answer-card h3,
@@ -2177,6 +2219,7 @@ dialog {
 
 .parent-video-grid h3 {
   font-size: 1.2rem;
+  color: inherit;
 }
 
 .parent-answer-card p,
@@ -2205,6 +2248,97 @@ dialog {
 
 .parent-principle p {
   max-width: 66ch;
+}
+
+.parent-doctrine-band {
+  margin-inline: -52px;
+  padding-inline: 52px;
+  background: var(--ink);
+  color: #CABFA9;
+}
+
+.parent-doctrine-band h2 {
+  color: var(--paper-raised);
+  font-style: italic;
+}
+
+.parent-doctrine-band p:not(.section-number) {
+  color: #CABFA9;
+}
+
+.parent-video-section {
+  margin-inline: -52px;
+  padding-inline: 52px;
+  background: var(--ink);
+  color: var(--paper-raised);
+}
+
+.parent-video-section h2 {
+  color: var(--paper-raised);
+}
+
+.parent-video-section .copy {
+  color: #CABFA9;
+}
+
+.parent-answer-page article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.parent-answer-page .parent-hero {
+  display: block;
+  max-width: 820px;
+}
+
+.parent-answer-page .parent-hero h1 {
+  max-width: 14ch;
+}
+
+.parent-answer-page .section:not(.parent-hero):not(.answer-columns) {
+  max-width: 820px;
+}
+
+.parent-answer-page .answer-list,
+.parent-answer-page .source-list {
+  margin-top: var(--space-5);
+}
+
+.parent-answer-page .answer-list {
+  display: grid;
+  gap: 1px;
+  padding-left: 0;
+  border: 1px solid var(--rule);
+  background: var(--rule);
+  list-style: none;
+}
+
+.parent-answer-page .answer-list li {
+  margin: 0;
+  padding: 18px 20px;
+  background: var(--paper-muted);
+}
+
+.parent-answer-page .answer-columns {
+  max-width: 980px;
+  gap: 1px;
+  border: 1px solid var(--rule);
+  background: var(--rule);
+}
+
+.parent-answer-page .answer-columns > div {
+  padding: 22px 20px;
+  background: var(--paper-muted);
+}
+
+.parent-answer-page .answer-columns p {
+  margin-bottom: 0;
+}
+
+.parent-answer-page .parent-cta {
+  max-width: 820px;
+  background: var(--paper-muted);
+  border-color: var(--rule);
 }
 
 .transcript-context {
@@ -2259,6 +2393,7 @@ dialog {
   }
 
   .parent-hero {
+    grid-template-columns: 1fr;
     padding-top: 52px;
     padding-bottom: 52px;
   }
@@ -2277,9 +2412,24 @@ dialog {
     min-height: 0;
   }
 
+  .parent-media-slot {
+    width: min(100%, 52ch);
+    justify-self: start;
+  }
+
+  .parent-media-slot div {
+    min-height: 340px;
+  }
+
   .parent-principle {
     margin-inline: -12px;
     padding-inline: 12px;
+  }
+
+  .parent-doctrine-band,
+  .parent-video-section {
+    margin-inline: -24px;
+    padding-inline: 24px;
   }
 
   .media-slot {

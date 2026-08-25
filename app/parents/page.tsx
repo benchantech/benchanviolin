@@ -29,21 +29,34 @@ export default function ParentsHubPage() {
       <SiteHeader />
       <main id="main" className="parent-page">
         <section className="section parent-hero">
-          <p className="kicker">Parents · violin · AI</p>
-          <h1>Use AI to see options. Keep the lesson human.</h1>
-          <p className="lede">
-            These answers are for parents and caregivers supporting a child between violin lessons. AI can help narrow
-            the situation, organize evidence, and prepare better questions. It should not silently become a second
-            violin teacher.
-          </p>
-          <div className="actions">
-            <a className="btn" href={violinForParentsUrl} target="_blank" rel="noopener">
-              {violinForParentsCta}
-            </a>
-            <a className="btn" href="/library">
-              Search Ben's library
-            </a>
+          <div>
+            <p className="kicker">Parents · violin · AI</p>
+            <h1>Use AI to see options. Keep the lesson human.</h1>
+            <p className="lede">
+              These answers are for parents and caregivers supporting a child between violin lessons. AI can help narrow
+              the situation, organize evidence, and prepare better questions. It should not silently become a second
+              violin teacher.
+            </p>
+            <p className="signature-note">
+              The useful move is not more advice. It is one clearer next move while the teacher is not in the room.{" "}
+              <span>— B.C.</span>
+            </p>
+            <div className="actions">
+              <a className="btn" href={violinForParentsUrl} target="_blank" rel="noopener">
+                {violinForParentsCta}
+              </a>
+              <a className="btn" href="/library">
+                Search Ben's library
+              </a>
+            </div>
           </div>
+          <figure className="media-slot parent-media-slot">
+            <div>
+              <span>Minimal turn</span>
+              <small>Maximum haystack removal</small>
+            </div>
+            <figcaption>Violin for Parents applies Ben's teacher, parent, and CTO judgment to between-lesson support.</figcaption>
+          </figure>
         </section>
 
         <section className="section" aria-labelledby="answers-title">
@@ -59,7 +72,7 @@ export default function ParentsHubPage() {
           </div>
         </section>
 
-        <section className="section parent-principle" aria-labelledby="principle-title">
+        <section className="section parent-principle parent-doctrine-band" aria-labelledby="principle-title">
           <p className="section-number">02 / Governing principle</p>
           <h2 id="principle-title">Minimal turn. Maximum haystack removal. Human judgment strengthened.</h2>
           <p>
@@ -69,7 +82,7 @@ export default function ParentsHubPage() {
           </p>
         </section>
 
-        <section className="section" aria-labelledby="videos-title">
+        <section className="section parent-video-section" aria-labelledby="videos-title">
           <p className="section-number">03 / Video architecture</p>
           <h2 id="videos-title">Planned YouTube question series.</h2>
           <p className="copy">
