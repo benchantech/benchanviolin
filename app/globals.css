@@ -2652,18 +2652,6 @@ dialog {
   .parent-answer-page .lede {
     width: 100%;
     max-width: 100%;
-    min-width: 0;
-  }
-
-  .parent-answer-page .parent-hero .kicker {
-    display: block;
-    width: 100%;
-    max-width: none;
-  }
-
-  .parent-answer-page .parent-hero .lede {
-    max-width: calc(100vw - 48px);
-    overflow-wrap: anywhere;
   }
 
   .answer-with-lessons {
@@ -2682,13 +2670,7 @@ dialog {
   }
 
   .parent-answer-page .answer-list li {
-    max-width: calc(100vw - 48px);
     overflow-wrap: anywhere;
-  }
-
-  .parent-answer-page .lesson-player-card,
-  .parent-answer-page .lesson-player-card iframe {
-    max-width: calc(100vw - 48px);
   }
 
   .home-page .hero,
@@ -2723,9 +2705,8 @@ dialog {
   }
 
   .parent-page {
-    width: calc(100% - 48px);
-    max-width: var(--page-max);
-    padding-inline: 0;
+    width: min(100% - 24px, var(--page-max));
+    padding-inline: 24px;
   }
 
   .parent-hero {
@@ -2777,24 +2758,14 @@ dialog {
 
   .parent-answer-page .parent-principle,
   .parent-answer-page .parent-cta {
-    width: calc(100% + 48px);
-    margin-inline: -24px;
+    width: calc(100vw - 24px);
+    margin-left: calc(50% - 50vw + 12px);
+    margin-right: calc(50% - 50vw + 12px);
     padding-inline: 24px;
   }
 
   .parent-answer-page {
     overflow-x: hidden;
-  }
-
-  html:has(.parent-answer-page),
-  body:has(.parent-answer-page) {
-    overflow-x: hidden;
-  }
-
-  .site-footer section,
-  .site-footer h2 {
-    width: 100%;
-    max-width: none;
   }
 
   .media-slot {
