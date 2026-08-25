@@ -2078,19 +2078,63 @@ dialog {
 }
 
 .parent-page {
-  padding-inline: 52px;
+  padding-inline: 0;
+  margin-bottom: 28px;
+}
+
+.parent-page .section {
+  padding-block: 64px;
+}
+
+.parent-page .section > .section-number,
+.parent-page .section > .kicker {
+  margin-bottom: var(--space-3);
+}
+
+.parent-page .section > h2,
+.parent-page .section > .copy {
+  margin-bottom: var(--space-6);
+}
+
+.parent-hero {
+  padding-top: 72px;
+  padding-bottom: 72px;
 }
 
 .parent-hero h1 {
-  max-width: 18ch;
+  max-width: 16ch;
+}
+
+.parent-hero .lede {
+  max-width: 58ch;
+  margin-top: var(--space-5);
+}
+
+.parent-hero .actions {
+  margin-top: var(--space-6);
 }
 
 .parent-answer-grid,
 .parent-video-grid,
 .answer-columns {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: var(--space-4);
+}
+
+.parent-answer-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: stretch;
+  margin-top: var(--space-6);
+}
+
+.parent-video-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  align-items: stretch;
+  margin-top: var(--space-6);
+}
+
+.answer-columns {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .parent-answer-card,
@@ -2101,12 +2145,38 @@ dialog {
   padding: var(--space-5);
 }
 
+.parent-answer-card {
+  display: flex;
+  min-height: 180px;
+  flex-direction: column;
+  gap: var(--space-3);
+  text-decoration: none;
+}
+
+.parent-answer-card p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.parent-video-grid article {
+  padding: var(--space-4);
+}
+
 .parent-answer-card h3,
 .parent-video-grid h3,
 .parent-principle h2,
 .parent-answer-page h2 {
   font-family: var(--font-display);
   font-weight: 400;
+}
+
+.parent-answer-card h3 {
+  font-size: clamp(1.25rem, 2vw, 1.55rem);
+}
+
+.parent-video-grid h3 {
+  font-size: 1.2rem;
 }
 
 .parent-answer-card p,
@@ -2130,6 +2200,11 @@ dialog {
 
 .parent-principle {
   background: var(--paper-raised);
+  padding-inline: var(--space-6);
+}
+
+.parent-principle p {
+  max-width: 66ch;
 }
 
 .transcript-context {
@@ -2156,10 +2231,7 @@ dialog {
   .sideways-section,
   .question-grid,
   .watch-grid,
-  .practice-grid,
-  .parent-answer-grid,
-  .parent-video-grid,
-  .answer-columns {
+  .practice-grid {
     grid-template-columns: 1fr;
   }
 
@@ -2177,10 +2249,37 @@ dialog {
   }
 
   .practice-section,
-  .listening-room,
-  .parent-page {
+  .listening-room {
     margin-inline: -24px;
     padding-inline: 24px;
+  }
+
+  .parent-page .section {
+    padding-block: 48px;
+  }
+
+  .parent-hero {
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+
+  .parent-hero h1 {
+    max-width: none;
+  }
+
+  .parent-answer-grid,
+  .parent-video-grid,
+  .answer-columns {
+    grid-template-columns: 1fr;
+  }
+
+  .parent-answer-card {
+    min-height: 0;
+  }
+
+  .parent-principle {
+    margin-inline: -12px;
+    padding-inline: 12px;
   }
 
   .media-slot {
