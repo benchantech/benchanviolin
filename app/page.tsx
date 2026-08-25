@@ -17,7 +17,8 @@ export default function HomePage() {
             <p className="lede">
               I&apos;ve been playing violin almost forty years and teaching it in public since 2007 — twenty-four views
               on that first video, and I kept going. This is where I perform, teach, and run my experiments in how one
-              hard-won skill quietly transfers into the next.
+              hard-won skill quietly transfers into the next, including how parents can use AI without replacing the
+              teacher in the room.
             </p>
             <p className="signature-note">
               The strings were attached a long time ago. I&apos;m just seeing what else they can play. <span>— B.C.</span>
@@ -25,6 +26,9 @@ export default function HomePage() {
             <div className="actions">
               <a className="btn" href="/library">
                 Search the library
+              </a>
+              <a className="btn" href="/parents">
+                Help between lessons
               </a>
               <a className="btn" href="https://youtube.com/benchanviolin" target="_blank" rel="noopener">
                 Watch on YouTube
@@ -51,6 +55,20 @@ export default function HomePage() {
             </div>
             <figcaption>BenChanViolin on YouTube: from 2007 to now, still practicing in public.</figcaption>
           </figure>
+        </section>
+
+        <section className="section parent-principle" aria-labelledby="parent-support-title">
+          <p className="kicker">For violin parents</p>
+          <h2 id="parent-support-title">AI can narrow the situation. It should not take over the lesson.</h2>
+          <p>
+            Parent support works best when it protects the teacher&apos;s assignment, the child&apos;s experience, and the
+            adult&apos;s judgment. The goal is not more advice. It is one clearer next move between lessons.
+          </p>
+          <p>
+            <a className="btn" href="/parents">
+              Read parent answers
+            </a>
+          </p>
         </section>
 
         <section className="practice-section section" aria-labelledby="practice-title">

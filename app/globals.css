@@ -2077,6 +2077,61 @@ dialog {
   font-weight: 400;
 }
 
+.parent-page {
+  padding-inline: 52px;
+}
+
+.parent-hero h1 {
+  max-width: 18ch;
+}
+
+.parent-answer-grid,
+.parent-video-grid,
+.answer-columns {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.parent-answer-card,
+.parent-video-grid article,
+.parent-cta {
+  border: 1px solid var(--rule-strong);
+  background: #FBF6EC;
+  padding: var(--space-5);
+}
+
+.parent-answer-card h3,
+.parent-video-grid h3,
+.parent-principle h2,
+.parent-answer-page h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+}
+
+.parent-answer-card p,
+.parent-principle p,
+.parent-cta p,
+.answer-columns p {
+  color: var(--muted);
+}
+
+.answer-list,
+.source-list,
+.parent-video-grid ul {
+  padding-left: 1.15rem;
+}
+
+.answer-list li,
+.source-list li,
+.parent-video-grid li {
+  margin-block: 0.55rem;
+}
+
+.parent-principle {
+  background: var(--paper-raised);
+}
+
 .transcript-context {
   background: #E5E5DE;
   border-left-color: var(--focus-ring);
@@ -2101,7 +2156,10 @@ dialog {
   .sideways-section,
   .question-grid,
   .watch-grid,
-  .practice-grid {
+  .practice-grid,
+  .parent-answer-grid,
+  .parent-video-grid,
+  .answer-columns {
     grid-template-columns: 1fr;
   }
 
@@ -2119,7 +2177,8 @@ dialog {
   }
 
   .practice-section,
-  .listening-room {
+  .listening-room,
+  .parent-page {
     margin-inline: -24px;
     padding-inline: 24px;
   }

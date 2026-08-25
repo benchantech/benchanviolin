@@ -5,7 +5,17 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: "Ben Chan Violin",
-  description: "Ben Chan Violin teaching archive.",
+  description:
+    "Ben Chan's violin teaching archive, parent-support answers, and AI-aware guidance for preserving teacher continuity between lessons.",
+  metadataBase: new URL("https://benchanviolin.com"),
+  openGraph: {
+    title: "Ben Chan Violin",
+    description:
+      "Violin teaching, parent-support answers, and AI-aware guidance for the space between lessons.",
+    url: "https://benchanviolin.com",
+    siteName: "Ben Chan Violin",
+    type: "website"
+  },
   icons: {
     icon: [
       { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },

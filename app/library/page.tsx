@@ -7,7 +7,8 @@ export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Technique Library - Ben Chan Violin",
-  description: "Search Ben Chan Violin technique routes and transcript-aligned candidate clips by learner phrases.",
+  description:
+    "Search Ben Chan Violin technique routes and transcript-aligned clips. Use this archive as source material, not a replacement for a current teacher.",
 };
 
 type LibraryPageProps = {
@@ -32,7 +33,10 @@ export default async function LibraryPage({ searchParams }: LibraryPageProps) {
       <main id="main" className="library-page">
         <section className="section library-hero">
           <p className="kicker">Technique routes</p>
-          <p className="lede">Search a technique, a problem, or the words you would use in practice.</p>
+          <p className="lede">
+            Search a technique, a problem, or the words you would use in practice. Parents can use this as source
+            material for better observations and teacher questions.
+          </p>
           <TagSearchInput initialQuery={initialQuery} initialRouteId={initialRouteId} initialNodeId={initialNodeId} />
         </section>
 
