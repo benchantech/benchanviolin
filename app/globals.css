@@ -2784,14 +2784,43 @@ dialog {
 
   .parent-answer-page .parent-principle,
   .parent-answer-page .parent-cta {
+    position: relative;
+    z-index: 0;
+    width: auto;
+    margin-inline: -24px;
+    padding-inline: 24px;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .parent-answer-page .parent-principle::before,
+  .parent-answer-page .parent-cta::before {
+    position: absolute;
+    inset-block: 0;
+    left: calc(50% + 24px);
+    z-index: 0;
     width: 100vw;
-    margin-left: calc(50% - 50vw);
-    margin-right: calc(50% - 50vw);
-    padding-inline: 36px;
+    transform: translateX(-50%);
+    content: "";
+  }
+
+  .parent-answer-page .parent-principle > *,
+  .parent-answer-page .parent-cta > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .parent-answer-page .parent-principle::before {
+    background: var(--paper-muted);
+    border-block: 1px solid var(--rule);
+  }
+
+  .parent-answer-page .parent-cta::before {
+    background: var(--ink);
   }
 
   .parent-answer-page {
-    overflow-x: hidden;
+    overflow-x: visible;
   }
 
   .site-footer h2 {
