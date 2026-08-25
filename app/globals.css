@@ -2304,19 +2304,23 @@ dialog {
 .parent-answer-page article {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  max-width: 980px;
+  margin-inline: auto;
 }
 
 .parent-answer-page .parent-hero {
   display: block;
-  max-width: 820px;
+  max-width: 760px;
+  padding-bottom: 64px;
 }
 
 .parent-answer-page .parent-hero h1 {
-  max-width: 14ch;
+  max-width: 16ch;
+  font-size: clamp(3rem, 5.4vw, 4.35rem);
 }
 
 .parent-answer-page .section:not(.parent-hero):not(.answer-columns) {
-  max-width: 820px;
+  max-width: 760px;
 }
 
 .parent-answer-page .answer-list,
@@ -2337,28 +2341,59 @@ dialog {
   margin: 0;
   padding: 18px 20px;
   background: var(--paper-muted);
+  color: var(--ink);
 }
 
 .parent-answer-page .answer-columns {
   max-width: 980px;
-  gap: 1px;
-  border: 1px solid var(--rule);
-  background: var(--rule);
+  gap: 24px;
+  border: 0;
+  background: transparent;
 }
 
 .parent-answer-page .answer-columns > div {
-  padding: 22px 20px;
-  background: var(--paper-muted);
+  padding: 24px 0 0;
+  border-top: 1px solid var(--rule);
+  background: transparent;
 }
 
 .parent-answer-page .answer-columns p {
   margin-bottom: 0;
+  color: #5B4F3C;
+  font-family: var(--font-display);
+  font-size: 1.06rem;
+  font-weight: 300;
+  line-height: 1.6;
+}
+
+.parent-answer-page .parent-principle {
+  max-width: none;
+  margin-inline: -52px;
+  padding-inline: 52px;
+  background: var(--paper-muted);
+  border-block: 1px solid var(--rule);
+}
+
+.parent-answer-page .parent-principle p {
+  color: #5B4F3C;
 }
 
 .parent-answer-page .parent-cta {
-  max-width: 820px;
-  background: var(--paper-muted);
-  border-color: var(--rule);
+  max-width: none;
+  margin-inline: -52px;
+  padding-inline: 52px;
+  border: 0;
+  background: var(--ink);
+  color: #CABFA9;
+}
+
+.parent-answer-page .parent-cta h2 {
+  color: var(--paper-raised);
+  font-style: italic;
+}
+
+.parent-answer-page .parent-cta p {
+  color: #CABFA9;
 }
 
 .transcript-context {
@@ -2453,6 +2488,12 @@ dialog {
 
   .parent-doctrine-band,
   .parent-video-section {
+    margin-inline: -24px;
+    padding-inline: 24px;
+  }
+
+  .parent-answer-page .parent-principle,
+  .parent-answer-page .parent-cta {
     margin-inline: -24px;
     padding-inline: 24px;
   }
