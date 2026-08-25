@@ -2135,6 +2135,31 @@ dialog {
   font-weight: 400;
 }
 
+.parent-media-slot .image-carousel img {
+  animation: parent-carousel-fade 6s var(--ease-standard) infinite;
+}
+
+.parent-media-slot .image-carousel img:nth-child(2) {
+  animation-delay: 3s;
+}
+
+@keyframes parent-carousel-fade {
+  0%,
+  8% {
+    opacity: 0;
+  }
+
+  16%,
+  50% {
+    opacity: 1;
+  }
+
+  58%,
+  100% {
+    opacity: 0;
+  }
+}
+
 .parent-answer-grid,
 .parent-video-grid,
 .answer-columns {

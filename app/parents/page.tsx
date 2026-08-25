@@ -53,18 +53,13 @@ export default function ParentsHubPage() {
           <figure className="media-slot parent-media-slot">
             <div className="image-carousel" aria-label="Ben Chan violin teaching video stills">
               <img
-                src="https://i.ytimg.com/vi/vB00ah6E5E4/hqdefault.jpg"
-                alt="Ben Chan violin teaching video still"
+                src="/images/parents/vfp-parent-carousel-1.webp"
+                alt="Ben Chan sitting near a music stand while using Violin for Parents"
                 loading="eager"
               />
               <img
-                src="https://i.ytimg.com/vi/s4U9Y2ts1Ys/0.jpg"
-                alt="Ben Chan violin teaching video still"
-                loading="eager"
-              />
-              <img
-                src="https://i.ytimg.com/vi/sNGIFa6gZqo/maxresdefault.jpg"
-                alt="Ben Chan violin teaching video still"
+                src="/images/parents/vfp-parent-carousel-2.webp"
+                alt="Ben Chan supporting a young violin learner between lessons"
                 loading="eager"
               />
             </div>
