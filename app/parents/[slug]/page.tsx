@@ -63,13 +63,39 @@ export default async function ParentQuestionPage({ params }: PageProps) {
             <p className="meta-line">By Ben Chan · Updated {question.updated}</p>
           </header>
 
-          <section className="section">
-            <h2>What to observe first</h2>
-            <ul className="answer-list">
-              {question.observations.map((item) => (
-                <li key={item}>{item}</li>
-              ))}
-            </ul>
+          <section className={question.lessonPlayers?.length ? "section answer-with-lessons" : "section"}>
+            <div>
+              <h2>What to observe first</h2>
+              <ul className="answer-list">
+                {question.observations.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            {question.lessonPlayers?.length ? (
+              <aside className="lesson-player-panel" aria-labelledby="lesson-player-title">
+                <p className="kicker">Ben-Approved Lessons</p>
+                <h2 id="lesson-player-title">Listen next</h2>
+                {question.lessonPlayers.map((lesson) => (
+                  <div className="lesson-player-card" key={lesson.embedUrl}>
+                    <iframe
+                      title={`Apple Podcasts player: ${lesson.title}`}
+                      src={lesson.embedUrl}
+                      height="175"
+                      loading="lazy"
+                      allow="autoplay *; encrypted-media *; fullscreen *; clipboard-write"
+                      sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-top-navigation-by-user-activation"
+                    />
+                    <h3>{lesson.title}</h3>
+                    <p>{lesson.note}</p>
+                    <a href={lesson.appleUrl} target="_blank" rel="noopener">
+                      Open in Apple Podcasts
+                    </a>
+                  </div>
+                ))}
+              </aside>
+            ) : null}
           </section>
 
           <section className="section answer-columns">

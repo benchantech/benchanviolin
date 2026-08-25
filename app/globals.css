@@ -2399,6 +2399,13 @@ dialog {
   max-width: none;
 }
 
+.answer-with-lessons {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 360px);
+  gap: 48px;
+  align-items: start;
+}
+
 .parent-answer-page .answer-list,
 .parent-answer-page .source-list {
   margin-top: var(--space-5);
@@ -2418,6 +2425,58 @@ dialog {
   padding: 18px 20px;
   background: var(--paper-muted);
   color: var(--ink);
+}
+
+.lesson-player-panel {
+  position: sticky;
+  top: 24px;
+  padding-top: 4px;
+}
+
+.lesson-player-panel .kicker {
+  margin-bottom: var(--space-3);
+}
+
+.lesson-player-panel h2 {
+  margin-bottom: var(--space-5);
+}
+
+.lesson-player-card {
+  display: grid;
+  gap: var(--space-3);
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+}
+
+.lesson-player-card iframe {
+  width: 100%;
+  max-width: 100%;
+  border: 0;
+  background: transparent;
+}
+
+.lesson-player-card h3 {
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.22rem;
+  font-weight: 400;
+  line-height: 1.25;
+}
+
+.lesson-player-card p {
+  margin: 0;
+  color: #5B4F3C;
+  font-size: 0.96rem;
+  line-height: 1.55;
+}
+
+.lesson-player-card a {
+  width: fit-content;
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
 .parent-answer-page .answer-columns {
@@ -2593,6 +2652,16 @@ dialog {
   .parent-answer-page .lede {
     width: 100%;
     max-width: 100%;
+  }
+
+  .answer-with-lessons {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+
+  .lesson-player-panel {
+    position: static;
+    padding-top: 0;
   }
 
   .parent-answer-page p,

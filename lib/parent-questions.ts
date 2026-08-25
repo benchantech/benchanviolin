@@ -13,6 +13,12 @@ export type ParentQuestion = {
   authority: string;
   nextMove: string;
   sourceLinks: { label: string; href: string }[];
+  lessonPlayers?: {
+    title: string;
+    note: string;
+    appleUrl: string;
+    embedUrl: string;
+  }[];
   related: string[];
 };
 
@@ -40,6 +46,17 @@ export const parentQuestions: ParentQuestion[] = [
     sourceLinks: [
       { label: "Search Ben's technique library for the specific issue", href: "/library" },
       { label: "AI and educational boundary statement", href: "/ai-disclosure" }
+    ],
+    lessonPlayers: [
+      {
+        title: "Am I Helping Or Taking Over",
+        note:
+          "Use this when parent help may be slipping into carrying too much of the practice or replacing the child's own work.",
+        appleUrl:
+          "https://podcasts.apple.com/us/podcast/am-i-helping-or-taking-over/id6792397467?i=1000777717789",
+        embedUrl:
+          "https://embed.podcasts.apple.com/us/podcast/am-i-helping-or-taking-over/id6792397467?i=1000777717789"
+      }
     ],
     related: [
       "when-should-a-violin-parent-ask-the-teacher-instead-of-ai",
