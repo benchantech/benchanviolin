@@ -51,9 +51,22 @@ export default function ParentsHubPage() {
             </div>
           </div>
           <figure className="media-slot parent-media-slot">
-            <div>
-              <span>Minimal turn</span>
-              <small>Maximum haystack removal</small>
+            <div className="image-carousel" aria-label="Ben Chan violin teaching video stills">
+              <img
+                src="https://i.ytimg.com/vi/vB00ah6E5E4/hqdefault.jpg"
+                alt="Ben Chan violin teaching video still"
+                loading="eager"
+              />
+              <img
+                src="https://i.ytimg.com/vi/s4U9Y2ts1Ys/0.jpg"
+                alt="Ben Chan violin teaching video still"
+                loading="eager"
+              />
+              <img
+                src="https://i.ytimg.com/vi/sNGIFa6gZqo/maxresdefault.jpg"
+                alt="Ben Chan violin teaching video still"
+                loading="eager"
+              />
             </div>
             <figcaption>Violin for Parents applies Ben's teacher, parent, and CTO judgment to between-lesson support.</figcaption>
           </figure>
