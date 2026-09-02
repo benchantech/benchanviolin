@@ -4,7 +4,7 @@ import { getRouteUrl, listTechnicalRoutePages } from "@/lib/technical-route-page
 export const dynamic = "force-static";
 
 const siteUrl = "https://benchanviolin.com";
-const vfpUrl = "https://studio.com/apps/benchanviolin/violin-for-parents";
+const vfpUrl = "https://benchanviolin.com/violin-for-parents";
 
 function absolute(path: string) {
   return `${siteUrl}${path}`;

@@ -8,7 +8,7 @@ The goal is not generic traffic. The goal is to test whether concrete between-le
 
 The product implementation for live parent situations is Violin for Parents:
 
-https://studio.com/apps/benchanviolin/violin-for-parents
+https://benchanviolin.com/violin-for-parents
 
 ## Operating Principle
 
@@ -302,7 +302,7 @@ If source support is weak, narrow the claim.
 - Route branches: `https://benchanviolin.com/library/routes/[route]/[branch]`
 - Sitemap: `https://benchanviolin.com/sitemap.xml`
 - LLM manifest: `https://benchanviolin.com/llms.txt`
-- VFP: `https://studio.com/apps/benchanviolin/violin-for-parents`
+- VFP: `https://benchanviolin.com/violin-for-parents`
 
 ## Release Log Template
 

@@ -1,4 +1,4 @@
-export const violinForParentsUrl = "https://studio.com/apps/benchanviolin/violin-for-parents";
+export const violinForParentsUrl = "https://benchanviolin.com/violin-for-parents";
 
 export const violinForParentsCta = "Get help with today's violin situation";
 

@@ -43,6 +43,7 @@ async function tagEntries(): Promise<MetadataRoute.Sitemap> {
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const staticEntries: MetadataRoute.Sitemap = [
     entry("/", { changeFrequency: "weekly", priority: 1 }),
+    entry("/studio-com-flagship-creator", { lastModified: "2026-08-31", changeFrequency: "monthly", priority: 0.88 }),
     entry("/parents", { changeFrequency: "weekly", priority: 0.9 }),
     entry("/library", { changeFrequency: "weekly", priority: 0.85 }),
     entry("/tools/clip-builder", { changeFrequency: "monthly", priority: 0.45 }),

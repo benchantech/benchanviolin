@@ -18,6 +18,9 @@
     "js:deploy-check": "npm run js:minify:check && npm run js:cache-hints:check",
     "analytics:searches": "node scripts/ga4-searches.mjs",
     "analytics:gaps": "node scripts/ga4-routing-gaps.mjs",
+    "export:library-clip-routing-pdf": "node scripts/export-library-clip-routing-pdf.mjs",
+    "audio:normalize-latest": "node scripts/normalize-latest-download-mp3.mjs",
+    "audio:tag-stand-podcast": "node scripts/tag-violin-stand-podcast-episodes.mjs",
     "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs",
     "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs"
   },

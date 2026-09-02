@@ -24,6 +24,71 @@ const nextConfig: NextConfig = {
     return [
       { source: "/archive", destination: "https://youtube.com/benchanviolin", permanent: false },
       { source: "/archive.html", destination: "https://youtube.com/benchanviolin", permanent: false },
+      {
+        source: "/mprpg",
+        destination: "https://benchanviolin.com/music-practice-rpg",
+        permanent: true,
+      },
+      {
+        source: "/music-practice-rpg",
+        destination: "https://benchanviolin.com/music-practice-rpg",
+        permanent: true,
+      },
+      {
+        source: "/musicpracticerpg",
+        destination: "https://benchanviolin.com/music-practice-rpg",
+        permanent: true,
+      },
+      {
+        source: "/rpg",
+        destination: "https://benchanviolin.com/music-practice-rpg",
+        permanent: true,
+      },
+      {
+        source: "/vfp",
+        destination: "https://benchanviolin.com/violin-for-parents",
+        permanent: true,
+      },
+      {
+        source: "/violin-for-parents",
+        destination: "https://benchanviolin.com/violin-for-parents",
+        permanent: true,
+      },
+      {
+        source: "/violin-for-parent",
+        destination: "https://benchanviolin.com/violin-for-parents",
+        permanent: true,
+      },
+      {
+        source: "/violinforparents",
+        destination: "https://benchanviolin.com/violin-for-parents",
+        permanent: true,
+      },
+      {
+        source: "/parent",
+        destination: "https://benchanviolin.com/violin-for-parents",
+        permanent: true,
+      },
+      {
+        source: "/vpb",
+        destination: "https://benchanviolin.com/violin-pitch-builder",
+        permanent: true,
+      },
+      {
+        source: "/violin-pitch-builder",
+        destination: "https://benchanviolin.com/violin-pitch-builder",
+        permanent: true,
+      },
+      {
+        source: "/violinpitchbuilder",
+        destination: "https://benchanviolin.com/violin-pitch-builder",
+        permanent: true,
+      },
+      {
+        source: "/pitch",
+        destination: "https://benchanviolin.com/violin-pitch-builder",
+        permanent: true,
+      },
     ];
   },
   async headers() {
