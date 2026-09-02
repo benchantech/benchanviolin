@@ -71,12 +71,7 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/vpb",
-        destination: "https://benchanviolin.com/violin-pitch-builder",
-        permanent: true,
-      },
-      {
-        source: "/violin-pitch-builder",
-        destination: "https://benchanviolin.com/violin-pitch-builder",
+        destination: "/violin-pitch-builder",
         permanent: true,
       },
       {
