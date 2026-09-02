@@ -235,13 +235,6 @@ export default function PitchLab() {
 
   return (
     <main className="site-shell">
-      <header className="masthead">
-        <a className="brand" href="https://benchanviolin.com" aria-label="Ben Chan Violin home">
-          <span className="brand-mark">BC</span><span>Ben Chan Violin</span>
-        </a>
-        <span className="mvp-tag">Pitch lab · MVP</span>
-      </header>
-
       <section className="hero">
         <div className="discontinued-note">
           <strong>Violin Pitch Builder has been discontinued as a product.</strong>

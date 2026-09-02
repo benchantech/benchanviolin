@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/SiteHeader";
 import PitchLab from "./PitchLab";
 import styles from "./violinPitchBuilder.module.css";
 
@@ -21,8 +22,11 @@ export const metadata: Metadata = {
 
 export default function ViolinPitchBuilderPage() {
   return (
-    <div className={`${styles.scope} violin-pitch-builder-app`}>
-      <PitchLab />
-    </div>
+    <>
+      <SiteHeader />
+      <div className={`${styles.scope} violin-pitch-builder-app`}>
+        <PitchLab />
+      </div>
+    </>
   );
 }

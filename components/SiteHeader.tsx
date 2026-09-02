@@ -8,7 +8,6 @@ export function SiteHeader() {
       <nav className="nav" aria-label="Primary">
         <a href="/parents">Parents</a>
         <a href="/library">Library</a>
-        <a href="/violin-pitch-builder">Pitch Builder</a>
         <a href="https://youtube.com/benchanviolin">YouTube</a>
       </nav>
       <details className="mobile-menu">
@@ -20,7 +19,6 @@ export function SiteHeader() {
         <nav aria-label="Mobile primary">
           <a href="/parents">Parents</a>
           <a href="/library">Library</a>
-          <a href="/violin-pitch-builder">Pitch Builder</a>
           <a href="https://youtube.com/benchanviolin">YouTube</a>
         </nav>
       </details>

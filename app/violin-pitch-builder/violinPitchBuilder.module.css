@@ -15,12 +15,9 @@
 .scope :global(button), .scope :global(a) { -webkit-tap-highlight-color: transparent; }
 .scope :global(button) { font: inherit; }
 
-.scope :global(.site-shell) { width: min(100% - 32px, 900px); margin: 0 auto; padding: 24px 0 40px; }
-.scope :global(.masthead) { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.scope :global(.site-shell) { width: min(100% - 32px, 900px); margin: 0 auto; padding: 1px 0 40px; }
 .scope :global(.brand) { display: inline-flex; align-items: center; gap: 10px; color: var(--ink); text-decoration: none; font-size: 14px; font-weight: 750; letter-spacing: -.01em; }
-.scope :global(.brand-mark) { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; font-family: Georgia, serif; font-size: 12px; }
-.scope :global(.mvp-tag) { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
-.scope :global(.hero) { max-width: 680px; margin: 72px auto 32px; text-align: center; }
+.scope :global(.hero) { max-width: 680px; margin: 42px auto 32px; text-align: center; }
 .scope :global(.discontinued-note) { display: grid; gap: 7px; margin: 0 auto 26px; padding: 14px 16px; border: 1px solid rgba(23,54,47,.18); border-radius: 12px; color: var(--muted); background: rgba(255,253,248,.76); text-align: left; font-size: 13px; line-height: 1.5; }
 .scope :global(.discontinued-note strong) { color: var(--ink); font-size: 13px; }
 .scope :global(.eyebrow) { margin: 0 0 14px; color: var(--coral-dark); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
@@ -167,9 +164,8 @@
 @keyframes pulse { 70%,100% { box-shadow: 0 0 0 12px rgba(228,95,79,0); } }
 @keyframes beat-pop { from { transform: scale(.82); box-shadow: 0 0 0 2px rgba(228,95,79,.25); } to { transform: scale(1); box-shadow: 0 0 0 15px rgba(228,95,79,0); } }
 @media (max-width: 640px) {
-.scope :global(.site-shell) { width: min(100% - 20px,900px); padding-top: 16px; }
-.scope :global(.mvp-tag) { font-size: 10px; }
-.scope :global(.hero) { margin: 48px auto 26px; }
+.scope :global(.site-shell) { width: min(100% - 20px,900px); padding-top: 1px; }
+.scope :global(.hero) { margin: 30px auto 26px; }
 .scope :global(.pitch-card) { min-height: 440px; border-radius: 24px; }
 .scope :global(.main-state) { min-height: 380px; padding-inline: 20px; }
 .scope :global(.builder-grid) { grid-template-columns: 1fr; }
