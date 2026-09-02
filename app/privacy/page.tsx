@@ -25,6 +25,12 @@ export default function PrivacyPage() {
             analytics providers, library search terms, routing outcomes, result clicks, and clip starts. The site does
             not currently provide user accounts, uploads, subscriptions, or personalized practice memory.
           </p>
+          <h3>Microphone and local practice tools</h3>
+          <p className="helper">
+            Violin Pitch Builder can ask for microphone permission so your browser can detect pitch and clap timing.
+            Microphone audio is processed locally on your device. BenChanViolin.com does not upload, save, store, or
+            review those recordings, and the tool does not create a practice history or account profile.
+          </p>
           <h3>Google Analytics</h3>
           <p className="helper">
             The site uses GA4 through direct gtag.js collection to understand aggregate use of the library and routing

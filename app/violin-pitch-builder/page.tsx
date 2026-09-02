@@ -1,18 +1,18 @@
 import type { Metadata } from "next";
-import { SiteFooter } from "@/components/SiteFooter";
-import { SiteHeader } from "@/components/SiteHeader";
+import PitchLab from "./PitchLab";
+import styles from "./violinPitchBuilder.module.css";
 
 export const metadata: Metadata = {
-  title: "Violin Pitch Builder Has Been Discontinued - Ben Chan Violin",
+  title: "Violin Pitch Builder - Ben Chan Violin",
   description:
-    "Violin Pitch Builder, an experimental Ben Chan Violin app for pitch practice, has been discontinued.",
+    "A browser-based Ben Chan Violin pitch and rhythm practice tool that detects single notes, pitch sequences, and rhythm-to-pitch notation.",
   alternates: {
     canonical: "https://benchanviolin.com/violin-pitch-builder",
   },
   openGraph: {
-    title: "Violin Pitch Builder Has Been Discontinued",
+    title: "Violin Pitch Builder",
     description:
-      "This particular pitch-practice app has been discontinued. Current Ben Chan Violin resources remain available through the library and parent pages.",
+      "Detect violin pitches, build pitch sequences, clap rhythms, assign notes, and draw the result on a staff in your browser.",
     url: "https://benchanviolin.com/violin-pitch-builder",
     siteName: "Ben Chan Violin",
     type: "website",
@@ -21,36 +21,8 @@ export const metadata: Metadata = {
 
 export default function ViolinPitchBuilderPage() {
   return (
-    <>
-      <a className="skip" href="#main">
-        Skip to status
-      </a>
-      <SiteHeader />
-      <main id="main" className="parent-page">
-        <section className="section parent-hero">
-          <div>
-            <p className="kicker">App status</p>
-            <h1>Violin Pitch Builder has been discontinued.</h1>
-            <p className="lede">
-              This particular app is no longer available as an active Ben Chan Violin product. The experiment helped
-              clarify where AI can support practice and where musical judgment needs a stronger source of truth.
-            </p>
-            <p className="signature-note">
-              I am leaving this page in place so old links resolve cleanly instead of sending people to a dead or
-              confusing destination. <span>- B.C.</span>
-            </p>
-            <div className="actions">
-              <a className="btn" href="/library">
-                Search the library
-              </a>
-              <a className="btn secondary" href="/parents">
-                Help between lessons
-              </a>
-            </div>
-          </div>
-        </section>
-      </main>
-      <SiteFooter />
-    </>
+    <div className={`${styles.scope} violin-pitch-builder-app`}>
+      <PitchLab />
+    </div>
   );
 }
