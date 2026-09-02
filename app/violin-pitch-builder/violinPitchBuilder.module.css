@@ -21,6 +21,8 @@
 .scope :global(.brand-mark) { display: grid; place-items: center; width: 34px; height: 34px; border: 1px solid var(--ink); border-radius: 50%; font-family: Georgia, serif; font-size: 12px; }
 .scope :global(.mvp-tag) { color: var(--muted); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; }
 .scope :global(.hero) { max-width: 680px; margin: 72px auto 32px; text-align: center; }
+.scope :global(.discontinued-note) { display: grid; gap: 7px; margin: 0 auto 26px; padding: 14px 16px; border: 1px solid rgba(23,54,47,.18); border-radius: 12px; color: var(--muted); background: rgba(255,253,248,.76); text-align: left; font-size: 13px; line-height: 1.5; }
+.scope :global(.discontinued-note strong) { color: var(--ink); font-size: 13px; }
 .scope :global(.eyebrow) { margin: 0 0 14px; color: var(--coral-dark); font-size: 12px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; }
 .scope :global(h1) { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(44px, 8vw, 72px); font-weight: 500; line-height: .98; letter-spacing: -.045em; }
 .scope :global(.lede) { max-width: 580px; margin: 20px auto 0; color: var(--muted); font-size: clamp(16px, 3vw, 19px); line-height: 1.6; }

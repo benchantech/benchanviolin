@@ -243,6 +243,13 @@ export default function PitchLab() {
       </header>
 
       <section className="hero">
+        <div className="discontinued-note">
+          <strong>Violin Pitch Builder has been discontinued as a product.</strong>
+          <span>
+            This page remains available as a client-only test implementation of pitch detection, possible rhythm
+            capture, and notation drawing. Microphone audio is processed locally in your browser.
+          </span>
+        </div>
         <p className="eyebrow">A tiny experiment in listening</p>
         <h1>{mode === "builder" ? "Build rhythm, then pitch." : mode === "sequence" ? "Play a pitch sequence." : "Play one steady note."}</h1>
         <p className="lede">
