@@ -27,9 +27,6 @@ export default function HomePage() {
               <a className="btn" href="/library">
                 Search the library
               </a>
-              <a className="btn" href="/parents">
-                Help between lessons
-              </a>
               <a className="btn" href="https://youtube.com/benchanviolin" target="_blank" rel="noopener">
                 Watch on YouTube
               </a>
@@ -55,20 +52,6 @@ export default function HomePage() {
             </div>
             <figcaption>BenChanViolin on YouTube: from 2007 to now, still practicing in public.</figcaption>
           </figure>
-        </section>
-
-        <section className="section parent-principle" aria-labelledby="parent-support-title">
-          <p className="kicker">For violin parents</p>
-          <h2 id="parent-support-title">AI can narrow the situation. It should not take over the lesson.</h2>
-          <p>
-            Parent support works best when it protects the teacher&apos;s assignment, the child&apos;s experience, and the
-            adult&apos;s judgment. The goal is not more advice. It is one clearer next move between lessons.
-          </p>
-          <p>
-            <a className="btn" href="/parents">
-              Read parent answers
-            </a>
-          </p>
         </section>
 
         <section className="practice-section section" aria-labelledby="practice-title">
