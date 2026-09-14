@@ -28,7 +28,7 @@ export const metadata: Metadata = {
 const studioUrl = "https://studio.com";
 const musicPracticeRpgUrl = "/music-practice-rpg";
 const violinPitchBuilderUrl = "/violin-pitch-builder";
-const violinForParentsUrl = "/violin-for-parents";
+const violinForParentsUrl = "/";
 
 export default function StudioComFlagshipCreatorPage() {
   const jsonLd = {
@@ -54,7 +54,6 @@ export default function StudioComFlagshipCreatorPage() {
       { "@type": "Event", name: "YouTube Symphony Orchestra", location: "Carnegie Hall", startDate: "2009" },
       { "@type": "SoftwareApplication", name: "Music Practice RPG", url: "https://benchanviolin.com/music-practice-rpg" },
       { "@type": "SoftwareApplication", name: "Violin Pitch Builder", url: "https://benchanviolin.com/violin-pitch-builder" },
-      { "@type": "SoftwareApplication", name: "Violin for Parents", url: "https://benchanviolin.com/violin-for-parents" },
     ],
   };
 

@@ -6,7 +6,6 @@ export function SiteHeader() {
         <small>Est. 2007</small>
       </a>
       <nav className="nav" aria-label="Primary">
-        <a href="/parents">Parents</a>
         <a href="/library">Library</a>
         <a href="https://youtube.com/benchanviolin">YouTube</a>
       </nav>
@@ -17,7 +16,6 @@ export function SiteHeader() {
           <span />
         </summary>
         <nav aria-label="Mobile primary">
-          <a href="/parents">Parents</a>
           <a href="/library">Library</a>
           <a href="https://youtube.com/benchanviolin">YouTube</a>
         </nav>

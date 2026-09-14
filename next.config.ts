@@ -46,27 +46,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/vfp",
-        destination: "https://studio.com/apps/benchanviolin/violin-for-parents",
+        destination: "/",
         permanent: true,
       },
       {
-        source: "/violin-for-parents",
-        destination: "https://studio.com/apps/benchanviolin/violin-for-parents",
+        source: "/violin-for-parents/:path*",
+        destination: "/",
         permanent: true,
       },
       {
         source: "/violin-for-parent",
-        destination: "https://studio.com/apps/benchanviolin/violin-for-parents",
+        destination: "/",
         permanent: true,
       },
       {
         source: "/violinforparents",
-        destination: "https://studio.com/apps/benchanviolin/violin-for-parents",
+        destination: "/",
         permanent: true,
       },
       {
         source: "/parent",
-        destination: "https://studio.com/apps/benchanviolin/violin-for-parents",
+        destination: "/",
         permanent: true,
       },
       {

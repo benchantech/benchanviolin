@@ -4,7 +4,6 @@ import { getRouteUrl, listTechnicalRoutePages } from "@/lib/technical-route-page
 export const dynamic = "force-static";
 
 const siteUrl = "https://benchanviolin.com";
-const vfpUrl = "https://benchanviolin.com/violin-for-parents";
 
 function absolute(path: string) {
   return `${siteUrl}${path}`;
@@ -36,9 +35,6 @@ export function GET() {
     "",
     "Technique Library:",
     absolute("/library"),
-    "",
-    "Violin for Parents:",
-    vfpUrl,
     "",
     "Key doctrine:",
     "AI may help parents observe, compare, retrieve, and see options between violin lessons. It should not silently replace the parent's judgment or the current teacher's individualized authority.",
