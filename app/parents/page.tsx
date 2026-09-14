@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
-import { parentQuestions, plannedParentVideos, violinForParentsCta, violinForParentsUrl } from "@/lib/parent-questions";
+import { parentQuestions, plannedParentVideos } from "@/lib/parent-questions";
 
 export const metadata: Metadata = {
   title: "Help Between Violin Lessons - Ben Chan Violin",
@@ -47,9 +47,6 @@ export default function ParentsHubPage() {
               </a>
               <a className="btn" href="/library">
                 Search Ben's library
-              </a>
-              <a className="btn secondary" href={violinForParentsUrl} target="_blank" rel="noopener">
-                {violinForParentsCta}
               </a>
             </div>
           </div>

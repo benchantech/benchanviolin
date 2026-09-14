@@ -4,7 +4,7 @@ import { SiteFooter } from "@/components/SiteFooter";
 import { SiteHeader } from "@/components/SiteHeader";
 import { PageViewTracker } from "@/components/PageViewTracker";
 import { getBenApprovedLessonsForParentQuestion } from "@/lib/ben-approved-lessons";
-import { getParentQuestion, parentQuestions, violinForParentsCta, violinForParentsUrl } from "@/lib/parent-questions";
+import { getParentQuestion, parentQuestions } from "@/lib/parent-questions";
 import { getRouteUrl, getTechnicalRoute } from "@/lib/technical-route-pages";
 
 type PageProps = {
@@ -196,17 +196,6 @@ export default async function ParentQuestionPage({ params }: PageProps) {
             </div>
           </section>
 
-          <section className="section parent-cta" aria-labelledby="vfp-title">
-            <p className="kicker">Violin for Parents</p>
-            <h2 id="vfp-title">AI helps narrow the situation; it doesn't take over the lesson.</h2>
-            <p>
-              Violin for Parents is an audio-first continuity coach for the adult supporting a child between lessons. It
-              helps preserve observations and teacher questions when the teacher is not in the room.
-            </p>
-            <a className="btn" href={violinForParentsUrl} target="_blank" rel="noopener">
-              {violinForParentsCta}
-            </a>
-          </section>
         </article>
       </main>
       <SiteFooter showSubscribe />

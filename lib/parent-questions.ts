@@ -1,7 +1,5 @@
 export const violinForParentsUrl = "https://benchanviolin.com/";
 
-export const violinForParentsCta = "Get help with today's violin situation";
-
 export type ParentQuestion = {
   slug: string;
   title: string;
