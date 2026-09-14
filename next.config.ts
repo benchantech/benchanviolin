@@ -46,27 +46,27 @@ const nextConfig: NextConfig = {
       },
       {
         source: "/vfp",
-        destination: "/",
+        destination: "/violin-for-parents",
         permanent: true,
       },
       {
-        source: "/violin-for-parents/:path*",
-        destination: "/",
+        source: "/violin-for-parents/:path+",
+        destination: "/violin-for-parents",
         permanent: true,
       },
       {
         source: "/violin-for-parent",
-        destination: "/",
+        destination: "/violin-for-parents",
         permanent: true,
       },
       {
         source: "/violinforparents",
-        destination: "/",
+        destination: "/violin-for-parents",
         permanent: true,
       },
       {
         source: "/parent",
-        destination: "/",
+        destination: "/violin-for-parents",
         permanent: true,
       },
       {
