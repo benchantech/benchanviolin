@@ -26,22 +26,22 @@ const nextConfig: NextConfig = {
       { source: "/archive.html", destination: "https://youtube.com/benchanviolin", permanent: false },
       {
         source: "/mprpg",
-        destination: "https://studio.com/apps/benchanviolin/music-practice-rpg",
+        destination: "/music-practice-rpg",
         permanent: true,
       },
       {
-        source: "/music-practice-rpg",
-        destination: "https://studio.com/apps/benchanviolin/music-practice-rpg",
+        source: "/music-practice-rpg/:path+",
+        destination: "/music-practice-rpg",
         permanent: true,
       },
       {
         source: "/musicpracticerpg",
-        destination: "https://studio.com/apps/benchanviolin/music-practice-rpg",
+        destination: "/music-practice-rpg",
         permanent: true,
       },
       {
         source: "/rpg",
-        destination: "https://studio.com/apps/benchanviolin/music-practice-rpg",
+        destination: "/music-practice-rpg",
         permanent: true,
       },
       {
