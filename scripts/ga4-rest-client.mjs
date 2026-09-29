@@ -86,6 +86,10 @@ async function accessToken(){
   }
 
   const home=captainHome();
+
+  const documentedServiceAccount=home?path.join(home,"credentials","benchanviolin-914529c4af97.json"):"";
+  if(documentedServiceAccount&&fs.existsSync(documentedServiceAccount)) return tokenFromServiceAccount(documentedServiceAccount);
+
   const adc=home?path.join(home,".config","gcloud","application_default_credentials.json"):"";
   if(adc&&fs.existsSync(adc)) return tokenFromAuthorizedUser(adc);
 
@@ -95,7 +99,7 @@ async function accessToken(){
   });
   if(gcloud.status===0&&gcloud.stdout.trim()) return gcloud.stdout.trim();
 
-  throw new Error("No local GA4 credential available. Configure gcloud ADC or GOOGLE_APPLICATION_CREDENTIALS on the Captain Mac.");
+  throw new Error("No local GA4 credential available. Expected GOOGLE_APPLICATION_CREDENTIALS, documented service-account key under $HOME/credentials, or gcloud ADC on the Captain Mac.");
 }
 
 const DEFAULT_PROPERTY_ID="545686836";
