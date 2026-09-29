@@ -98,9 +98,11 @@ async function accessToken(){
   throw new Error("No local GA4 credential available. Configure gcloud ADC or GOOGLE_APPLICATION_CREDENTIALS on the Captain Mac.");
 }
 
+const DEFAULT_PROPERTY_ID="545686836";
+
 export function requirePropertyId(){
-  const propertyId=process.env.GA4_PROPERTY_ID;
-  if(!propertyId||!/^\d+$/.test(propertyId)) throw new Error("GA4_PROPERTY_ID must be set to the numeric GA4 property ID.");
+  const propertyId=process.env.GA4_PROPERTY_ID||DEFAULT_PROPERTY_ID;
+  if(!/^\d+$/.test(propertyId)) throw new Error("GA4_PROPERTY_ID must be a numeric GA4 property ID.");
   return propertyId;
 }
 
