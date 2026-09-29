@@ -25,7 +25,9 @@
     "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs",
     "check:analytics-readonly": "node scripts/ga4-site-overview.mjs && node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs",
     "check:runner-analytics-profile": "node scripts/verify-runner-analytics-readonly.mjs",
-    "analytics:overview": "node scripts/ga4-site-overview.mjs"
+    "analytics:overview": "node scripts/ga4-site-overview.mjs",
+    "check:gsc-sitemap-submit": "node scripts/gsc-submit-sitemap.mjs",
+    "check:runner-gsc-sitemap-profile": "node scripts/verify-runner-gsc-sitemap-submit.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
