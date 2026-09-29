@@ -98,3 +98,17 @@ Authentication stays local to the Captain Mac. The reporting scripts resolve cre
 The runner request and receipt never contain credential material. The profile is read-only and requests only the `analytics.readonly` OAuth scope. `GA4_PROPERTY_ID` remains local configuration.
 
 `npm run analytics:overview` reports 366-day aggregate traffic, top page paths, and acquisition channel groups. `npm run analytics:searches` and `npm run analytics:gaps` report 366-day internal-search behavior and routing gaps.
+
+
+## Search Console sitemap submission
+
+GOAL-0016 keeps GSC Wizard read-only. Sitemap registration is a separate Captain-local runner capability using the existing local service-account key.
+
+The `goal-0016-gsc-sitemap-submit` profile is intentionally bounded to one property and one sitemap:
+
+- property: `sc-domain:benchanviolin.com`
+- sitemap: `https://benchanviolin.com/sitemap.xml`
+- OAuth scope: `https://www.googleapis.com/auth/webmasters`
+- action: one idempotent sitemap `PUT`, followed by a sitemap-list `GET` confirmation
+
+The service account must have Search Console Full user or Owner permission for the property. Credential material remains local and is never written to Git or runner receipts.
