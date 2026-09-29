@@ -22,7 +22,8 @@
     "audio:normalize-latest": "node scripts/normalize-latest-download-mp3.mjs",
     "audio:tag-stand-podcast": "node scripts/tag-violin-stand-podcast-episodes.mjs",
     "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs",
-    "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs"
+    "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs",
+    "check:analytics-readonly": "node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",
