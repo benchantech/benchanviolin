@@ -23,8 +23,9 @@
     "audio:tag-stand-podcast": "node scripts/tag-violin-stand-podcast-episodes.mjs",
     "library:rebuild-routes": "node scripts/rebuild-route-candidates.mjs",
     "library:sync-durations": "node scripts/sync-video-durations-from-transcripts.mjs",
-    "check:analytics-readonly": "node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs",
-    "check:runner-analytics-profile": "node scripts/verify-runner-analytics-readonly.mjs"
+    "check:analytics-readonly": "node scripts/ga4-site-overview.mjs && node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs",
+    "check:runner-analytics-profile": "node scripts/verify-runner-analytics-readonly.mjs",
+    "analytics:overview": "node scripts/ga4-site-overview.mjs"
   },
   "dependencies": {
     "@google-analytics/data": "^6.1.0",

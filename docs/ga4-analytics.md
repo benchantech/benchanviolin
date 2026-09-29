@@ -83,3 +83,18 @@ The site initializes Google Consent Mode v2 directly through `gtag.js`.
 - The current first-party consent banner calls `gtag("consent", "update", { analytics_storage: "granted" })` only after visitor consent.
 
 Consent and privacy requirements remain the site operator's responsibility. Create custom definitions before relying on GA4 reports.
+
+
+## Captain-local runner reporting
+
+The GOAL-0016 analytics profile uses the GA4 Data API REST `runReport` endpoint directly. It does not require `node_modules` in the runner's detached exact-head worktree.
+
+Authentication stays local to the Captain Mac. The reporting scripts resolve credentials in this order:
+
+1. `GA4_ACCESS_TOKEN` when explicitly supplied by the local environment;
+2. `GOOGLE_APPLICATION_CREDENTIALS` pointing to an `authorized_user` or `service_account` JSON file;
+3. the Captain's existing `gcloud auth application-default login` credentials.
+
+The runner request and receipt never contain credential material. The profile is read-only and requests only the `analytics.readonly` OAuth scope. `GA4_PROPERTY_ID` remains local configuration.
+
+`npm run analytics:overview` reports 366-day aggregate traffic, top page paths, and acquisition channel groups. `npm run analytics:searches` and `npm run analytics:gaps` report 366-day internal-search behavior and routing gaps.
