@@ -18,6 +18,16 @@
         "scripts/ga4-site-overview.mjs",
         "scripts/verify-runner-analytics-readonly.mjs"
       ]
+    },
+    {
+      "profileId": "goal-0016-gsc-sitemap-submit",
+      "goalId": "GOAL-0016",
+      "cwd": ".",
+      "branchRegex": "^goal-0016-run-[A-Za-z0-9._-]+$",
+      "allowedNodeScripts": [
+        "scripts/gsc-submit-sitemap.mjs",
+        "scripts/verify-runner-gsc-sitemap-submit.mjs"
+      ]
     }
   ]
 }
