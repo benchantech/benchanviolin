@@ -13,7 +13,8 @@
       "branchRegex": "^goal-0016-run-[A-Za-z0-9._-]+$",
       "allowedNodeScripts": [
         "scripts/ga4-searches.mjs",
-        "scripts/ga4-routing-gaps.mjs"
+        "scripts/ga4-routing-gaps.mjs",
+        "scripts/verify-runner-analytics-readonly.mjs"
       ]
     }
   ]
