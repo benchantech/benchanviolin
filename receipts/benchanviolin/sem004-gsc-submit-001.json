@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-gsc-submit-001",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-gsc-sitemap-submit",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-gsc-submit-001",
+  "targetSha": "6c846a4d7ddc9ea46124b551a9d24596216db829",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:gsc-sitemap-submit",
+  "safetyValidation": "pass",
+  "exitCode": 1,
+  "startedAt": "2026-09-29T16:40:09Z",
+  "finishedAt": "2026-09-29T16:40:10Z",
+  "outputSha256": "787e70389a52d336261091abf556f86312fd220ea6ac2df79ba630e287e7b893",
+  "output": "npm notice run benchanviolin@1.0.0 check:gsc-sitemap-submit\nnpm notice run node scripts/gsc-submit-sitemap.mjs\nfile:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.maMXIw/scripts/gsc-submit-sitemap.mjs:80\n  throw new Error(\"Search Console sitemap submit failed \"+submit.status+\": \"+submitText);\n        ^\n\nError: Search Console sitemap submit failed 403: {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"Google Search Console API has not been used in project 1024242741890 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/searchconsole.googleapis.com/overview?project=1024242741890 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n    \"errors\": [\n      {\n        \"message\": \"Google Search Console API has not been used in project 1024242741890 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/searchconsole.googleapis.com/overview?project=1024242741890 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\",\n        \"domain\": \"usageLimits\",\n        \"reason\": \"accessNotConfigured\",\n        \"extendedHelp\": \"https://console.developers.google.com\"\n      }\n    ],\n    \"status\": \"PERMISSION_DENIED\",\n    \"details\": [\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.ErrorInfo\",\n        \"reason\": \"SERVICE_DISABLED\",\n        \"domain\": \"googleapis.com\",\n        \"metadata\": {\n          \"serviceTitle\": \"Google Search Console API\",\n          \"containerInfo\": \"1024242741890\",\n          \"activationUrl\": \"https://console.developers.google.com/apis/api/searchconsole.googleapis.com/overview?project=1024242741890\",\n          \"consumer\": \"projects/1024242741890\",\n          \"service\": \"searchconsole.googleapis.com\"\n        }\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.LocalizedMessage\",\n        \"locale\": \"en-US\",\n        \"message\": \"Google Search Console API has not been used in project 1024242741890 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/searchconsole.googleapis.com/overview?project=1024242741890 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.\"\n      },\n      {\n        \"@type\": \"type.googleapis.com/google.rpc.Help\",\n        \"links\": [\n          {\n            \"description\": \"Google developers console API activation\",\n            \"url\": \"https://console.developers.google.com/apis/api/searchconsole.googleapis.com/overview?project=1024242741890\"\n          }\n        ]\n      }\n    ]\n  }\n}\n\n    at file:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.maMXIw/scripts/gsc-submit-sitemap.mjs:80:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\nNode.js v26.4.0\n"
+}

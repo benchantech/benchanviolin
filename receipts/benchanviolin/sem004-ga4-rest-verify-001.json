@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-ga4-rest-verify-001",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-analytics-readonly",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-ga4-rest-verify-001",
+  "targetSha": "c84d75e5f71493a8f0ff4d5c314ad0e454b66c83",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:runner-analytics-profile",
+  "safetyValidation": "pass",
+  "exitCode": 0,
+  "startedAt": "2026-09-29T16:15:30Z",
+  "finishedAt": "2026-09-29T16:15:30Z",
+  "outputSha256": "f86d446b5a614bc3d64ee965fe6665a7608afdaae7aa2612d6479b8a3031c5a1",
+  "output": "npm notice run benchanviolin@1.0.0 check:runner-analytics-profile\nnpm notice run node scripts/verify-runner-analytics-readonly.mjs\nanalytics profile read-only REST contract ok\n"
+}

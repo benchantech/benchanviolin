@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-ga4-live-002",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-analytics-readonly",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-ga4-live-002",
+  "targetSha": "c84d75e5f71493a8f0ff4d5c314ad0e454b66c83",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:analytics-readonly",
+  "safetyValidation": "fail",
+  "exitCode": 126,
+  "startedAt": "2026-09-29T16:16:08Z",
+  "finishedAt": "2026-09-29T16:16:08Z",
+  "outputSha256": "bfe88c42890b3c59b4cec8c5419df3d78b7ce87b0f68421bd6804d5fba804f51",
+  "output": "Runner safety validation rejected npm script: check:analytics-readonly\n"
+}

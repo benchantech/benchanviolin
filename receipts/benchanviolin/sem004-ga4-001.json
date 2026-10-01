@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-ga4-001",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-analytics-readonly",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-ga4-001",
+  "targetSha": "15b4c77a0248d7b7d42a62884ad2937415945ae9",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:analytics-readonly",
+  "safetyValidation": "pass",
+  "exitCode": 1,
+  "startedAt": "2026-09-29T14:51:40Z",
+  "finishedAt": "2026-09-29T14:51:40Z",
+  "outputSha256": "947a01fee9460c128995f9cbe14b7f85ff935453c2330689c8f8a3c3d05ed6ff",
+  "output": "npm notice run benchanviolin@1.0.0 check:analytics-readonly\nnpm notice run node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs\nnode:internal/modules/package_json_reader:301\n  throw new ERR_MODULE_NOT_FOUND(packageName, fileURLToPath(base), null);\n        ^\n\nError [ERR_MODULE_NOT_FOUND]: Cannot find package '@google-analytics/data' imported from /Users/benchan/Library/Application Support/BenChanTech/BctRunner/worktree.Xzaz63/scripts/ga4-searches.mjs\n    at Object.getPackageJSONURL (node:internal/modules/package_json_reader:301:9)\n    at packageResolve (node:internal/modules/esm/resolve:784:25)\n    at moduleResolve (node:internal/modules/esm/resolve:873:18)\n    at defaultResolve (node:internal/modules/esm/resolve:1006:11)\n    at #cachedDefaultResolve (node:internal/modules/esm/loader:704:20)\n    at #resolveAndMaybeBlockOnLoaderThread (node:internal/modules/esm/loader:724:38)\n    at ModuleLoader.resolveSync (node:internal/modules/esm/loader:762:56)\n    at #resolve (node:internal/modules/esm/loader:686:17)\n    at ModuleLoader.getOrCreateModuleJob (node:internal/modules/esm/loader:606:35)\n    at ModuleJob.syncLink (node:internal/modules/esm/module_job:164:33) {\n  code: 'ERR_MODULE_NOT_FOUND'\n}\n\nNode.js v26.4.0\n"
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-gsc-verify-001",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-gsc-sitemap-submit",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-gsc-verify-001",
+  "targetSha": "6c846a4d7ddc9ea46124b551a9d24596216db829",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:runner-gsc-sitemap-profile",
+  "safetyValidation": "pass",
+  "exitCode": 0,
+  "startedAt": "2026-09-29T16:39:30Z",
+  "finishedAt": "2026-09-29T16:39:30Z",
+  "outputSha256": "aedc0496d533783f13fcb742baf05717b9fa14f952190b5abde78cce3c585717",
+  "output": "npm notice run benchanviolin@1.0.0 check:runner-gsc-sitemap-profile\nnpm notice run node scripts/verify-runner-gsc-sitemap-submit.mjs\ngsc sitemap-submit profile contract ok\n"
+}

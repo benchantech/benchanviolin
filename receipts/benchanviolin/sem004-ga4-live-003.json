@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-ga4-live-003",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-analytics-readonly",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-ga4-live-003",
+  "targetSha": "8393e7e583d414f4476f6d79449268a6ba895f5c",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:analytics-readonly",
+  "safetyValidation": "pass",
+  "exitCode": 1,
+  "startedAt": "2026-09-29T16:17:20Z",
+  "finishedAt": "2026-09-29T16:17:20Z",
+  "outputSha256": "30ac33ab3c2e2ae760a57e7c0d9e480907cb54c201ee6872d9cc1811daf65cd9",
+  "output": "npm notice run benchanviolin@1.0.0 check:analytics-readonly\nnpm notice run node scripts/ga4-site-overview.mjs && node scripts/ga4-searches.mjs && node scripts/ga4-routing-gaps.mjs\nfile:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.JvbWzn/scripts/ga4-rest-client.mjs:103\n  if(!propertyId||!/^\\d+$/.test(propertyId)) throw new Error(\"GA4_PROPERTY_ID must be set to the numeric GA4 property ID.\");\n                                                   ^\n\nError: GA4_PROPERTY_ID must be set to the numeric GA4 property ID.\n    at requirePropertyId (file:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.JvbWzn/scripts/ga4-rest-client.mjs:103:52)\n    at runGa4Report (file:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.JvbWzn/scripts/ga4-rest-client.mjs:108:20)\n    at file:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.JvbWzn/scripts/ga4-site-overview.mjs:6:3\n    at ModuleJob.run (node:internal/modules/esm/module_job:447:25)\n    at async node:internal/modules/esm/loader:646:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v26.4.0\n"
+}

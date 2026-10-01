@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "sem004-gsc-submit-002",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-gsc-sitemap-submit",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-sem004-gsc-submit-002",
+  "targetSha": "6c846a4d7ddc9ea46124b551a9d24596216db829",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:gsc-sitemap-submit",
+  "safetyValidation": "pass",
+  "exitCode": 1,
+  "startedAt": "2026-09-29T16:45:54Z",
+  "finishedAt": "2026-09-29T16:45:54Z",
+  "outputSha256": "fb0d59485270ca31a4674ce717b3b24a187b2d927057cfd15853f0b78559a74c",
+  "output": "npm notice run benchanviolin@1.0.0 check:gsc-sitemap-submit\nnpm notice run node scripts/gsc-submit-sitemap.mjs\nfile:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.cOwKZX/scripts/gsc-submit-sitemap.mjs:80\n  throw new Error(\"Search Console sitemap submit failed \"+submit.status+\": \"+submitText);\n        ^\n\nError: Search Console sitemap submit failed 403: {\n  \"error\": {\n    \"code\": 403,\n    \"message\": \"User does not have sufficient permission for site 'sc-domain:benchanviolin.com'. See also: https://support.google.com/webmasters/answer/2451999.\",\n    \"errors\": [\n      {\n        \"message\": \"User does not have sufficient permission for site 'sc-domain:benchanviolin.com'. See also: https://support.google.com/webmasters/answer/2451999.\",\n        \"domain\": \"global\",\n        \"reason\": \"forbidden\"\n      }\n    ]\n  }\n}\n\n    at file:///Users/benchan/Library/Application%20Support/BenChanTech/BctRunner/worktree.cOwKZX/scripts/gsc-submit-sitemap.mjs:80:9\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\nNode.js v26.4.0\n"
+}

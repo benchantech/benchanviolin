@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "requestSchemaVersion": 2,
+  "requestId": "mr004-benchanviolin-001",
+  "repositoryId": "benchanviolin",
+  "repositoryFullName": "benchantech/benchanviolin",
+  "profileId": "goal-0016-analytics-readonly",
+  "goalId": "GOAL-0016",
+  "branch": "goal-0016-run-mr004-external-001",
+  "targetSha": "15b4c77a0248d7b7d42a62884ad2937415945ae9",
+  "cwd": ".",
+  "kind": "npm-script",
+  "script": "check:runner-analytics-profile",
+  "safetyValidation": "pass",
+  "exitCode": 0,
+  "startedAt": "2026-09-29T12:46:25Z",
+  "finishedAt": "2026-09-29T12:46:25Z",
+  "outputSha256": "31f44888a1300576e1ceef2794acefbf6c75da0be5f1186033f9d1f37184f625",
+  "output": "npm notice run benchanviolin@1.0.0 check:runner-analytics-profile\nnpm notice run node scripts/verify-runner-analytics-readonly.mjs\nanalytics profile read-only contract ok\n"
+}
